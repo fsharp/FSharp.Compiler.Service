@@ -1,0 +1,1615 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | SynExpr
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link menu-group-link-active">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <div class="api-page">
+            <h2>
+              SynExpr
+            </h2>
+            <b>
+              Namespace: 
+            </b>
+            <a href="FSharp.Compiler.html">
+              FSharp.Compiler
+            </a>
+            <br/>
+            <b>
+              Parent: 
+            </b>
+            <a href="fsharp-compiler-syntaxtree.html">
+              SyntaxTree
+            </a>
+            <span>
+              <p>Represents a syntax tree for F# expressions</p>
+
+
+            </span>
+            <br/>
+            <b>
+              Attributes:
+            </b>
+            <br/>
+            <code>
+              NoEqualityAttribute
+            </code>
+            <br/>
+            <code>
+              NoComparisonAttribute
+            </code>
+            <br/>
+            <code>
+              RequireQualifiedAccessAttribute
+            </code>
+            <br/>
+            <table>
+              <tr>
+                <th width="35%">
+                  Name
+                </th>
+                <th width="65%">
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <b>
+                    Instance Members
+                  </b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    RangeSansAnyExtraDot
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  range
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the Range ignoring any (parse error) extra trailing dots</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    RangeOfFirstPortion
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  range
+                  <br/>
+                </td>
+                <td>
+                  <p>Attempt to get the range of the first token or initial portion only - this
+is ad-hoc, just a cheap way to improve a certain 'query custom operation' error range</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Range
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  range
+                  <br/>
+                </td>
+                <td>
+                  <p>Gets the syntax range of this construct</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsArbExprAndThusAlreadyReportedError
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if this expression arises from error recovery</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <b>
+                    Union Cases
+                  </b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Paren
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range * range option * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: (expr)</p>
+<p>Parenthesized expressions. Kept in AST to distinguish A.M((x, y))
+from A.M(x, y), among other things.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Quote
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * bool * SynExpr * bool * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: <@ expr @>, <@@ expr @@></p>
+<p>Quote(operator, isRaw, quotedSynExpr, isFromQueryExpression, m)</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Const
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynConst * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: 1, 1.3, () etc.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Typed
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * SynType * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: expr: type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Tuple
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * SynExpr list * range list * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: e1, ..., eN</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    AnonRecd
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * (SynExpr * BlockSeparator) option * (Ident * SynExpr) list * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: {| id1=e1; ...; idN=eN |}
+F# syntax: struct {| id1=e1; ...; idN=eN |}</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ArrayOrList
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * SynExpr list * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: [ e1; ...; en ], [| e1; ...; en |]</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Record
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (SynType * SynExpr * range * BlockSeparator option * range) option * (SynExpr * BlockSeparator) option * (RecordFieldName * SynExpr option * BlockSeparator option) list * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: { f1=e1; ...; fn=en }
+inherit includes location of separator (for tooling)
+copyOpt contains range of the following WITH part (for tooling)
+every field includes range of separator after the field (for tooling)</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    New
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * SynType * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: new C(...)
+The flag is true if known to be 'family' ('protected') scope</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ObjExpr
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynType * (SynExpr * Ident option) option * SynBinding list * SynInterfaceImpl list * range * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: { new ... with ... }</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    While
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  DebugPointAtWhile * SynExpr * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: 'while ... do ...'</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    For
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  DebugPointAtFor * Ident * SynExpr * bool * SynExpr * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: 'for i = ... to ... do ...'</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ForEach
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  DebugPointAtFor * SeqExprOnly * bool * SynPat * SynExpr * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: 'for ... in ... do ...'</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ArrayOrListOfSeqExpr
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: [ expr ], [| expr |]</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    CompExpr
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * bool ref * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: { expr }</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Lambda
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * bool * SynSimplePats * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>First bool indicates if lambda originates from a method. Patterns here are always "simple"
+Second bool indicates if this is a "later" part of an iterated sequence of lambdas</p>
+<p>F# syntax: fun pat -&gt; expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    MatchLambda
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * range * SynMatchClause list * DebugPointForBinding * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: function pat1 -&gt; expr | ... | patN -&gt; exprN</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Match
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  DebugPointForBinding * SynExpr * SynMatchClause list * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: match expr with pat1 -&gt; expr | ... | patN -&gt; exprN</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Do
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: do expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Assert
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: assert expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    App
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ExprAtomicFlag * bool * SynExpr * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: f x</p>
+<p>flag: indicates if the application is syntactically atomic, e.g. f.[1] is atomic, but 'f x' is not
+isInfix is true for the first app of an infix operator, e.g. 1+2
+becomes App(App(+, 1), 2), where the inner node is marked isInfix</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    TypeApp
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range * SynType list * range list * range option * range * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: expr<type1, ..., typeN></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LetOrUse
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * bool * SynBinding list * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: let pat = expr in expr
+F# syntax: let f pat1 .. patN = expr in expr
+F# syntax: let rec f pat1 .. patN = expr in expr
+F# syntax: use pat = expr in expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    TryWith
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range * SynMatchClause list * range * range * DebugPointAtTry * DebugPointAtWith
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: try expr with pat -&gt; expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    TryFinally
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * SynExpr * range * DebugPointAtTry * DebugPointAtFinally
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: try expr finally expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Lazy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: lazy expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Sequential
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  DebugPointAtSequential * bool * SynExpr * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: expr; expr</p>
+<p>isTrueSeq: false indicates "let v = a in b; v"</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IfThenElse
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * SynExpr * SynExpr option * DebugPointForBinding * bool * range * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: if expr then expr
+F# syntax: if expr then expr else expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Ident
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  Ident
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: ident
+Optimized representation for SynExpr.LongIdent (false, [id], id.idRange)</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LongIdent
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * LongIdentWithDots * SynSimplePatAlternativeIdInfo ref option * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: ident.ident...ident</p>
+<p>isOptional: true if preceded by a '?' for an optional named parameter
+altNameRefCell: Normally 'None' except for some compiler-generated
+variables in desugaring pattern matching. See SynSimplePat.Id</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LongIdentSet
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  LongIdentWithDots * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: ident.ident...ident &lt;- expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DotGet
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range * LongIdentWithDots * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: expr.ident.ident</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DotSet
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * LongIdentWithDots * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: expr.ident...ident &lt;- expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Set
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: expr &lt;- expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DotIndexedGet
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * SynIndexerArg list * range * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: expr.[expr, ..., expr]</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DotIndexedSet
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * SynIndexerArg list * SynExpr * range * range * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: expr.[expr, ..., expr] &lt;- expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    NamedIndexedPropertySet
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  LongIdentWithDots * SynExpr * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: Type.Items(e1) &lt;- e2, rarely used named-property-setter notation, e.g. Foo.Bar.Chars(3) &lt;- 'a'</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DotNamedIndexedPropertySet
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * LongIdentWithDots * SynExpr * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: expr.Items (e1) &lt;- e2, rarely used named-property-setter notation, e.g. (stringExpr).Chars(3) &lt;- 'a'</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    TypeTest
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * SynType * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: expr :? type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Upcast
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * SynType * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: expr :&gt; type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Downcast
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * SynType * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: expr :?&gt; type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    InferredUpcast
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: upcast expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    InferredDowncast
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: downcast expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Null
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: null</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    AddressOf
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * SynExpr * range * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: &amp;expr, &amp;&amp;expr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    TraitCall
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynTypar list * SynMemberSig * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: ((typar1 or ... or typarN): (member-dig) expr)</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    JoinIn
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: ... in ...
+Computation expressions only, based on JOIN_IN token from lex filter</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ImplicitZero
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  range
+                  <br/>
+                </td>
+                <td>
+                  <p>Used in parser error recovery and internally during type checking for translating computation expressions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    SequentialOrImplicitYield
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  DebugPointAtSequential * SynExpr * SynExpr * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>Used internally during type checking for translating computation expressions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    YieldOrReturn
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * bool * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: yield expr
+F# syntax: return expr
+Computation expressions only</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    YieldOrReturnFrom
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool * bool * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: yield! expr
+F# syntax: return! expr
+Computation expressions only</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LetOrUseBang
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  DebugPointForBinding * bool * bool * SynPat * SynExpr * (DebugPointForBinding * bool * bool * SynPat * SynExpr * range) list * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: let! pat = expr in expr
+F# syntax: use! pat = expr in expr
+F# syntax: let! pat = expr and! ... and! ... and! pat = expr in expr
+Computation expressions only</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    MatchBang
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  DebugPointForBinding * SynExpr * SynMatchClause list * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: match! expr with pat1 -&gt; expr | ... | patN -&gt; exprN</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DoBang
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: do! expr
+Computation expressions only</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LibraryOnlyILAssembly
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILInstr array * SynType list * SynExpr list * SynType list * range
+                  <br/>
+                </td>
+                <td>
+                  <p>Only used in FSharp.Core</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LibraryOnlyStaticOptimization
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynStaticOptimizationConstraint list * SynExpr * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>Only used in FSharp.Core</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LibraryOnlyUnionCaseFieldGet
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * LongIdent * int * range
+                  <br/>
+                </td>
+                <td>
+                  <p>Only used in FSharp.Core</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LibraryOnlyUnionCaseFieldSet
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * LongIdent * int * SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>Only used in FSharp.Core</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ArbitraryAfterError
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string * range
+                  <br/>
+                </td>
+                <td>
+                  <p>Inserted for error recovery</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    FromParseError
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>Inserted for error recovery</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DiscardAfterMissingQualificationAfterDot
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>Inserted for error recovery when there is "expr." and missing tokens or error recovery after the dot</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Fixed
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynExpr * range
+                  <br/>
+                </td>
+                <td>
+                  <p>'use x = fixed expr'</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    InterpolatedString
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  SynInterpolatedStringPart list * range
+                  <br/>
+                </td>
+                <td>
+                  <p>F# syntax: interpolated string, e.g. "abc{x}" or "abc{x,3}" or "abc{x:N4}"
+Note the string ranges include the quotes, verbatim markers, dollar sign and braces</p>
+
+
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1373 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | FSharpEntity
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link menu-group-link-active">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <div class="api-page">
+            <h2>
+              FSharpEntity
+            </h2>
+            <b>
+              Namespace: 
+            </b>
+            <a href="FSharp.Compiler.SourceCodeServices.html">
+              FSharp.Compiler.SourceCodeServices
+            </a>
+            <br/>
+            <b>
+              Parent: 
+            </b>
+            <a href="FSharp.Compiler.SourceCodeServices.html">
+              FSharp.Compiler.SourceCodeServices
+            </a>
+            <span>
+              <p>A subtype of FSharpSymbol that represents a type definition or module as seen by the F# language</p>
+
+
+            </span>
+            <br/>
+            <b>
+              Attributes:
+            </b>
+            <br/>
+            <code>
+              ClassAttribute
+            </code>
+            <br/>
+            <table>
+              <tr>
+                <th width="35%">
+                  Name
+                </th>
+                <th width="65%">
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <b>
+                    Instance Members
+                  </b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    XmlDocSig
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the XML documentation signature for the entity, used for .xml file lookup for compiled code</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    XmlDoc
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IList<string>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the in-memory XML documentation for the entity, used when code is checked in-memory</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    UsesPrefixDisplay
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the type prefers the "tycon<a,b>" syntax for display etc.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    UnionCases
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IList<FSharpUnionCase>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the cases of a union type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    TryFullName
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string option
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the full name of the type or module if it is available</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    StaticParameters
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IList<FSharpStaticParameter>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the static parameters for a provided type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    RepresentationAccessibility
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpAccessibility
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the declared accessibility of the representation, not taking signatures into account</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    RecordFields
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IList<FSharpField>
+                  <br/>
+                  <b>
+                    Attributes:
+                  </b>
+                  <code>
+                    ObsoleteAttribute
+                  </code>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    QualifiedName
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the fully qualified name of the type or module</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    NestedEntities
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IList<FSharpEntity>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the modules and types defined in a module, or the nested types of a type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Namespace
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string option
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the namespace containing the type or module, if any. Use 'None' for item not in a namespace.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    MembersOrValues
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IList<FSharpMemberOrFunctionOrValue>
+                  <br/>
+                  <b>
+                    Attributes:
+                  </b>
+                  <code>
+                    ObsoleteAttribute
+                  </code>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    MembersFunctionsAndValues
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IList<FSharpMemberOrFunctionOrValue>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the properties, events and methods of a type definitions, or the functions and values of a module</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LogicalName
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the name of the type or module, possibly with `n mangling</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsValueType
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is a struct or enum</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsUnresolved
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is in an unresolved assembly</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsStaticInstantiation
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is a 'fake' symbol related to a static instantiation of a type provider</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsProvidedAndGenerated
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is a generated provided type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsProvidedAndErased
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is an erased provided type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsProvided
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is a provided type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsOpaque
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is a type definition for a reference type where the implementation details are hidden by a signature</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsNamespace
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is a part of a namespace path</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsMeasure
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is a measure definition</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsInterface
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is an interface type definition</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsFSharpUnion
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is union type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsFSharpRecord
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is record type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsFSharpModule
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is an F# module definition</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsFSharpExceptionDeclaration
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates an F# exception declaration</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsFSharpAbbreviation
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is a measure, type or exception abbreviation</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsFSharp
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if this is a reference to something in an F#-compiled assembly</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsEnum
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is an enum type definition</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsDelegate
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is a delegate type definition</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsClass
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is a class type definition</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsByRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if is the 'byref<_>' type definition used for byref types in F#-compiled assemblies</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsAttributeType
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Check if the entity inherits from System.Attribute in its type hierarchy</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsArrayType
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the entity is an array type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    HasFSharpModuleSuffix
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates that a module is compiled to a class with the given mangled name. The mangling is reversed during lookup</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    HasAssemblyCodeRepresentation
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the type is implemented through a mapping to IL assembly code. This is only
+true for types in FSharp.Core.dll</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GenericParameters
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IList<FSharpGenericParameter>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the generic parameters, possibly including unit-of-measure parameters</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    FullName
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the full name of the type or module</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    FSharpFields
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IList<FSharpField>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the fields of a record, class, struct or enum from the perspective of the F# language.
+This includes static fields, the 'val' bindings in classes and structs, and the value definitions in enums.
+For classes, the list may include compiler generated fields implied by the use of primary constructors.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    FSharpDelegateSignature
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpDelegateSignature
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates if the type is a delegate with the given Invoke signature</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DisplayName
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the name of the type or module as displayed in F# code</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DeclaringEntity
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpEntity option
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the enclosing entity for the definition</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DeclaredInterfaces
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IList<FSharpType>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the declared interface implementations</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DeclarationLocation
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  range
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the declaration location for the type constructor</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    CompiledName
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the compiled name of the type or module, possibly with `n mangling. This is identical to LogicalName
+unless the CompiledName attribute is used.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    BaseType
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpType option
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the base type, if any</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Attributes
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IList<FSharpAttribute>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the declared attributes for the type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ArrayRank
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the rank of an array type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    AllInterfaces
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IList<FSharpType>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get all the interface implementations, by walking the type hierarchy</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    AllCompilationPaths
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string list
+                  <br/>
+                </td>
+                <td>
+                  <p>Get all compilation paths, taking <code>Module</code> suffixes into account.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ActivePatternCases
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpActivePatternCase list
+                  <br/>
+                </td>
+                <td>
+                  <p>Get all active pattern cases defined in all active patterns in the module.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Accessibility
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpAccessibility
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the declared accessibility of the type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    AccessPath
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the path used to address the entity (e.g. "Namespace.Module1.NestedModule2"). Gives
+"global" for items not in a namespace.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    AbbreviatedType
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpType
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the type abbreviated by an F# type abbreviation</p>
+
+
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

@@ -1,0 +1,349 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | Hosted Compiler
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link menu-group-link-active">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu submenu-active">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="active-link padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <h1>Hosted Compiler</h1>
+<p>This tutorial demonstrates how to host the F# compiler.</p>
+<blockquote>
+<p><strong>NOTE:</strong> The FSharp.Compiler.Service API is subject to change when later versions of the nuget package are published</p>
+</blockquote>
+<blockquote>
+<p><strong>NOTE:</strong> There are several options for hosting the F# compiler. The easiest one is to use the
+<code>fsc.exe</code> process and pass arguments.</p>
+</blockquote>
+<blockquote>
+<p><strong>NOTE:</strong> By default <a href="https://github.com/fsharp/FSharp.Compiler.Service/issues/156">compilations using FSharp.Compiler.Service reference FSharp.Core 4.3.0.0</a> (matching F# 3.0).  You can override
+this choice by passing a reference to FSharp.Core for 4.3.1.0 or later explicitly in your command-line arguments.</p>
+</blockquote>
+<hr />
+<p>First, we need to reference the libraries that contain F# interactive service:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">#r</span> <span class="hljs-string">&quot;FSharp.Compiler.Service.dll&quot;</span>
+<span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="hljs-function">System</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="hljs-function">IO</span>
+<span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="hljs-function">FSharp</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="hljs-function">Compiler</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="hljs-function">SourceCodeServices</span>
+
+<span class="hljs-comment">// Create an interactive checker instance</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="hljs-function">checker</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs7', 7)" onmouseover="showTip(event, 'fs7', 7)" class="hljs-type">FSharpChecker</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs8', 8)" onmouseover="showTip(event, 'fs8', 8)" class="hljs-function">Create</span><span class="hljs-keyword">(</span><span class="hljs-keyword">)</span>
+</code></pre>
+<p>Now write content to a temporary file:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs9', 9)" onmouseover="showTip(event, 'fs9', 9)" class="hljs-function">fn</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs10', 10)" onmouseover="showTip(event, 'fs10', 10)" class="hljs-type">Path</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs11', 11)" onmouseover="showTip(event, 'fs11', 11)" class="hljs-function">GetTempFileName</span><span class="hljs-keyword">(</span><span class="hljs-keyword">)</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs12', 12)" onmouseover="showTip(event, 'fs12', 12)" class="hljs-function">fn2</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs10', 13)" onmouseover="showTip(event, 'fs10', 13)" class="hljs-type">Path</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs13', 14)" onmouseover="showTip(event, 'fs13', 14)" class="hljs-function">ChangeExtension</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs9', 15)" onmouseover="showTip(event, 'fs9', 15)" class="hljs-function">fn</span><span class="hljs-keyword">,</span> <span class="hljs-string">&quot;.fsx&quot;</span><span class="hljs-keyword">)</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs14', 16)" onmouseover="showTip(event, 'fs14', 16)" class="hljs-function">fn3</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs10', 17)" onmouseover="showTip(event, 'fs10', 17)" class="hljs-type">Path</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs13', 18)" onmouseover="showTip(event, 'fs13', 18)" class="hljs-function">ChangeExtension</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs9', 19)" onmouseover="showTip(event, 'fs9', 19)" class="hljs-function">fn</span><span class="hljs-keyword">,</span> <span class="hljs-string">&quot;.dll&quot;</span><span class="hljs-keyword">)</span>
+
+<span onmouseout="hideTip(event, 'fs15', 20)" onmouseover="showTip(event, 'fs15', 20)" class="hljs-type">File</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs16', 21)" onmouseover="showTip(event, 'fs16', 21)" class="hljs-function">WriteAllText</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs12', 22)" onmouseover="showTip(event, 'fs12', 22)" class="hljs-function">fn2</span><span class="hljs-keyword">,</span> <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">module M</span>
+
+<span class="hljs-string">type C() =</span>
+<span class="hljs-string">   member x.P = 1</span>
+
+<span class="hljs-string">let x = 3 + 4</span>
+<span class="hljs-string">&quot;&quot;&quot;</span><span class="hljs-keyword">)</span>
+</code></pre>
+<p>Now invoke the compiler:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs17', 23)" onmouseover="showTip(event, 'fs17', 23)" class="hljs-function">errors1</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs18', 24)" onmouseover="showTip(event, 'fs18', 24)" class="hljs-function">exitCode1</span> <span class="hljs-keyword">=</span>
+    <span onmouseout="hideTip(event, 'fs6', 25)" onmouseover="showTip(event, 'fs6', 25)" class="hljs-function">checker</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs19', 26)" onmouseover="showTip(event, 'fs19', 26)" class="hljs-function">Compile</span><span class="hljs-keyword">(</span><span class="hljs-keyword">[|</span> <span class="hljs-string">&quot;fsc.exe&quot;</span><span class="hljs-keyword">;</span> <span class="hljs-string">&quot;-o&quot;</span><span class="hljs-keyword">;</span> <span onmouseout="hideTip(event, 'fs14', 27)" onmouseover="showTip(event, 'fs14', 27)" class="hljs-function">fn3</span><span class="hljs-keyword">;</span> <span class="hljs-string">&quot;-a&quot;</span><span class="hljs-keyword">;</span> <span onmouseout="hideTip(event, 'fs12', 28)" onmouseover="showTip(event, 'fs12', 28)" class="hljs-function">fn2</span> <span class="hljs-keyword">|]</span><span class="hljs-keyword">)</span>
+    <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs20', 29)" onmouseover="showTip(event, 'fs20', 29)" class="hljs-type">Async</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs21', 30)" onmouseover="showTip(event, 'fs21', 30)" class="hljs-function">RunSynchronously</span>
+</code></pre>
+<p>If errors occur you can see this in the 'exitCode' and the returned array of errors:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span onmouseout="hideTip(event, 'fs15', 31)" onmouseover="showTip(event, 'fs15', 31)" class="hljs-type">File</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs16', 32)" onmouseover="showTip(event, 'fs16', 32)" class="hljs-function">WriteAllText</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs12', 33)" onmouseover="showTip(event, 'fs12', 33)" class="hljs-function">fn2</span><span class="hljs-keyword">,</span> <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">module M</span>
+
+<span class="hljs-string">let x = 1.0 + &quot;&quot; // a type error</span>
+<span class="hljs-string">&quot;&quot;&quot;</span><span class="hljs-keyword">)</span>
+
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs22', 34)" onmouseover="showTip(event, 'fs22', 34)" class="hljs-function">errors1b</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs23', 35)" onmouseover="showTip(event, 'fs23', 35)" class="hljs-function">exitCode1b</span> <span class="hljs-keyword">=</span>
+    <span onmouseout="hideTip(event, 'fs6', 36)" onmouseover="showTip(event, 'fs6', 36)" class="hljs-function">checker</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs19', 37)" onmouseover="showTip(event, 'fs19', 37)" class="hljs-function">Compile</span><span class="hljs-keyword">(</span><span class="hljs-keyword">[|</span> <span class="hljs-string">&quot;fsc.exe&quot;</span><span class="hljs-keyword">;</span> <span class="hljs-string">&quot;-o&quot;</span><span class="hljs-keyword">;</span> <span onmouseout="hideTip(event, 'fs14', 38)" onmouseover="showTip(event, 'fs14', 38)" class="hljs-function">fn3</span><span class="hljs-keyword">;</span> <span class="hljs-string">&quot;-a&quot;</span><span class="hljs-keyword">;</span> <span onmouseout="hideTip(event, 'fs12', 39)" onmouseover="showTip(event, 'fs12', 39)" class="hljs-function">fn2</span> <span class="hljs-keyword">|]</span><span class="hljs-keyword">)</span>
+    <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs20', 40)" onmouseover="showTip(event, 'fs20', 40)" class="hljs-type">Async</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs21', 41)" onmouseover="showTip(event, 'fs21', 41)" class="hljs-function">RunSynchronously</span>
+</code></pre>
+<h1>Compiling to a dynamic assembly</h1>
+<p>You can also compile to a dynamic assembly, which uses the F# Interactive code generator.
+This can be useful if you are, for example, in a situation where writing to the file system
+is not really an option.</p>
+<p>You still have to pass the "-o" option to name the output file, but the output file is not actually written to disk.</p>
+<p>The 'None' option indicates that the initialization code for the assembly is not executed.</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs24', 42)" onmouseover="showTip(event, 'fs24', 42)" class="hljs-function">errors2</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs25', 43)" onmouseover="showTip(event, 'fs25', 43)" class="hljs-function">exitCode2</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs26', 44)" onmouseover="showTip(event, 'fs26', 44)" class="hljs-function">dynAssembly2</span> <span class="hljs-keyword">=</span>
+    <span onmouseout="hideTip(event, 'fs6', 45)" onmouseover="showTip(event, 'fs6', 45)" class="hljs-function">checker</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs19', 46)" onmouseover="showTip(event, 'fs19', 46)" class="hljs-function">CompileToDynamicAssembly</span><span class="hljs-keyword">(</span><span class="hljs-keyword">[|</span> <span class="hljs-string">&quot;-o&quot;</span><span class="hljs-keyword">;</span> <span onmouseout="hideTip(event, 'fs14', 47)" onmouseover="showTip(event, 'fs14', 47)" class="hljs-function">fn3</span><span class="hljs-keyword">;</span> <span class="hljs-string">&quot;-a&quot;</span><span class="hljs-keyword">;</span> <span onmouseout="hideTip(event, 'fs12', 48)" onmouseover="showTip(event, 'fs12', 48)" class="hljs-function">fn2</span> <span class="hljs-keyword">|]</span><span class="hljs-keyword">,</span> <span class="hljs-function">execute</span><span class="hljs-keyword">=</span><span onmouseout="hideTip(event, 'fs27', 49)" onmouseover="showTip(event, 'fs27', 49)" class="hljs-type">None</span><span class="hljs-keyword">)</span>
+     <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs20', 50)" onmouseover="showTip(event, 'fs20', 50)" class="hljs-type">Async</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs21', 51)" onmouseover="showTip(event, 'fs21', 51)" class="hljs-function">RunSynchronously</span>
+
+<span class="hljs-comment">(*</span>
+<span class="hljs-comment">Passing &#39;Some&#39; for the &#39;execute&#39; parameter executes  the initialization code for the assembly.</span>
+<span class="hljs-comment">*)</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs28', 52)" onmouseover="showTip(event, 'fs28', 52)" class="hljs-function">errors3</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs29', 53)" onmouseover="showTip(event, 'fs29', 53)" class="hljs-function">exitCode3</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs30', 54)" onmouseover="showTip(event, 'fs30', 54)" class="hljs-function">dynAssembly3</span> <span class="hljs-keyword">=</span>
+    <span onmouseout="hideTip(event, 'fs6', 55)" onmouseover="showTip(event, 'fs6', 55)" class="hljs-function">checker</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs19', 56)" onmouseover="showTip(event, 'fs19', 56)" class="hljs-function">CompileToDynamicAssembly</span><span class="hljs-keyword">(</span><span class="hljs-keyword">[|</span> <span class="hljs-string">&quot;-o&quot;</span><span class="hljs-keyword">;</span> <span onmouseout="hideTip(event, 'fs14', 57)" onmouseover="showTip(event, 'fs14', 57)" class="hljs-function">fn3</span><span class="hljs-keyword">;</span> <span class="hljs-string">&quot;-a&quot;</span><span class="hljs-keyword">;</span> <span onmouseout="hideTip(event, 'fs12', 58)" onmouseover="showTip(event, 'fs12', 58)" class="hljs-function">fn2</span> <span class="hljs-keyword">|]</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs31', 59)" onmouseover="showTip(event, 'fs31', 59)" class="hljs-type">Some</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs32', 60)" onmouseover="showTip(event, 'fs32', 60)" class="hljs-function">stdout</span><span class="hljs-keyword">,</span><span onmouseout="hideTip(event, 'fs33', 61)" onmouseover="showTip(event, 'fs33', 61)" class="hljs-function">stderr</span><span class="hljs-keyword">)</span><span class="hljs-keyword">)</span>
+     <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs20', 62)" onmouseover="showTip(event, 'fs20', 62)" class="hljs-type">Async</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs21', 63)" onmouseover="showTip(event, 'fs21', 63)" class="hljs-function">RunSynchronously</span>
+</code></pre>
+<div class="tip" id="fs1">namespace System</div>
+<div class="tip" id="fs2">namespace System.IO</div>
+<div class="tip" id="fs3">Multiple items<br />namespace FSharp<br /><br />--------------------<br />namespace Microsoft.FSharp</div>
+<div class="tip" id="fs4">namespace FSharp.Compiler</div>
+<div class="tip" id="fs5">namespace FSharp.Compiler.SourceCodeServices</div>
+<div class="tip" id="fs6">val checker : FSharpChecker</div>
+<div class="tip" id="fs7">type FSharpChecker =<br />&#160;&#160;member CheckFileInProject : parsed:FSharpParseFileResults * filename:string * fileversion:int * sourceText:ISourceText * options:FSharpProjectOptions * ?textSnapshotInfo:obj * ?userOpName:string -&gt; Async&lt;FSharpCheckFileAnswer&gt;<br />&#160;&#160;member CheckProjectInBackground : options:FSharpProjectOptions * ?userOpName:string -&gt; unit<br />&#160;&#160;member ClearLanguageServiceRootCachesAndCollectAndFinalizeAllTransients : unit -&gt; unit<br />&#160;&#160;member Compile : argv:string [] * ?userOpName:string -&gt; Async&lt;FSharpErrorInfo [] * int&gt;<br />&#160;&#160;member Compile : ast:ParsedInput list * assemblyName:string * outFile:string * dependencies:string list * ?pdbFile:string * ?executable:bool * ?noframework:bool * ?userOpName:string -&gt; Async&lt;FSharpErrorInfo [] * int&gt;<br />&#160;&#160;member CompileToDynamicAssembly : otherFlags:string [] * execute:(TextWriter * TextWriter) option * ?userOpName:string -&gt; Async&lt;FSharpErrorInfo [] * int * Assembly option&gt;<br />&#160;&#160;member CompileToDynamicAssembly : ast:ParsedInput list * assemblyName:string * dependencies:string list * execute:(TextWriter * TextWriter) option * ?debug:bool * ?noframework:bool * ?userOpName:string -&gt; Async&lt;FSharpErrorInfo [] * int * Assembly option&gt;<br />&#160;&#160;member FindBackgroundReferencesInFile : filename:string * options:FSharpProjectOptions * symbol:FSharpSymbol * ?userOpName:string -&gt; Async&lt;seq&lt;range&gt;&gt;<br />&#160;&#160;member GetBackgroundCheckResultsForFileInProject : filename:string * options:FSharpProjectOptions * ?userOpName:string -&gt; Async&lt;FSharpParseFileResults * FSharpCheckFileResults&gt;<br />&#160;&#160;member GetBackgroundParseResultsForFileInProject : filename:string * options:FSharpProjectOptions * ?userOpName:string -&gt; Async&lt;FSharpParseFileResults&gt;<br />&#160;&#160;...</div>
+<div class="tip" id="fs8">static member FSharpChecker.Create : ?projectCacheSize:int * ?keepAssemblyContents:bool * ?keepAllBackgroundResolutions:bool * ?legacyReferenceResolver:FSharp.Compiler.ReferenceResolver.Resolver * ?tryGetMetadataSnapshot:FSharp.Compiler.AbstractIL.ILBinaryReader.ILReaderTryGetMetadataSnapshot * ?suggestNamesForErrors:bool * ?keepAllBackgroundSymbolUses:bool * ?enableBackgroundItemKeyStoreAndSemanticClassification:bool -&gt; FSharpChecker</div>
+<div class="tip" id="fs9">val fn : string</div>
+<div class="tip" id="fs10">type Path =<br />&#160;&#160;static val DirectorySeparatorChar : char<br />&#160;&#160;static val AltDirectorySeparatorChar : char<br />&#160;&#160;static val VolumeSeparatorChar : char<br />&#160;&#160;static val PathSeparator : char<br />&#160;&#160;static val InvalidPathChars : char[]<br />&#160;&#160;static member ChangeExtension : path:string * extension:string -&gt; string<br />&#160;&#160;static member Combine : [&lt;ParamArray&gt;] paths:string[] -&gt; string + 3 overloads<br />&#160;&#160;static member EndsInDirectorySeparator : path:ReadOnlySpan&lt;char&gt; -&gt; bool + 1 overload<br />&#160;&#160;static member GetDirectoryName : path:string -&gt; string + 1 overload<br />&#160;&#160;static member GetExtension : path:string -&gt; string + 1 overload<br />&#160;&#160;...</div>
+<div class="tip" id="fs11">Path.GetTempFileName() : string</div>
+<div class="tip" id="fs12">val fn2 : string</div>
+<div class="tip" id="fs13">Path.ChangeExtension(path: string, extension: string) : string</div>
+<div class="tip" id="fs14">val fn3 : string</div>
+<div class="tip" id="fs15">type File =<br />&#160;&#160;static member AppendAllLines : path:string * contents:IEnumerable&lt;string&gt; -&gt; unit + 1 overload<br />&#160;&#160;static member AppendAllLinesAsync : path:string * contents:IEnumerable&lt;string&gt; * ?cancellationToken:CancellationToken -&gt; Task + 1 overload<br />&#160;&#160;static member AppendAllText : path:string * contents:string -&gt; unit + 1 overload<br />&#160;&#160;static member AppendAllTextAsync : path:string * contents:string * ?cancellationToken:CancellationToken -&gt; Task + 1 overload<br />&#160;&#160;static member AppendText : path:string -&gt; StreamWriter<br />&#160;&#160;static member Copy : sourceFileName:string * destFileName:string -&gt; unit + 1 overload<br />&#160;&#160;static member Create : path:string -&gt; FileStream + 2 overloads<br />&#160;&#160;static member CreateText : path:string -&gt; StreamWriter<br />&#160;&#160;static member Decrypt : path:string -&gt; unit<br />&#160;&#160;static member Delete : path:string -&gt; unit<br />&#160;&#160;...</div>
+<div class="tip" id="fs16">File.WriteAllText(path: string, contents: string) : unit<br />File.WriteAllText(path: string, contents: string, encoding: System.Text.Encoding) : unit</div>
+<div class="tip" id="fs17">val errors1 : FSharpErrorInfo []</div>
+<div class="tip" id="fs18">val exitCode1 : int</div>
+<div class="tip" id="fs19"></div>
+<div class="tip" id="fs20">Multiple items<br />type Async =<br />&#160;&#160;static member AsBeginEnd : computation:(&#39;Arg -&gt; Async&lt;&#39;T&gt;) -&gt; (&#39;Arg * AsyncCallback * obj -&gt; IAsyncResult) * (IAsyncResult -&gt; &#39;T) * (IAsyncResult -&gt; unit)<br />&#160;&#160;static member AwaitEvent : event:IEvent&lt;&#39;Del,&#39;T&gt; * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt; (requires delegate and &#39;Del :&gt; Delegate)<br />&#160;&#160;static member AwaitIAsyncResult : iar:IAsyncResult * ?millisecondsTimeout:int -&gt; Async&lt;bool&gt;<br />&#160;&#160;static member AwaitTask : task:Task -&gt; Async&lt;unit&gt;<br />&#160;&#160;static member AwaitTask : task:Task&lt;&#39;T&gt; -&gt; Async&lt;&#39;T&gt;<br />&#160;&#160;static member AwaitWaitHandle : waitHandle:WaitHandle * ?millisecondsTimeout:int -&gt; Async&lt;bool&gt;<br />&#160;&#160;static member CancelDefaultToken : unit -&gt; unit<br />&#160;&#160;static member Catch : computation:Async&lt;&#39;T&gt; -&gt; Async&lt;Choice&lt;&#39;T,exn&gt;&gt;<br />&#160;&#160;static member Choice : computations:seq&lt;Async&lt;&#39;T option&gt;&gt; -&gt; Async&lt;&#39;T option&gt;<br />&#160;&#160;static member FromBeginEnd : beginAction:(AsyncCallback * obj -&gt; IAsyncResult) * endAction:(IAsyncResult -&gt; &#39;T) * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt;<br />&#160;&#160;...<br /><br />--------------------<br />type Async&lt;&#39;T&gt; =</div>
+<div class="tip" id="fs21">static member Async.RunSynchronously : computation:Async&lt;&#39;T&gt; * ?timeout:int * ?cancellationToken:System.Threading.CancellationToken -&gt; &#39;T</div>
+<div class="tip" id="fs22">val errors1b : FSharpErrorInfo []</div>
+<div class="tip" id="fs23">val exitCode1b : int</div>
+<div class="tip" id="fs24">val errors2 : FSharpErrorInfo []</div>
+<div class="tip" id="fs25">val exitCode2 : int</div>
+<div class="tip" id="fs26">val dynAssembly2 : System.Reflection.Assembly option</div>
+<div class="tip" id="fs27">union case Option.None: Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs28">val errors3 : FSharpErrorInfo []</div>
+<div class="tip" id="fs29">val exitCode3 : int</div>
+<div class="tip" id="fs30">val dynAssembly3 : System.Reflection.Assembly option</div>
+<div class="tip" id="fs31">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs32">val stdout&lt;&#39;T&gt; : TextWriter</div>
+<div class="tip" id="fs33">val stderr&lt;&#39;T&gt; : TextWriter</div>
+
+
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

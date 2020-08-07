@@ -1,0 +1,314 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | Notes on the FSharpChecker caches
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link menu-group-link-active">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu submenu-active">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="active-link padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <h1>Compiler Services: Notes on the FSharpChecker caches</h1>
+<p>This is a design note on the FSharpChecker component and its caches.  See also the notes on the <a href="queue.html">FSharpChecker operations queue</a></p>
+<p>Each FSharpChecker object maintains a set of caches.  These are</p>
+<ul>
+<li>
+<p><code>scriptClosureCache</code> - an MRU cache of default size <code>projectCacheSize</code> that caches the
+computation of GetProjectOptionsFromScript. This computation can be lengthy as it can involve processing the transitive closure
+of all <code>#load</code> directives, which in turn can mean parsing an unbounded number of script files</p>
+</li>
+<li>
+<p><code>incrementalBuildersCache</code> - an MRU cache of projects where a handle is being kept to their incremental checking state,
+of default size <code>projectCacheSize</code> (= 3 unless explicitly set as a parameter).
+The "current background project" (see the <a href="queue.html">FSharpChecker operations queue</a>)
+will be one of these projects.  When analyzing large collections of projects, this cache usually occupies by far the most memory.
+Increasing the size of this cache can dramatically decrease incremental computation of project-wide checking, or of checking
+individual files within a project, but can very greatly increase memory usage.</p>
+</li>
+<li><p><code>braceMatchCache</code> - an MRU cache of size <code>braceMatchCacheSize</code> (default = 5) keeping the results of calls to MatchBraces, keyed by filename, source and project options.</p></li>
+<li>
+<p><code>parseFileCache</code> - an MRU cache of size <code>parseFileCacheSize</code> (default = 2) keeping the results of ParseFile,
+keyed by filename, source and project options.</p>
+</li>
+<li>
+<p><code>checkFileInProjectCache</code> - an MRU cache of size <code>incrementalTypeCheckCacheSize</code> (default = 5) keeping the results of
+ParseAndCheckFileInProject, CheckFileInProject and/or CheckFileInProjectIfReady. This is keyed by filename, file source
+and project options.  The results held in this cache are only returned if they would reflect an accurate parse and check of the
+file.</p>
+</li>
+<li><p><code>getToolTipTextCache</code> - an aged lookup cache of strong size <code>getToolTipTextSize</code> (default = 5) computing the results of GetToolTipText.</p></li>
+<li>
+<p><code>ilModuleReaderCache</code> - an aged lookup of weak references to "readers" for references .NET binaries. Because these
+are all weak references, you can generally ignore this cache, since its entries will be automatically collected.
+Strong references to binary readers will be kept by other FCS data structures, e.g. any project checkers, symbols or project checking results.</p>
+<p>In more detail, the bytes for referenced .NET binaries are read into memory all at once, eagerly. Files are not left
+open or memory-mapped when using FSharpChecker (as opposed to FsiEvaluationSession, which loads assemblies using reflection).
+The purpose of this cache is mainly to ensure that while setting up compilation, the reads of mscorlib, FSharp.Core and so on
+amortize cracking the DLLs.</p>
+</li>
+<li>
+<p><code>frameworkTcImportsCache</code> - an aged lookup of strong size 8 which caches the process of setting up type checking against a set of system
+components (e.g. a particular version of mscorlib, FSharp.Core and other system DLLs).  These resources are automatically shared between multiple
+project checkers which happen to reference the same set of system assemblies.</p>
+</li>
+</ul>
+<p>Profiling the memory used by the various caches can be done by looking for the corresponding static roots in memory profiling traces.</p>
+<p>The sizes of some of these caches can be adjusted by giving parameters to FSharpChecker.  Unless otherwise noted,
+the cache sizes above indicate the "strong" size of the cache, where memory is held regardless of the memory
+pressure on the system. Some of the caches can also hold "weak" references which can be collected at will by the GC.</p>
+<blockquote>
+<p>Note: Because of these caches, you should generally use one global, shared FSharpChecker for everything in an IDE application.</p>
+</blockquote>
+<h2>Low-Memory Condition</h2>
+<p>Version 1.4.0.8 added a "maximum memory" limit specified by the <code>MaxMemory</code> property on FSharpChecker (in MB). If an FCS project operation
+is performed (see <code>CheckMaxMemoryReached</code> in <code>service.fs</code>) and <code>System.GC.GetTotalMemory(false)</code> reports a figure greater than this, then
+the strong sizes of all FCS caches are reduced to either 0 or 1.  This happens for the remainder of the lifetime of the FSharpChecker object.
+In practice this will still make tools like the Visual Studio F# Power Tools usable, but some operations like renaming across multiple
+projects may take substantially longer.</p>
+<p>By default the maximum memory trigger is disabled, see <code>maxMBDefault</code> in <code>service.fs</code>.</p>
+<p>Reducing the FCS strong cache sizes does not guarantee there will be enough memory to continue operations - even holding one project
+strongly may exceed a process memory budget. It just means FCS may hold less memory strongly.</p>
+<p>If you do not want the maximum memory limit to apply then set MaxMemory to System.Int32.MaxValue.</p>
+<h2>Summary</h2>
+<p>In this design note, you learned that the FSharpChecker component keeps a set of caches in order to support common
+incremental analysis scenarios reasonably efficiently. They correspond roughly to the original caches and sizes
+used by the Visual F# Tools, from which the FSharpChecker component derives.</p>
+<p>In long running, highly interactive, multi-project scenarios you should carefully
+consider the cache sizes you are using and the tradeoffs involved between incremental multi-project checking and memory usage.</p>
+
+
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

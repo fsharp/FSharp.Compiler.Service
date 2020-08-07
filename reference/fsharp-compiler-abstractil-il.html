@@ -1,0 +1,5356 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | IL
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link menu-group-link-active">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <div class="api-page">
+            <h2>
+              IL
+            </h2>
+            <b>
+              Namespace: 
+            </b>
+            <a href="FSharp.Compiler.AbstractIL.html">
+              FSharp.Compiler.AbstractIL
+            </a>
+            <br/>
+            <b>
+              Parent: 
+            </b>
+            <a href="FSharp.Compiler.AbstractIL.html">
+              FSharp.Compiler.AbstractIL
+            </a>
+            <span>
+              <p>The "unlinked" view of .NET metadata and code.  Central to the Abstract IL library</p>
+
+
+            </span>
+            <br/>
+            <b>
+              Declared Types
+            </b>
+            <table>
+              <tr>
+                <th width="35%">
+                  Type
+                </th>
+                <th width="65%">
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilalignment.html">
+                    ILAlignment
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilargconvention.html">
+                    ILArgConvention
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilarraybound.html">
+                    ILArrayBound
+                  </a>
+                </td>
+                <td>
+                  <p>Array shapes. For most purposes the rank is the only thing that matters.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilarraybounds.html">
+                    ILArrayBounds
+                  </a>
+                </td>
+                <td>
+                  <p>Lower-bound/size pairs</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilarrayshape.html">
+                    ILArrayShape
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilassemblylongevity.html">
+                    ILAssemblyLongevity
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilassemblymanifest.html">
+                    ILAssemblyManifest
+                  </a>
+                </td>
+                <td>
+                  <p>The main module of an assembly is a module plus some manifest information.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilassemblyref.html">
+                    ILAssemblyRef
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilattribelem.html">
+                    ILAttribElem
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilattribute.html">
+                    ILAttribute
+                  </a>
+                </td>
+                <td>
+                  <p>Custom attribute.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilattributenamedarg.html">
+                    ILAttributeNamedArg
+                  </a>
+                </td>
+                <td>
+                  <p>Named args: values and flags indicating if they are fields or properties.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilattributes.html">
+                    ILAttributes
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilattributesstored.html">
+                    ILAttributesStored
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the efficiency-oriented storage of ILAttributes in another item.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilbasictype.html">
+                    ILBasicType
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilboxity.html">
+                    ILBoxity
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilcallingconv.html">
+                    ILCallingConv
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilcallingsignature.html">
+                    ILCallingSignature
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilcode.html">
+                    ILCode
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilcodelabel.html">
+                    ILCodeLabel
+                  </a>
+                </td>
+                <td>
+                  <p>ILCode labels.  In structured code each code label refers to a basic block somewhere in the code of the method.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilcomparisoninstr.html">
+                    ILComparisonInstr
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilconst.html">
+                    ILConst
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ildefaultpinvokeencoding.html">
+                    ILDefaultPInvokeEncoding
+                  </a>
+                </td>
+                <td>
+                  <p>Default Unicode encoding for P/Invoke  within a type.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilenuminfo.html">
+                    ILEnumInfo
+                  </a>
+                </td>
+                <td>
+                  <p>Decompose a type definition according to its kind.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ileventdef.html">
+                    ILEventDef
+                  </a>
+                </td>
+                <td>
+                  <p>Event definitions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ileventdefs.html">
+                    ILEventDefs
+                  </a>
+                </td>
+                <td>
+                  <p>Table of those events in a type definition.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ileventref.html">
+                    ILEventRef
+                  </a>
+                </td>
+                <td>
+                  <p>A utility type provided for completeness</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilexceptionclause.html">
+                    ILExceptionClause
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilexceptionspec.html">
+                    ILExceptionSpec
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilexportedtypeorforwarder.html">
+                    ILExportedTypeOrForwarder
+                  </a>
+                </td>
+                <td>
+                  <p>these are only found in the ILExportedTypesAndForwarders table in the manifest</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilexportedtypesandforwarders.html">
+                    ILExportedTypesAndForwarders
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilfielddef.html">
+                    ILFieldDef
+                  </a>
+                </td>
+                <td>
+                  <p>Field definitions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilfielddefs.html">
+                    ILFieldDefs
+                  </a>
+                </td>
+                <td>
+                  <p>Tables of fields.  Logically equivalent to a list of fields but the table is kept in
+a form to allow efficient looking up fields by name.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilfieldinit.html">
+                    ILFieldInit
+                  </a>
+                </td>
+                <td>
+                  <p>Field Init</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilfieldref.html">
+                    ILFieldRef
+                  </a>
+                </td>
+                <td>
+                  <p>Formal identities of fields.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilfieldspec.html">
+                    ILFieldSpec
+                  </a>
+                </td>
+                <td>
+                  <p>Field specs.  The data given for a ldfld, stfld etc. instruction.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilgenericargs.html">
+                    ILGenericArgs
+                  </a>
+                </td>
+                <td>
+                  <p>Actual generic parameters are  always types.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilgenericargslist.html">
+                    ILGenericArgsList
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilgenericparameterdef.html">
+                    ILGenericParameterDef
+                  </a>
+                </td>
+                <td>
+                  <p>Generic parameters.  Formal generic parameter declarations may include the bounds, if any, on the generic parameter.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilgenericparameterdefs.html">
+                    ILGenericParameterDefs
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilgenericvariance.html">
+                    ILGenericVariance
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilglobals.html">
+                    ILGlobals
+                  </a>
+                </td>
+                <td>
+                  <p>A table of common references to items in primary assembly (System.Runtime or mscorlib).
+If a particular version of System.Runtime.dll has been loaded then you should
+reference items from it via an ILGlobals for that specific version built using mkILGlobals.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilguid.html">
+                    ILGuid
+                  </a>
+                </td>
+                <td>
+                  <p>Represents guids</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilinstr.html">
+                    ILInstr
+                  </a>
+                </td>
+                <td>
+                  <p>The instruction set.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-illazymethodbody.html">
+                    ILLazyMethodBody
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-illocal.html">
+                    ILLocal
+                  </a>
+                </td>
+                <td>
+                  <p>Local variables</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-illocaldebuginfo.html">
+                    ILLocalDebugInfo
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-illocaldebugmapping.html">
+                    ILLocalDebugMapping
+                  </a>
+                </td>
+                <td>
+                  <p>Indicates that a particular local variable has a particular source
+language name within a given set of ranges. This does not effect local
+variable numbering, which is global over the whole method.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-illocals.html">
+                    ILLocals
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-illocalsallocator.html">
+                    ILLocalsAllocator
+                  </a>
+                </td>
+                <td>
+                  <p>Helpers for codegen: scopes for allocating new temporary variables.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilmemberaccess.html">
+                    ILMemberAccess
+                  </a>
+                </td>
+                <td>
+                  <p>Member Access</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilmethodbody.html">
+                    ILMethodBody
+                  </a>
+                </td>
+                <td>
+                  <p>IL method bodies</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilmethoddef.html">
+                    ILMethodDef
+                  </a>
+                </td>
+                <td>
+                  <p>IL Method definitions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilmethoddefs.html">
+                    ILMethodDefs
+                  </a>
+                </td>
+                <td>
+                  <p>Tables of methods.  Logically equivalent to a list of methods but
+the table is kept in a form optimized for looking up methods by
+name and arity.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilmethodimpldef.html">
+                    ILMethodImplDef
+                  </a>
+                </td>
+                <td>
+                  <p>Method Impls</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilmethodimpldefs.html">
+                    ILMethodImplDefs
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilmethodref.html">
+                    ILMethodRef
+                  </a>
+                </td>
+                <td>
+                  <p>Formal identities of methods.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilmethodspec.html">
+                    ILMethodSpec
+                  </a>
+                </td>
+                <td>
+                  <p>The information at the callsite of a method</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilmethodvirtualinfo.html">
+                    ILMethodVirtualInfo
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilmoduledef.html">
+                    ILModuleDef
+                  </a>
+                </td>
+                <td>
+                  <p>One module in the "current" assembly, either a main-module or
+an auxiliary module.  The main module will have a manifest.</p>
+<p>An assembly is built by joining together a "main" module plus
+several auxiliary modules.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilmoduleref.html">
+                    ILModuleRef
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilnativeresource.html">
+                    ILNativeResource
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilnativetype.html">
+                    ILNativeType
+                  </a>
+                </td>
+                <td>
+                  <p>Native Types, for marshalling to the native C interface.
+These are taken directly from the ILASM syntax, see ECMA Spec (Partition II, 7.4).</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilnativevariant.html">
+                    ILNativeVariant
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilnestedexportedtype.html">
+                    ILNestedExportedType
+                  </a>
+                </td>
+                <td>
+                  <p>these are only found in the "Nested" field of ILExportedTypeOrForwarder objects</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilnestedexportedtypes.html">
+                    ILNestedExportedTypes
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iloverridesspec.html">
+                    ILOverridesSpec
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilparameter.html">
+                    ILParameter
+                  </a>
+                </td>
+                <td>
+                  <p>Method parameters and return values.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilparameters.html">
+                    ILParameters
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilplatform.html">
+                    ILPlatform
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilpretypedef.html">
+                    ILPreTypeDef
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a prefix of information for ILTypeDef.</p>
+<p>The information is enough to perform name resolution for the F# compiler, probe attributes
+for ExtensionAttribute  etc.  This is key to the on-demand exploration of .NET metadata.
+This information has to be "Goldilocks" - not too much, not too little, just right.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilpretypedefimpl.html">
+                    ILPreTypeDefImpl
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilpropertydef.html">
+                    ILPropertyDef
+                  </a>
+                </td>
+                <td>
+                  <p>Property definitions</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilpropertydefs.html">
+                    ILPropertyDefs
+                  </a>
+                </td>
+                <td>
+                  <p>Table of properties in an IL type definition.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilpropertyref.html">
+                    ILPropertyRef
+                  </a>
+                </td>
+                <td>
+                  <p>A utility type provided for completeness</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilreadonly.html">
+                    ILReadonly
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilreferences.html">
+                    ILReferences
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilresource.html">
+                    ILResource
+                  </a>
+                </td>
+                <td>
+                  <p>"Manifest ILResources" are chunks of resource data, being one of:
+- the data section of the current module (byte[] of resource given directly).
+- in an external file in this assembly (offset given in the ILResourceLocation field).
+- as a resources in another assembly of the same name.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilresourceaccess.html">
+                    ILResourceAccess
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilresourcelocation.html">
+                    ILResourceLocation
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilresources.html">
+                    ILResources
+                  </a>
+                </td>
+                <td>
+                  <p>Table of resources in a module.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilreturn.html">
+                    ILReturn
+                  </a>
+                </td>
+                <td>
+                  <p>Method return values.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilscoperef.html">
+                    ILScopeRef
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilsecurityaction.html">
+                    ILSecurityAction
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilsecuritydecl.html">
+                    ILSecurityDecl
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilsecuritydecls.html">
+                    ILSecurityDecls
+                  </a>
+                </td>
+                <td>
+                  <p>Abstract type equivalent to ILSecurityDecl list - use helpers
+below to construct/destruct these.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilsecuritydeclsstored.html">
+                    ILSecurityDeclsStored
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the efficiency-oriented storage of ILSecurityDecls in another item.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilsourcedocument.html">
+                    ILSourceDocument
+                  </a>
+                </td>
+                <td>
+                  <p>Debug info.  Values of type "source" can be attached at sequence
+points and some other locations.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilsourcemarker.html">
+                    ILSourceMarker
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltailcall.html">
+                    ILTailcall
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilthisconvention.html">
+                    ILThisConvention
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltoken.html">
+                    ILToken
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltype.html">
+                    ILType
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltypedef.html">
+                    ILTypeDef
+                  </a>
+                </td>
+                <td>
+                  <p>Represents IL Type Definitions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltypedefaccess.html">
+                    ILTypeDefAccess
+                  </a>
+                </td>
+                <td>
+                  <p>Type Access.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltypedefkind.html">
+                    ILTypeDefKind
+                  </a>
+                </td>
+                <td>
+                  <p>A categorization of type definitions into "kinds"</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltypedeflayout.html">
+                    ILTypeDefLayout
+                  </a>
+                </td>
+                <td>
+                  <p>Type Layout information.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltypedeflayoutinfo.html">
+                    ILTypeDefLayoutInfo
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltypedefstored.html">
+                    ILTypeDefStored
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltypedefs.html">
+                    ILTypeDefs
+                  </a>
+                </td>
+                <td>
+                  <p>Tables of named type definitions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltypeinit.html">
+                    ILTypeInit
+                  </a>
+                </td>
+                <td>
+                  <p>Indicate the initialization semantics of a type.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltyperef.html">
+                    ILTypeRef
+                  </a>
+                </td>
+                <td>
+                  <p>Type refs, i.e. references to types in some .NET assembly</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltypespec.html">
+                    ILTypeSpec
+                  </a>
+                </td>
+                <td>
+                  <p>Type specs and types.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-iltypes.html">
+                    ILTypes
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilvarargs.html">
+                    ILVarArgs
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilversioninfo.html">
+                    ILVersionInfo
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-ilvolatility.html">
+                    ILVolatility
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-methodbody.html">
+                    MethodBody
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-methodcodekind.html">
+                    MethodCodeKind
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-methodkind.html">
+                    MethodKind
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-pinvokecallingconvention.html">
+                    PInvokeCallingConvention
+                  </a>
+                </td>
+                <td>
+                  <p>PInvoke attributes.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-pinvokecharbestfit.html">
+                    PInvokeCharBestFit
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-pinvokecharencoding.html">
+                    PInvokeCharEncoding
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-pinvokemethod.html">
+                    PInvokeMethod
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-pinvokethrowonunmappablechar.html">
+                    PInvokeThrowOnUnmappableChar
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-primaryassembly.html">
+                    PrimaryAssembly
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-abstractil-il-publickey.html">
+                    PublicKey
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+            </table>
+            <br/>
+            <b>
+              Values and Functions
+            </b>
+            <table>
+              <tr>
+                <th width="35%">
+                  Name
+                </th>
+                <th width="65%">
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    typesOfILParams
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILParameters -> ILType list
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILPreTypeDef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeDef -> ILPreTypeDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILPreTypeDefComputed
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string list * string * (unit -> ILTypeDef)) -> ILPreTypeDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILPreTypeDefRead
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string list * string * int32 * ILTypeDefStored) -> ILPreTypeDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILTypeDefReader
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (int32 -> ILTypeDef) -> ILTypeDefStored
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    resolveILMethodRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeDef -> ILMethodRef -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  <p>Find the method definition corresponding to the given property or
+event operation. These are always in the same class as the property
+or event. This is useful especially if your code is not using the Ilbind
+API to bind references.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    resolveILMethodRefWithRescope
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILType -> ILType) -> ILTypeDef -> ILMethodRef -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    splitNamespace
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string -> string list
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    splitNamespaceToArray
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string -> string []
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    splitILTypeName
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string -> string list * string
+                  <br/>
+                </td>
+                <td>
+                  <p>The <c>splitILTypeName</c> utility helps you split a string representing
+a type name into the leading namespace elements (if any), the
+names of any nested types and the type name itself.  This function
+memoizes and interns the splitting of the namespace portion of
+the type name.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    splitILTypeNameWithPossibleStaticArguments
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string -> string [] * string
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    splitTypeNameRight
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string -> string option * string
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    typeNameForGlobalFunctions
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isTypeNameForGlobalFunctions
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILGlobals
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (primaryScopeRef:ILScopeRef * assembliesThatForwardToPrimaryAssembly:ILAssemblyRef list) -> ILGlobals
+                  <br/>
+                </td>
+                <td>
+                  <p>Build the table of commonly used references given functions to find types in system assemblies</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    EcmaMscorlibILGlobals
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    PrimaryAssemblyILGlobals
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    destTypeDefsWithGlobalFunctionsFirst
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILTypeDefs -> ILTypeDef list
+                  <br/>
+                </td>
+                <td>
+                  <p>When writing a binary the fake "toplevel" type definition (called <Module>)
+must come first. This function puts it first, and creates it in the returned
+list as an empty typedef if it doesn't already exist.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    decodeILAttribData
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILAttribute -> ILAttribElem list * ILAttributeNamedArg list
+                  <br/>
+                </td>
+                <td>
+                  <p>Not all custom attribute data can be decoded without binding types.  In particular
+enums must be bound in order to discover the size of the underlying integer.
+The following assumes enums have size int32.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkSimpleAssemblyRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string -> ILAssemblyRef
+                  <br/>
+                </td>
+                <td>
+                  <p>Generate simple references to assemblies and modules.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkSimpleModRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string -> ILModuleRef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILTyvarTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  uint16 -> ILType
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNestedTyRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILScopeRef * string list * string) -> ILTypeRef
+                  <br/>
+                </td>
+                <td>
+                  <p>Make type refs.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILTyRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILScopeRef * string) -> ILTypeRef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILTyRefInTyRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILTypeRef * string) -> ILTypeRef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNonGenericTySpec
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeRef -> ILTypeSpec
+                  <br/>
+                </td>
+                <td>
+                  <p>Make type specs.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILTySpec
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILTypeRef * ILGenericArgsList) -> ILTypeSpec
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILBoxity -> ILTypeSpec -> ILType
+                  <br/>
+                </td>
+                <td>
+                  <p>Make types.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNamedTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILBoxity -> ILTypeRef -> ILGenericArgsList -> ILType
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILBoxedTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeRef -> ILGenericArgsList -> ILType
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILValueTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeRef -> ILGenericArgsList -> ILType
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNonGenericBoxedTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeRef -> ILType
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNonGenericValueTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeRef -> ILType
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILArrTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILType * ILArrayShape) -> ILType
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILArr1DTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILType -> ILType
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILArrTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    destILArrTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILType -> ILArrayShape * ILType
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILBoxedType
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeSpec -> ILType
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILMethRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILTypeRef * ILCallingConv * string * int * ILType list * ILType) -> ILMethodRef
+                  <br/>
+                </td>
+                <td>
+                  <p>Make method references and specs.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILMethSpec
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILMethodRef * ILBoxity * ILGenericArgsList * ILGenericArgsList) -> ILMethodSpec
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILMethSpecForMethRefInTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILMethodRef * ILType * ILGenericArgsList) -> ILMethodSpec
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILMethSpecInTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILType * ILCallingConv * string * ILType list * ILType * ILGenericArgsList) -> ILMethodSpec
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNonGenericMethSpecInTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILType * ILCallingConv * string * ILType list * ILType) -> ILMethodSpec
+                  <br/>
+                </td>
+                <td>
+                  <p>Construct references to methods on a given type .</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILInstanceMethSpecInTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILType * string * ILType list * ILType * ILGenericArgsList) -> ILMethodSpec
+                  <br/>
+                </td>
+                <td>
+                  <p>Construct references to instance methods.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNonGenericInstanceMethSpecInTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILType * string * ILType list * ILType) -> ILMethodSpec
+                  <br/>
+                </td>
+                <td>
+                  <p>Construct references to instance methods.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILStaticMethSpecInTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILType * string * ILType list * ILType * ILGenericArgsList) -> ILMethodSpec
+                  <br/>
+                </td>
+                <td>
+                  <p>Construct references to static methods.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNonGenericStaticMethSpecInTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILType * string * ILType list * ILType) -> ILMethodSpec
+                  <br/>
+                </td>
+                <td>
+                  <p>Construct references to static, non-generic methods.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILCtorMethSpecForTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILType * ILType list) -> ILMethodSpec
+                  <br/>
+                </td>
+                <td>
+                  <p>Construct references to constructors.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILFieldRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILTypeRef * string * ILType) -> ILFieldRef
+                  <br/>
+                </td>
+                <td>
+                  <p>Construct references to fields.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILFieldSpec
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILFieldRef * ILType) -> ILFieldSpec
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILFieldSpecInTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILType * string * ILType) -> ILFieldSpec
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILCallSig
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILCallingConv * ILType list * ILType) -> ILCallingSignature
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILFormalBoxedTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeRef -> ILGenericParameterDef list -> ILType
+                  <br/>
+                </td>
+                <td>
+                  <p>Make generalized versions of possibly-generic types, e.g. Given the ILTypeDef for List, return the type "List<T>".</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILFormalNamedTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILBoxity -> ILTypeRef -> ILGenericParameterDef list -> ILType
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILFormalTypars
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILType list -> ILGenericParameterDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILFormalGenericArgs
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int -> ILGenericParameterDefs -> ILGenericArgsList
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILSimpleTypar
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string -> ILGenericParameterDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILCustomAttribMethRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> (ILMethodSpec * ILAttribElem list * ILAttributeNamedArg list) -> ILAttribute
+                  <br/>
+                </td>
+                <td>
+                  <p>Make custom attributes.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILCustomAttribute
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> (ILTypeRef * ILType list * ILAttribElem list * ILAttributeNamedArg list) -> ILAttribute
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    getCustomAttrData
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILAttribute -> byte []
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkPermissionSet
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> (ILSecurityAction * (ILTypeRef * (string * ILType * ILAttribElem) list) list) -> ILSecurityDecl
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    generateCodeLabel
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> ILCodeLabel
+                  <br/>
+                </td>
+                <td>
+                  <p>Making code.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    formatCodeLabel
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILCodeLabel -> string
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    nonBranchingInstrsToCode
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILInstr list -> ILCode
+                  <br/>
+                </td>
+                <td>
+                  <p>Make some code that is a straight line sequence of instructions.
+The function will add a "return" if the last instruction is not an exiting instruction.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkNormalCall
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILMethodSpec -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  <p>Derived functions for making some common patterns of instructions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkNormalCallvirt
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILMethodSpec -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkNormalCallconstraint
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILType * ILMethodSpec) -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkNormalNewobj
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILMethodSpec -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkCallBaseConstructor
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILType * ILType list) -> ILInstr list
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkNormalStfld
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILFieldSpec -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkNormalStsfld
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILFieldSpec -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkNormalLdsfld
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILFieldSpec -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkNormalLdfld
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILFieldSpec -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkNormalLdflda
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILFieldSpec -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkNormalLdobj
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILType -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkNormalStobj
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILType -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkLdcInt32
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int32 -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkLdarg0
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkLdloc
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  uint16 -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkStloc
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  uint16 -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkLdarg
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  uint16 -> ILInstr
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    andTailness
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTailcall -> bool -> ILTailcall
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILParam
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string option * ILType) -> ILParameter
+                  <br/>
+                </td>
+                <td>
+                  <p>Derived functions for making return, parameter and local variable
+objects for use in method definitions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILParamAnon
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILType -> ILParameter
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILParamNamed
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string * ILType) -> ILParameter
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILReturn
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILType -> ILReturn
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILLocal
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILType -> (string * int * int) option -> ILLocal
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILEmptyGenericParams
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGenericParameterDefs
+                  <br/>
+                </td>
+                <td>
+                  <p>Make a formal generic parameters.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILMethodBody
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (initlocals:bool * ILLocals * int * ILCode * ILSourceMarker option) -> ILMethodBody
+                  <br/>
+                </td>
+                <td>
+                  <p>Make method definitions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkMethodBody
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (bool * ILLocals * int * ILCode * ILSourceMarker option) -> MethodBody
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    methBodyNotAvailable
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILLazyMethodBody
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    methBodyAbstract
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILLazyMethodBody
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    methBodyNative
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILLazyMethodBody
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILCtor
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILMemberAccess * ILParameter list * MethodBody) -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILClassCtor
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  MethodBody -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNonGenericEmptyCtor
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILSourceMarker option -> ILType -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILStaticMethod
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILGenericParameterDefs * string * ILMemberAccess * ILParameter list * ILReturn * MethodBody) -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNonGenericStaticMethod
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string * ILMemberAccess * ILParameter list * ILReturn * MethodBody) -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILGenericVirtualMethod
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string * ILMemberAccess * ILGenericParameterDefs * ILParameter list * ILReturn * MethodBody) -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILGenericNonVirtualMethod
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string * ILMemberAccess * ILGenericParameterDefs * ILParameter list * ILReturn * MethodBody) -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNonGenericVirtualMethod
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string * ILMemberAccess * ILParameter list * ILReturn * MethodBody) -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNonGenericInstanceMethod
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string * ILMemberAccess * ILParameter list * ILReturn * MethodBody) -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILInstanceField
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string * ILType * ILFieldInit option * ILMemberAccess) -> ILFieldDef
+                  <br/>
+                </td>
+                <td>
+                  <p>Make field definitions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILStaticField
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string * ILType * ILFieldInit option * byte [] option * ILMemberAccess) -> ILFieldDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILLiteralField
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string * ILType * ILFieldInit * byte [] option * ILMemberAccess) -> ILFieldDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILGenericClass
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string * ILTypeDefAccess * ILGenericParameterDefs * ILType * ILType list * ILMethodDefs * ILFieldDefs * ILTypeDefs * ILPropertyDefs * ILEventDefs * ILAttributes * ILTypeInit) -> ILTypeDef
+                  <br/>
+                </td>
+                <td>
+                  <p>Make a type definition.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILSimpleClass
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> (string * ILTypeDefAccess * ILMethodDefs * ILFieldDefs * ILTypeDefs * ILPropertyDefs * ILEventDefs * ILAttributes * ILTypeInit) -> ILTypeDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILTypeDefForGlobalFunctions
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> (ILMethodDefs * ILFieldDefs) -> ILTypeDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkRawDataValueTypeDef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILType -> (string * size:int32 * pack:uint16) -> ILTypeDef
+                  <br/>
+                </td>
+                <td>
+                  <p>Make a type definition for a value type used to point to raw data.
+These are useful when generating array initialization code
+according to the
+ldtoken    field valuetype '<PrivateImplementationDetails>'/'<span class="math">\[struct0x6000127-1' '&lt;PrivateImplementationDetails&gt;'::'\]</span>method0x6000127-1'
+call       void System.Runtime.CompilerServices.RuntimeHelpers::InitializeArray(class System.Array,valuetype System.RuntimeFieldHandle)
+idiom.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    prependInstrsToCode
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILInstr list -> ILCode -> ILCode
+                  <br/>
+                </td>
+                <td>
+                  <p>Injecting code into existing code blocks.  A branch will
+be added from the given instructions to the (unique) entry of
+the code, and the first instruction will be the new entry
+of the method.  The instructions should be non-branching.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    prependInstrsToMethod
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILInstr list -> ILMethodDef -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    prependInstrsToClassCtor
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILInstr list -> ILSourceMarker option -> ILTypeDef -> ILTypeDef
+                  <br/>
+                </td>
+                <td>
+                  <p>Injecting initialization code into a class.
+Add some code to the end of the .cctor for a type.  Create a .cctor
+if one doesn't exist already.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILStorageCtor
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILSourceMarker option * ILInstr list * ILType * (string * ILType) list * ILMemberAccess) -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  <p>Derived functions for making some simple constructors</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILSimpleStorageCtor
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILSourceMarker option * ILTypeSpec option * ILType * ILParameter list * (string * ILType) list * ILMemberAccess) -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILSimpleStorageCtorWithParamNames
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILSourceMarker option * ILTypeSpec option * ILType * ILParameter list * (string * string * ILType) list * ILMemberAccess) -> ILMethodDef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILDelegateMethods
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILMemberAccess -> ILGlobals -> (ILType * ILType) -> (ILParameter list * ILReturn) -> ILMethodDef list
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkCtorMethSpecForDelegate
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> (ILType * bool) -> ILMethodSpec
+                  <br/>
+                </td>
+                <td>
+                  <p>Given a delegate type definition which lies in a particular scope,
+make a reference to its constructor.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILTypeForGlobalFunctions
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILScopeRef -> ILType
+                  <br/>
+                </td>
+                <td>
+                  <p>The toplevel "class" for a module or assembly.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILCustomAttrs
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILAttribute list -> ILAttributes
+                  <br/>
+                </td>
+                <td>
+                  <p>Making tables of custom attributes, etc.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILCustomAttrsFromArray
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILAttribute [] -> ILAttributes
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    storeILCustomAttrs
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILAttributes -> ILAttributesStored
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILCustomAttrsReader
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (int32 -> ILAttribute []) -> ILAttributesStored
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    emptyILCustomAttrs
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILAttributes
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILSecurityDecls
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILSecurityDecl list -> ILSecurityDecls
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    emptyILSecurityDecls
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILSecurityDecls
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    storeILSecurityDecls
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILSecurityDecls -> ILSecurityDeclsStored
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILSecurityDeclsReader
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (int32 -> ILSecurityDecl []) -> ILSecurityDeclsStored
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkMethBodyAux
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  MethodBody -> ILLazyMethodBody
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkMethBodyLazyAux
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  Lazy<MethodBody> -> ILLazyMethodBody
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILEvents
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILEventDef list -> ILEventDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILEventsLazy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  Lazy<ILEventDef list> -> ILEventDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    emptyILEvents
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILEventDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILProperties
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILPropertyDef list -> ILPropertyDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILPropertiesLazy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  Lazy<ILPropertyDef list> -> ILPropertyDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    emptyILProperties
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILPropertyDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILMethods
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILMethodDef list -> ILMethodDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILMethodsFromArray
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILMethodDef [] -> ILMethodDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILMethodsComputed
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (unit -> ILMethodDef []) -> ILMethodDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    emptyILMethods
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILMethodDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILFields
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILFieldDef list -> ILFieldDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILFieldsLazy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  Lazy<ILFieldDef list> -> ILFieldDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    emptyILFields
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILFieldDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILMethodImpls
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILMethodImplDef list -> ILMethodImplDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILMethodImplsLazy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  Lazy<ILMethodImplDef list> -> ILMethodImplDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    emptyILMethodImpls
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILMethodImplDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILTypeDefs
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeDef list -> ILTypeDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILTypeDefsFromArray
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeDef [] -> ILTypeDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    emptyILTypeDefs
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILTypeDefsComputed
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (unit -> ILPreTypeDef []) -> ILTypeDefs
+                  <br/>
+                </td>
+                <td>
+                  <p>Create table of types which is loaded/computed on-demand, and whose individual
+elements are also loaded/computed on-demand. Any call to tdefs.AsList will
+result in the laziness being forced.  Operations can examine the
+custom attributes and name of each type in order to decide whether
+to proceed with examining the other details of the type.</p>
+<p>Note that individual type definitions may contain further delays
+in their method, field and other tables.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    addILTypeDef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILTypeDef -> ILTypeDefs -> ILTypeDefs
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkTypeForwarder
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILScopeRef -> string -> ILNestedExportedTypes -> ILAttributes -> ILTypeDefAccess -> ILExportedTypeOrForwarder
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNestedExportedTypes
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILNestedExportedType list -> ILNestedExportedTypes
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILNestedExportedTypesLazy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  Lazy<ILNestedExportedType list> -> ILNestedExportedTypes
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILExportedTypes
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILExportedTypeOrForwarder list -> ILExportedTypesAndForwarders
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILExportedTypesLazy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  Lazy<ILExportedTypeOrForwarder list> -> ILExportedTypesAndForwarders
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILResources
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILResource list -> ILResources
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkILSimpleModule
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  assemblyName:string -> moduleName:string -> dll:bool -> subsystemVersion:(int * int) -> useHighEntropyVA:bool -> ILTypeDefs -> int32 option -> string option -> int -> ILExportedTypesAndForwarders -> string -> ILModuleDef
+                  <br/>
+                </td>
+                <td>
+                  <p>Making modules.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkRefForNestedILTypeDef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILScopeRef -> (ILTypeDef list * ILTypeDef) -> ILTypeRef
+                  <br/>
+                </td>
+                <td>
+                  <p>Generate references to existing type definitions, method definitions
+etc.  Useful for generating references, e.g. to a  class we're processing
+Also used to reference type definitions that we've generated.  [ILScopeRef]
+is normally ILScopeRef.Local, unless we've generated the ILTypeDef in
+an auxiliary module or are generating multiple assemblies at
+once.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkRefForILMethod
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILScopeRef -> (ILTypeDef list * ILTypeDef) -> ILMethodDef -> ILMethodRef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkRefForILField
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILScopeRef -> (ILTypeDef list * ILTypeDef) -> ILFieldDef -> ILFieldRef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkRefToILMethod
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILTypeRef * ILMethodDef) -> ILMethodRef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkRefToILField
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ILTypeRef * ILFieldDef) -> ILFieldRef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkRefToILAssembly
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILAssemblyManifest -> ILAssemblyRef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    mkRefToILModule
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILModuleDef -> ILModuleRef
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    NoMetadataIdx
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int32
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    rescopeILScopeRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILScopeRef -> ILScopeRef -> ILScopeRef
+                  <br/>
+                </td>
+                <td>
+                  <p>Rescoping. The first argument tells the function how to reference the original scope from
+the new scope.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    rescopeILTypeSpec
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILScopeRef -> ILTypeSpec -> ILTypeSpec
+                  <br/>
+                </td>
+                <td>
+                  <p>Rescoping. The first argument tells the function how to reference the original scope from
+the new scope.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    rescopeILType
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILScopeRef -> ILType -> ILType
+                  <br/>
+                </td>
+                <td>
+                  <p>Rescoping. The first argument tells the function how to reference the original scope from
+the new scope.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    rescopeILMethodRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILScopeRef -> ILMethodRef -> ILMethodRef
+                  <br/>
+                </td>
+                <td>
+                  <p>Rescoping. The first argument tells the function how to reference the original scope from
+the new scope.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    rescopeILFieldRef
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILScopeRef -> ILFieldRef -> ILFieldRef
+                  <br/>
+                </td>
+                <td>
+                  <p>Rescoping. The first argument tells the function how to reference the original scope from
+the new scope.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    unscopeILType
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILType -> ILType
+                  <br/>
+                </td>
+                <td>
+                  <p>Unscoping. Clears every scope information, use for looking up IL method references only.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    buildILCode
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string -> lab2pc:Dictionary<ILCodeLabel,int> -> instrs:ILInstr [] -> ILExceptionSpec list -> ILLocalDebugInfo list -> ILCode
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    instILTypeAux
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int -> ILGenericArgs -> ILType -> ILType
+                  <br/>
+                </td>
+                <td>
+                  <p>Instantiate type variables that occur within types and other items.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    instILType
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGenericArgs -> ILType -> ILType
+                  <br/>
+                </td>
+                <td>
+                  <p>Instantiate type variables that occur within types and other items.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ecmaPublicKey
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  PublicKey
+                  <br/>
+                </td>
+                <td>
+                  <p>This is a 'vendor neutral' way of referencing mscorlib.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILObjectTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Discriminating different important built-in types.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILStringTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILSByteTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILByteTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILInt16Ty
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILUInt16Ty
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILInt32Ty
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILUInt32Ty
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILInt64Ty
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILUInt64Ty
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILIntPtrTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILUIntPtrTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILBoolTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILCharTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILTypedReferenceTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILDoubleTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    isILSingleTy
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILType -> bool
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    sha1HashInt64
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  byte [] -> int64
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    sha1HashBytes
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  byte [] -> byte []
+                  <br/>
+                </td>
+                <td>
+                  <p>Get a public key token from a public key.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    parseILVersion
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string -> ILVersionInfo
+                  <br/>
+                </td>
+                <td>
+                  <p>Get a version number from a CLR version string, e.g. 1.0.3705.0</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    formatILVersion
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILVersionInfo -> string
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    compareILVersions
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILVersionInfo -> ILVersionInfo -> int
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    getTyOfILEnumInfo
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILEnumInfo -> ILType
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    computeILEnumInfo
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (string * ILFieldDefs) -> ILEnumInfo
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    computeILRefs
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILGlobals -> ILModuleDef -> ILReferences
+                  <br/>
+                </td>
+                <td>
+                  <p>Find the full set of assemblies referenced by a module.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    emptyILRefs
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  ILReferences
+                  <br/>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+            </table>
+            <br/>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

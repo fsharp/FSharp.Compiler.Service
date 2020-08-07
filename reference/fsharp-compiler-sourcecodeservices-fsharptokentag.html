@@ -1,0 +1,1499 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | FSharpTokenTag
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link menu-group-link-active">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <div class="api-page">
+            <h2>
+              FSharpTokenTag
+            </h2>
+            <b>
+              Namespace: 
+            </b>
+            <a href="FSharp.Compiler.SourceCodeServices.html">
+              FSharp.Compiler.SourceCodeServices
+            </a>
+            <br/>
+            <b>
+              Parent: 
+            </b>
+            <a href="FSharp.Compiler.SourceCodeServices.html">
+              FSharp.Compiler.SourceCodeServices
+            </a>
+            <span>
+              <p>Some of the values in the field FSharpTokenInfo.Tag</p>
+
+
+            </span>
+            <br/>
+            <b>
+              Values and Functions
+            </b>
+            <table>
+              <tr>
+                <th width="35%">
+                  Name
+                </th>
+                <th width="65%">
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Identifier
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is an identifier</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    String
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a string</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IDENT
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is an identifier (synonym for FSharpTokenTag.Identifier)</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    STRING
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a string (synonym for FSharpTokenTag.String)</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    INTERP_STRING_BEGIN_END
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a part of an interpolated string</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    INTERP_STRING_BEGIN_PART
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a part of an interpolated string</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    INTERP_STRING_PART
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a part of an interpolated string</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    INTERP_STRING_END
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a part of an interpolated string</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LPAREN
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>(</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    RPAREN
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>)</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LBRACK
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>[</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    RBRACK
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>]</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LBRACE
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>{</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    RBRACE
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>}</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LBRACK_LESS
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>[&lt;</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GREATER_RBRACK
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>&gt;]</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LESS
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>&lt;</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GREATER
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>&gt;</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LBRACK_BAR
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>[|</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    BAR_RBRACK
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>|]</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    PLUS_MINUS_OP
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>+</code> or <code>-</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    MINUS
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>-</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    STAR
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>*</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    INFIX_STAR_DIV_MOD_OP
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>%</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    PERCENT_OP
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>%</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    INFIX_AT_HAT_OP
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>^</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    QMARK
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>?</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    COLON
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>:</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    EQUALS
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>=</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    SEMICOLON
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>;</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    COMMA
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>,</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DOT
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>.</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DOT_DOT
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>..</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DOT_DOT_HAT
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>..</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    INT32_DOT_DOT
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>..^</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    UNDERSCORE
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>..</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    BAR
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>_</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    COLON_GREATER
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>:&gt;</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    COLON_QMARK_GREATER
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>:?&gt;</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    COLON_QMARK
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>:?</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    INFIX_BAR_OP
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>|</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    INFIX_COMPARE_OP
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>|</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    COLON_COLON
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>::</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    AMP_AMP
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>@@</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    PREFIX_OP
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>~</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    COLON_EQUALS
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>:=</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    BAR_BAR
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>||</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    RARROW
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>-&gt;</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LARROW
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>&lt;-</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    QUOTE
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a <code>"</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    WHITESPACE
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a whitespace</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    COMMENT
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a comment</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LINE_COMMENT
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is a line comment</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    BEGIN
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is keyword <code>begin</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DO
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is keyword <code>do</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    FUNCTION
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is keyword <code>function</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    THEN
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is keyword <code>then</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ELSE
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is keyword <code>else</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    STRUCT
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is keyword <code>struct</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    CLASS
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is keyword <code>class</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    TRY
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is keyword <code>try</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    WITH
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is keyword <code>with</code></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    OWITH
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is keyword <code>with</code> in #light</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    NEW
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the token is keyword <code>new</code></p>
+
+
+                </td>
+              </tr>
+            </table>
+            <br/>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

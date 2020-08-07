@@ -1,0 +1,478 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | Editor services
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link menu-group-link-active">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu submenu-active">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="active-link padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <h1>Compiler Services: Editor services</h1>
+<p>This tutorial demonstrates how to use the editor services provided by the F# compiler.
+This API is used to provide auto-complete, tool-tips, parameter info help, matching of
+brackets and other functions in F# editors including Visual Studio, Xamarin Studio and Emacs
+(see <a href="https://github.com/fsharp/fsharpbinding">fsharpbindings</a> project for more information).
+Similarly to <a href="untypedtree.html">the tutorial on using untyped AST</a>, we start by
+getting the <code>InteractiveChecker</code> object.</p>
+<blockquote>
+<p><strong>NOTE:</strong> The FSharp.Compiler.Service API is subject to change when later versions of the nuget package are published</p>
+</blockquote>
+<h2>Type checking sample source code</h2>
+<p>As in the <a href="untypedtree.html">previous tutorial (using untyped AST)</a>, we start by referencing
+<code>FSharp.Compiler.Service.dll</code>, opening the relevant namespace and creating an instance
+of <code>InteractiveChecker</code>:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">// Reference F# compiler API</span>
+<span class="hljs-comment">#r</span> <span class="hljs-string">&quot;FSharp.Compiler.Service.dll&quot;</span>
+
+<span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="hljs-function">System</span>
+<span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="hljs-function">FSharp</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="hljs-function">Compiler</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="hljs-function">SourceCodeServices</span>
+<span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="hljs-function">FSharp</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs3', 6)" onmouseover="showTip(event, 'fs3', 6)" class="hljs-function">Compiler</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="hljs-function">Text</span>
+
+<span class="hljs-comment">// Create an interactive checker instance</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs7', 8)" onmouseover="showTip(event, 'fs7', 8)" class="hljs-function">checker</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs8', 9)" onmouseover="showTip(event, 'fs8', 9)" class="hljs-type">FSharpChecker</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs9', 10)" onmouseover="showTip(event, 'fs9', 10)" class="hljs-function">Create</span><span class="hljs-keyword">(</span><span class="hljs-keyword">)</span>
+</code></pre>
+<p>As <a href="untypedtree.html">previously</a>, we use <code>GetProjectOptionsFromScriptRoot</code> to get a context
+where the specified input is the only file passed to the compiler (and it is treated as a
+script file or stand-alone F# source code).</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">// Sample input as a multi-line string</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs10', 11)" onmouseover="showTip(event, 'fs10', 11)" class="hljs-function">input</span> <span class="hljs-keyword">=</span>
+  <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">  open System</span>
+
+<span class="hljs-string">  let foo() =</span>
+<span class="hljs-string">    let msg = String.Concat(&quot;Hello&quot;,&quot; &quot;,&quot;world&quot;)</span>
+<span class="hljs-string">    if true then</span>
+<span class="hljs-string">      printfn &quot;%s&quot; msg.</span>
+<span class="hljs-string">  &quot;&quot;&quot;</span>
+<span class="hljs-comment">// Split the input &amp; define file name</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs11', 12)" onmouseover="showTip(event, 'fs11', 12)" class="hljs-function">inputLines</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs10', 13)" onmouseover="showTip(event, 'fs10', 13)" class="hljs-function">input</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 14)" onmouseover="showTip(event, 'fs12', 14)" class="hljs-function">Split</span><span class="hljs-keyword">(</span><span class="hljs-string">&#39;\n&#39;</span><span class="hljs-keyword">)</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs13', 15)" onmouseover="showTip(event, 'fs13', 15)" class="hljs-function">file</span> <span class="hljs-keyword">=</span> <span class="hljs-string">&quot;/home/user/Test.fsx&quot;</span>
+
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs14', 16)" onmouseover="showTip(event, 'fs14', 16)" class="hljs-function">projOptions</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs15', 17)" onmouseover="showTip(event, 'fs15', 17)" class="hljs-function">errors</span> <span class="hljs-keyword">=</span>
+    <span onmouseout="hideTip(event, 'fs7', 18)" onmouseover="showTip(event, 'fs7', 18)" class="hljs-function">checker</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 19)" onmouseover="showTip(event, 'fs12', 19)" class="hljs-function">GetProjectOptionsFromScript</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs13', 20)" onmouseover="showTip(event, 'fs13', 20)" class="hljs-function">file</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs16', 21)" onmouseover="showTip(event, 'fs16', 21)" class="hljs-type">SourceText</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs17', 22)" onmouseover="showTip(event, 'fs17', 22)" class="hljs-function">ofString</span> <span onmouseout="hideTip(event, 'fs10', 23)" onmouseover="showTip(event, 'fs10', 23)" class="hljs-function">input</span><span class="hljs-keyword">)</span>
+    <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs18', 24)" onmouseover="showTip(event, 'fs18', 24)" class="hljs-type">Async</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs19', 25)" onmouseover="showTip(event, 'fs19', 25)" class="hljs-function">RunSynchronously</span>
+
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs20', 26)" onmouseover="showTip(event, 'fs20', 26)" class="hljs-function">parsingOptions</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs21', 27)" onmouseover="showTip(event, 'fs21', 27)" class="hljs-function">_errors</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs7', 28)" onmouseover="showTip(event, 'fs7', 28)" class="hljs-function">checker</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 29)" onmouseover="showTip(event, 'fs12', 29)" class="hljs-function">GetParsingOptionsFromProjectOptions</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs14', 30)" onmouseover="showTip(event, 'fs14', 30)" class="hljs-function">projOptions</span><span class="hljs-keyword">)</span>
+</code></pre>
+<p>To perform type checking, we first need to parse the input using
+<code>ParseFile</code>, which gives us access to the <a href="untypedtree.html">untyped AST</a>. However,
+then we need to call <code>CheckFileInProject</code> to perform the full type checking. This function
+also requires the result of <code>ParseFileInProject</code>, so the two functions are often called
+together.</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">// Perform parsing</span>
+
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs22', 31)" onmouseover="showTip(event, 'fs22', 31)" class="hljs-function">parseFileResults</span> <span class="hljs-keyword">=</span>
+    <span onmouseout="hideTip(event, 'fs7', 32)" onmouseover="showTip(event, 'fs7', 32)" class="hljs-function">checker</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 33)" onmouseover="showTip(event, 'fs12', 33)" class="hljs-function">ParseFile</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs13', 34)" onmouseover="showTip(event, 'fs13', 34)" class="hljs-function">file</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs16', 35)" onmouseover="showTip(event, 'fs16', 35)" class="hljs-type">SourceText</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs17', 36)" onmouseover="showTip(event, 'fs17', 36)" class="hljs-function">ofString</span> <span onmouseout="hideTip(event, 'fs10', 37)" onmouseover="showTip(event, 'fs10', 37)" class="hljs-function">input</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs20', 38)" onmouseover="showTip(event, 'fs20', 38)" class="hljs-function">parsingOptions</span><span class="hljs-keyword">)</span>
+    <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs18', 39)" onmouseover="showTip(event, 'fs18', 39)" class="hljs-type">Async</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs19', 40)" onmouseover="showTip(event, 'fs19', 40)" class="hljs-function">RunSynchronously</span>
+</code></pre>
+<p>Before we look at the interesting operations provided by <code>TypeCheckResults</code>, we
+need to run the type checker on a sample input. On F# code with errors, you would get some type checking
+result (but it may contain incorrectly "guessed" results).</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">// Perform type checking</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs23', 41)" onmouseover="showTip(event, 'fs23', 41)" class="hljs-function">checkFileAnswer</span> <span class="hljs-keyword">=</span>
+    <span onmouseout="hideTip(event, 'fs7', 42)" onmouseover="showTip(event, 'fs7', 42)" class="hljs-function">checker</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 43)" onmouseover="showTip(event, 'fs12', 43)" class="hljs-function">CheckFileInProject</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs22', 44)" onmouseover="showTip(event, 'fs22', 44)" class="hljs-function">parseFileResults</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs13', 45)" onmouseover="showTip(event, 'fs13', 45)" class="hljs-function">file</span><span class="hljs-keyword">,</span> <span class="hljs-number">0</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs16', 46)" onmouseover="showTip(event, 'fs16', 46)" class="hljs-type">SourceText</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs17', 47)" onmouseover="showTip(event, 'fs17', 47)" class="hljs-function">ofString</span> <span onmouseout="hideTip(event, 'fs10', 48)" onmouseover="showTip(event, 'fs10', 48)" class="hljs-function">input</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs14', 49)" onmouseover="showTip(event, 'fs14', 49)" class="hljs-function">projOptions</span><span class="hljs-keyword">)</span>
+    <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs18', 50)" onmouseover="showTip(event, 'fs18', 50)" class="hljs-type">Async</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs19', 51)" onmouseover="showTip(event, 'fs19', 51)" class="hljs-function">RunSynchronously</span>
+</code></pre>
+<p>Alternatively you can use <code>ParseAndCheckFileInProject</code> to check both in one step:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs24', 52)" onmouseover="showTip(event, 'fs24', 52)" class="hljs-function">parseResults2</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs25', 53)" onmouseover="showTip(event, 'fs25', 53)" class="hljs-function">checkFileAnswer2</span> <span class="hljs-keyword">=</span>
+    <span onmouseout="hideTip(event, 'fs7', 54)" onmouseover="showTip(event, 'fs7', 54)" class="hljs-function">checker</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 55)" onmouseover="showTip(event, 'fs12', 55)" class="hljs-function">ParseAndCheckFileInProject</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs13', 56)" onmouseover="showTip(event, 'fs13', 56)" class="hljs-function">file</span><span class="hljs-keyword">,</span> <span class="hljs-number">0</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs16', 57)" onmouseover="showTip(event, 'fs16', 57)" class="hljs-type">SourceText</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs17', 58)" onmouseover="showTip(event, 'fs17', 58)" class="hljs-function">ofString</span> <span onmouseout="hideTip(event, 'fs10', 59)" onmouseover="showTip(event, 'fs10', 59)" class="hljs-function">input</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs14', 60)" onmouseover="showTip(event, 'fs14', 60)" class="hljs-function">projOptions</span><span class="hljs-keyword">)</span>
+    <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs18', 61)" onmouseover="showTip(event, 'fs18', 61)" class="hljs-type">Async</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs19', 62)" onmouseover="showTip(event, 'fs19', 62)" class="hljs-function">RunSynchronously</span>
+</code></pre>
+<p>The function returns both the untyped parse result (which we do not use in this
+tutorial), but also a <code>CheckFileAnswer</code> value, which gives us access to all
+the interesting functionality...</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs26', 63)" onmouseover="showTip(event, 'fs26', 63)" class="hljs-function">checkFileResults</span> <span class="hljs-keyword">=</span>
+    <span class="hljs-keyword">match</span> <span onmouseout="hideTip(event, 'fs23', 64)" onmouseover="showTip(event, 'fs23', 64)" class="hljs-function">checkFileAnswer</span> <span class="hljs-keyword">with</span>
+    <span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs27', 65)" onmouseover="showTip(event, 'fs27', 65)" class="hljs-type">FSharpCheckFileAnswer</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs28', 66)" onmouseover="showTip(event, 'fs28', 66)" class="hljs-function">Succeeded</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs29', 67)" onmouseover="showTip(event, 'fs29', 67)" class="hljs-function">res</span><span class="hljs-keyword">)</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs29', 68)" onmouseover="showTip(event, 'fs29', 68)" class="hljs-function">res</span>
+    <span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs30', 69)" onmouseover="showTip(event, 'fs30', 69)" class="hljs-function">res</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs31', 70)" onmouseover="showTip(event, 'fs31', 70)" class="hljs-function">failwithf</span> <span class="hljs-string">&quot;Parsing did not finish... (</span><span class="hljs-regexp">%A</span><span class="hljs-string">)&quot;</span> <span onmouseout="hideTip(event, 'fs30', 71)" onmouseover="showTip(event, 'fs30', 71)" class="hljs-function">res</span>
+</code></pre>
+<p>Here, we type check a simple function that (conditionally) prints "Hello world".
+On the last line, we leave an additional dot in <code>msg.</code> so that we can get the
+completion list on the <code>msg</code> value (we expect to see various methods on the string
+type there).</p>
+<h2>Using type checking results</h2>
+<p>Let's now look at some of the API that is exposed by the <code>TypeCheckResults</code> type. In general,
+this is the type that lets you implement most of the interesting F# source code editor services.</p>
+<h3>Getting a tool tip</h3>
+<p>To get a tool tip, you can use <code>GetToolTipTextAlternate</code> method. The method takes a line number and character
+offset. Both of the numbers are zero-based. In the sample code, we want to get tooltip for the <code>foo</code>
+function that is defined on line 3 (line 0 is blank) and the letter <code>f</code> starts at index 7 (the tooltip
+would work anywhere inside the identifier).</p>
+<p>In addition, the method takes a tag of token which is typically <code>IDENT</code>, when getting tooltip for an
+identifier (the other option lets you get tooltip with full assembly location when using <code>#r "..."</code>).</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">// Get tag of the IDENT token to be used as the last argument</span>
+<span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs5', 72)" onmouseover="showTip(event, 'fs5', 72)" class="hljs-function">FSharp</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs3', 73)" onmouseover="showTip(event, 'fs3', 73)" class="hljs-function">Compiler</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs32', 74)" onmouseover="showTip(event, 'fs32', 74)" class="hljs-function">identToken</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs33', 75)" onmouseover="showTip(event, 'fs33', 75)" class="hljs-type">FSharpTokenTag</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs34', 76)" onmouseover="showTip(event, 'fs34', 76)" class="hljs-function">Identifier</span>
+
+<span class="hljs-comment">// Get tool tip at the specified location</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs35', 77)" onmouseover="showTip(event, 'fs35', 77)" class="hljs-function">tip</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs26', 78)" onmouseover="showTip(event, 'fs26', 78)" class="hljs-function">checkFileResults</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 79)" onmouseover="showTip(event, 'fs12', 79)" class="hljs-function">GetToolTipText</span><span class="hljs-keyword">(</span><span class="hljs-number">4</span><span class="hljs-keyword">,</span> <span class="hljs-number">7</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs11', 80)" onmouseover="showTip(event, 'fs11', 80)" class="hljs-function">inputLines</span><span class="hljs-type">.</span><span class="hljs-keyword">[</span><span class="hljs-number">1</span><span class="hljs-keyword">]</span><span class="hljs-keyword">,</span> <span class="hljs-keyword">[</span><span class="hljs-string">&quot;foo&quot;</span><span class="hljs-keyword">]</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs32', 81)" onmouseover="showTip(event, 'fs32', 81)" class="hljs-function">identToken</span><span class="hljs-keyword">)</span>
+<span onmouseout="hideTip(event, 'fs36', 82)" onmouseover="showTip(event, 'fs36', 82)" class="hljs-function">printfn</span> <span class="hljs-string">&quot;</span><span class="hljs-regexp">%A</span><span class="hljs-string">&quot;</span> <span onmouseout="hideTip(event, 'fs35', 83)" onmouseover="showTip(event, 'fs35', 83)" class="hljs-function">tip</span>
+</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> <code>GetToolTipTextAlternate</code> is an alternative name for the old <code>GetToolTipText</code>. The old <code>GetToolTipText</code> was
+deprecated because it accepted zero-based line numbers.  At some point it will be removed, and  <code>GetToolTipTextAlternate</code> will be renamed back to <code>GetToolTipText</code>.</p>
+</blockquote>
+<p>Aside from the location and token kind, the function also requires the current contents of the line
+(useful when the source code changes) and a <code>Names</code> value, which is a list of strings representing
+the current long name. For example to get tooltip for the <code>Random</code> identifier in a long name
+<code>System.Random</code>, you would use location somewhere in the string <code>Random</code> and you would pass
+<code>["System"; "Random"]</code> as the <code>Names</code> value.</p>
+<p>The returned value is of type <code>ToolTipText</code> which contains a discriminated union <code>ToolTipElement</code>.
+The union represents different kinds of tool tips that you can get from the compiler.</p>
+<h3>Getting auto-complete lists</h3>
+<p>The next method exposed by <code>TypeCheckResults</code> lets us perform auto-complete on a given location.
+This can be called on any identifier or in any scope (in which case you get a list of names visible
+in the scope) or immediately after <code>.</code> to get a list of members of some object. Here, we get a
+list of members of the string value <code>msg</code>.</p>
+<p>To do this, we call <code>GetDeclarationListInfo</code> with the location of the <code>.</code> symbol on the last line
+(ending with <code>printfn "%s" msg.</code>). The offsets are one-based, so the location is <code>7, 23</code>.
+We also need to specify a function that says that the text has not changed and the current identifier
+where we need to perform the completion.</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">// Get declarations (autocomplete) for a location</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs37', 84)" onmouseover="showTip(event, 'fs37', 84)" class="hljs-function">decls</span> <span class="hljs-keyword">=</span>
+    <span onmouseout="hideTip(event, 'fs26', 85)" onmouseover="showTip(event, 'fs26', 85)" class="hljs-function">checkFileResults</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 86)" onmouseover="showTip(event, 'fs12', 86)" class="hljs-function">GetDeclarationListInfo</span>
+      <span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs38', 87)" onmouseover="showTip(event, 'fs38', 87)" class="hljs-type">Some</span> <span onmouseout="hideTip(event, 'fs22', 88)" onmouseover="showTip(event, 'fs22', 88)" class="hljs-function">parseFileResults</span><span class="hljs-keyword">,</span> <span class="hljs-number">7</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs11', 89)" onmouseover="showTip(event, 'fs11', 89)" class="hljs-function">inputLines</span><span class="hljs-type">.</span><span class="hljs-keyword">[</span><span class="hljs-number">6</span><span class="hljs-keyword">]</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs39', 90)" onmouseover="showTip(event, 'fs39', 90)" class="hljs-type">PartialLongName</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs40', 91)" onmouseover="showTip(event, 'fs40', 91)" class="hljs-function">Empty</span> <span class="hljs-number">23</span><span class="hljs-keyword">,</span> <span class="hljs-keyword">(</span><span class="hljs-keyword">fun</span> <span class="hljs-keyword">(</span><span class="hljs-keyword">)</span> <span class="hljs-keyword">-&gt;</span> <span class="hljs-keyword">[</span><span class="hljs-keyword">]</span><span class="hljs-keyword">)</span><span class="hljs-keyword">,</span> <span class="hljs-keyword">fun</span> <span class="hljs-function">_</span> <span class="hljs-keyword">-&gt;</span> <span class="hljs-keyword">false</span><span class="hljs-keyword">)</span>
+    <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs18', 92)" onmouseover="showTip(event, 'fs18', 92)" class="hljs-type">Async</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs19', 93)" onmouseover="showTip(event, 'fs19', 93)" class="hljs-function">RunSynchronously</span>
+
+<span class="hljs-comment">// Print the names of available items</span>
+<span class="hljs-keyword">for</span> <span onmouseout="hideTip(event, 'fs41', 94)" onmouseover="showTip(event, 'fs41', 94)" class="hljs-function">item</span> <span class="hljs-keyword">in</span> <span onmouseout="hideTip(event, 'fs37', 95)" onmouseover="showTip(event, 'fs37', 95)" class="hljs-function">decls</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 96)" onmouseover="showTip(event, 'fs12', 96)" class="hljs-function">Items</span> <span class="hljs-keyword">do</span>
+    <span onmouseout="hideTip(event, 'fs36', 97)" onmouseover="showTip(event, 'fs36', 97)" class="hljs-function">printfn</span> <span class="hljs-string">&quot; - </span><span class="hljs-regexp">%s</span><span class="hljs-string">&quot;</span> <span onmouseout="hideTip(event, 'fs41', 98)" onmouseover="showTip(event, 'fs41', 98)" class="hljs-function">item</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 99)" onmouseover="showTip(event, 'fs12', 99)" class="hljs-function">Name</span>
+</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> <code>v</code> is an alternative name for the old <code>GetDeclarations</code>. The old <code>GetDeclarations</code> was
+deprecated because it accepted zero-based line numbers.  At some point it will be removed, and  <code>GetDeclarationListInfo</code> will be renamed back to <code>GetDeclarations</code>.</p>
+</blockquote>
+<p>When you run the code, you should get a list containing the usual string methods such as
+<code>Substring</code>, <code>ToUpper</code>, <code>ToLower</code> etc. The fourth argument of <code>GetDeclarations</code>, here <code>([], "msg")</code>,
+specifies the context for the auto-completion. Here, we want a completion on a complete name
+<code>msg</code>, but you could for example use <code>(["System"; "Collections"], "Generic")</code> to get a completion list
+for a fully qualified namespace.</p>
+<h3>Getting parameter information</h3>
+<p>The next common feature of editors is to provide information about overloads of a method. In our
+sample code, we use <code>String.Concat</code> which has a number of overloads. We can get the list using
+<code>GetMethods</code> operation. As previously, this takes zero-indexed offset of the location that we are
+interested in (here, right at the end of the <code>String.Concat</code> identifier) and we also need to provide
+the identifier again (so that the compiler can provide up-to-date information when the source code
+changes):</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">// Get overloads of the String.Concat method</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs42', 100)" onmouseover="showTip(event, 'fs42', 100)" class="hljs-function">methods</span> <span class="hljs-keyword">=</span>
+    <span onmouseout="hideTip(event, 'fs26', 101)" onmouseover="showTip(event, 'fs26', 101)" class="hljs-function">checkFileResults</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 102)" onmouseover="showTip(event, 'fs12', 102)" class="hljs-function">GetMethods</span><span class="hljs-keyword">(</span><span class="hljs-number">5</span><span class="hljs-keyword">,</span> <span class="hljs-number">27</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs11', 103)" onmouseover="showTip(event, 'fs11', 103)" class="hljs-function">inputLines</span><span class="hljs-type">.</span><span class="hljs-keyword">[</span><span class="hljs-number">4</span><span class="hljs-keyword">]</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs38', 104)" onmouseover="showTip(event, 'fs38', 104)" class="hljs-type">Some</span> <span class="hljs-keyword">[</span><span class="hljs-string">&quot;String&quot;</span><span class="hljs-keyword">;</span> <span class="hljs-string">&quot;Concat&quot;</span><span class="hljs-keyword">]</span><span class="hljs-keyword">)</span>
+    <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs18', 105)" onmouseover="showTip(event, 'fs18', 105)" class="hljs-type">Async</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs19', 106)" onmouseover="showTip(event, 'fs19', 106)" class="hljs-function">RunSynchronously</span>
+
+<span class="hljs-comment">// Print concatenated parameter lists</span>
+<span class="hljs-keyword">for</span> <span onmouseout="hideTip(event, 'fs43', 107)" onmouseover="showTip(event, 'fs43', 107)" class="hljs-function">mi</span> <span class="hljs-keyword">in</span> <span onmouseout="hideTip(event, 'fs42', 108)" onmouseover="showTip(event, 'fs42', 108)" class="hljs-function">methods</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 109)" onmouseover="showTip(event, 'fs12', 109)" class="hljs-function">Methods</span> <span class="hljs-keyword">do</span>
+    <span class="hljs-keyword">[</span> <span class="hljs-keyword">for</span> <span onmouseout="hideTip(event, 'fs44', 110)" onmouseover="showTip(event, 'fs44', 110)" class="hljs-function">p</span> <span class="hljs-keyword">in</span> <span onmouseout="hideTip(event, 'fs43', 111)" onmouseover="showTip(event, 'fs43', 111)" class="hljs-function">mi</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 112)" onmouseover="showTip(event, 'fs12', 112)" class="hljs-function">Parameters</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs44', 113)" onmouseover="showTip(event, 'fs44', 113)" class="hljs-function">p</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 114)" onmouseover="showTip(event, 'fs12', 114)" class="hljs-function">Display</span> <span class="hljs-keyword">]</span>
+    <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs45', 115)" onmouseover="showTip(event, 'fs45', 115)" class="hljs-type">String</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs46', 116)" onmouseover="showTip(event, 'fs46', 116)" class="hljs-function">concat</span> <span class="hljs-string">&quot;, &quot;</span>
+    <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs36', 117)" onmouseover="showTip(event, 'fs36', 117)" class="hljs-function">printfn</span> <span class="hljs-string">&quot;</span><span class="hljs-regexp">%s</span><span class="hljs-string">(</span><span class="hljs-regexp">%s</span><span class="hljs-string">)&quot;</span> <span onmouseout="hideTip(event, 'fs42', 118)" onmouseover="showTip(event, 'fs42', 118)" class="hljs-function">methods</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 119)" onmouseover="showTip(event, 'fs12', 119)" class="hljs-function">MethodName</span>
+</code></pre>
+<p>The code uses the <code>Display</code> property to get the annotation for each parameter. This returns information
+such as <code>arg0: obj</code> or <code>params args: obj[]</code> or <code>str0: string, str1: string</code>. We concatenate the parameters
+and print a type annotation with the method name.</p>
+<h2>Asynchronous and immediate operations</h2>
+<p>You may have noticed that <code>CheckFileInProject</code> is an asynchronous operation.
+This indicates that type checking of F# code can take some time.
+The F# compiler performs the work in background (automatically) and when
+we call <code>CheckFileInProject</code> method, it returns an asynchronous operation.</p>
+<p>There is also the <code>CheckFileInProjectIfReady</code> method. This returns immediately if the
+type checking operation can't be started immediately, e.g. if other files in the project
+are not yet type-checked. In this case, a background worker might choose to do other
+work in the meantime, or give up on type checking the file until the <code>FileTypeCheckStateIsDirty</code> event
+is raised.</p>
+<blockquote>
+<p>The <a href="https://github.com/fsharp/fsharpbinding">fsharpbinding</a> project has more advanced
+example of handling the background work where all requests are sent through an F# agent.
+This may be a more appropriate for implementing editor support.</p>
+</blockquote>
+<h2>Summary</h2>
+<p>The <code>CheckFileAnswer</code> object contains other useful methods that were not covered in this tutorial. You
+can use it to get location of a declaration for a given identifier, additional colorization information
+(the F# 3.1 colorizes computation builder identifiers &amp; query operators) and others.</p>
+<p>Using the FSharpChecker component in multi-project, incremental and interactive editing situations may involve
+knowledge of the <a href="queue.html">FSharpChecker operations queue</a> and the <a href="caches.html">FSharpChecker caches</a>.</p>
+<p>Finally, if you are implementing an editor support for an editor that cannot directly call .NET API,
+you can call many of the methods discussed here via a command line interface that is available in the
+<a href="https://github.com/fsharp/fsharpbinding/tree/master/FSharp.AutoComplete">FSharp.AutoComplete</a> project.</p>
+<div class="tip" id="fs1">namespace System</div>
+<div class="tip" id="fs2">Multiple items<br />namespace FSharp<br /><br />--------------------<br />namespace Microsoft.FSharp</div>
+<div class="tip" id="fs3">namespace FSharp.Compiler</div>
+<div class="tip" id="fs4">namespace FSharp.Compiler.SourceCodeServices</div>
+<div class="tip" id="fs5">Multiple items<br />namespace FSharp<br /><br />--------------------<br />namespace Microsoft.FSharp<br /><br />--------------------<br />type FSharpAttribute =<br />&#160;&#160;member Format : context:FSharpDisplayContext -&gt; string<br />&#160;&#160;member AttributeType : FSharpEntity<br />&#160;&#160;member ConstructorArguments : IList&lt;FSharpType * obj&gt;<br />&#160;&#160;member IsUnresolved : bool<br />&#160;&#160;member NamedArguments : IList&lt;FSharpType * string * bool * obj&gt;</div>
+<div class="tip" id="fs6">namespace FSharp.Compiler.Text</div>
+<div class="tip" id="fs7">val checker : FSharpChecker</div>
+<div class="tip" id="fs8">type FSharpChecker =<br />&#160;&#160;member CheckFileInProject : parsed:FSharpParseFileResults * filename:string * fileversion:int * sourceText:ISourceText * options:FSharpProjectOptions * ?textSnapshotInfo:obj * ?userOpName:string -&gt; Async&lt;FSharpCheckFileAnswer&gt;<br />&#160;&#160;member CheckProjectInBackground : options:FSharpProjectOptions * ?userOpName:string -&gt; unit<br />&#160;&#160;member ClearLanguageServiceRootCachesAndCollectAndFinalizeAllTransients : unit -&gt; unit<br />&#160;&#160;member Compile : argv:string [] * ?userOpName:string -&gt; Async&lt;FSharpErrorInfo [] * int&gt;<br />&#160;&#160;member Compile : ast:ParsedInput list * assemblyName:string * outFile:string * dependencies:string list * ?pdbFile:string * ?executable:bool * ?noframework:bool * ?userOpName:string -&gt; Async&lt;FSharpErrorInfo [] * int&gt;<br />&#160;&#160;member CompileToDynamicAssembly : otherFlags:string [] * execute:(TextWriter * TextWriter) option * ?userOpName:string -&gt; Async&lt;FSharpErrorInfo [] * int * Assembly option&gt;<br />&#160;&#160;member CompileToDynamicAssembly : ast:ParsedInput list * assemblyName:string * dependencies:string list * execute:(TextWriter * TextWriter) option * ?debug:bool * ?noframework:bool * ?userOpName:string -&gt; Async&lt;FSharpErrorInfo [] * int * Assembly option&gt;<br />&#160;&#160;member FindBackgroundReferencesInFile : filename:string * options:FSharpProjectOptions * symbol:FSharpSymbol * ?userOpName:string -&gt; Async&lt;seq&lt;range&gt;&gt;<br />&#160;&#160;member GetBackgroundCheckResultsForFileInProject : filename:string * options:FSharpProjectOptions * ?userOpName:string -&gt; Async&lt;FSharpParseFileResults * FSharpCheckFileResults&gt;<br />&#160;&#160;member GetBackgroundParseResultsForFileInProject : filename:string * options:FSharpProjectOptions * ?userOpName:string -&gt; Async&lt;FSharpParseFileResults&gt;<br />&#160;&#160;...</div>
+<div class="tip" id="fs9">static member FSharpChecker.Create : ?projectCacheSize:int * ?keepAssemblyContents:bool * ?keepAllBackgroundResolutions:bool * ?legacyReferenceResolver:FSharp.Compiler.ReferenceResolver.Resolver * ?tryGetMetadataSnapshot:FSharp.Compiler.AbstractIL.ILBinaryReader.ILReaderTryGetMetadataSnapshot * ?suggestNamesForErrors:bool * ?keepAllBackgroundSymbolUses:bool * ?enableBackgroundItemKeyStoreAndSemanticClassification:bool -&gt; FSharpChecker</div>
+<div class="tip" id="fs10">val input : string</div>
+<div class="tip" id="fs11">val inputLines : string []</div>
+<div class="tip" id="fs12"></div>
+<div class="tip" id="fs13">val file : string</div>
+<div class="tip" id="fs14">val projOptions : FSharpProjectOptions</div>
+<div class="tip" id="fs15">val errors : FSharpErrorInfo list</div>
+<div class="tip" id="fs16">module SourceText<br /><br />from FSharp.Compiler.Text</div>
+<div class="tip" id="fs17">val ofString : string -&gt; ISourceText</div>
+<div class="tip" id="fs18">Multiple items<br />type Async =<br />&#160;&#160;static member AsBeginEnd : computation:(&#39;Arg -&gt; Async&lt;&#39;T&gt;) -&gt; (&#39;Arg * AsyncCallback * obj -&gt; IAsyncResult) * (IAsyncResult -&gt; &#39;T) * (IAsyncResult -&gt; unit)<br />&#160;&#160;static member AwaitEvent : event:IEvent&lt;&#39;Del,&#39;T&gt; * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt; (requires delegate and &#39;Del :&gt; Delegate)<br />&#160;&#160;static member AwaitIAsyncResult : iar:IAsyncResult * ?millisecondsTimeout:int -&gt; Async&lt;bool&gt;<br />&#160;&#160;static member AwaitTask : task:Task -&gt; Async&lt;unit&gt;<br />&#160;&#160;static member AwaitTask : task:Task&lt;&#39;T&gt; -&gt; Async&lt;&#39;T&gt;<br />&#160;&#160;static member AwaitWaitHandle : waitHandle:WaitHandle * ?millisecondsTimeout:int -&gt; Async&lt;bool&gt;<br />&#160;&#160;static member CancelDefaultToken : unit -&gt; unit<br />&#160;&#160;static member Catch : computation:Async&lt;&#39;T&gt; -&gt; Async&lt;Choice&lt;&#39;T,exn&gt;&gt;<br />&#160;&#160;static member Choice : computations:seq&lt;Async&lt;&#39;T option&gt;&gt; -&gt; Async&lt;&#39;T option&gt;<br />&#160;&#160;static member FromBeginEnd : beginAction:(AsyncCallback * obj -&gt; IAsyncResult) * endAction:(IAsyncResult -&gt; &#39;T) * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt;<br />&#160;&#160;...<br /><br />--------------------<br />type Async&lt;&#39;T&gt; =</div>
+<div class="tip" id="fs19">static member Async.RunSynchronously : computation:Async&lt;&#39;T&gt; * ?timeout:int * ?cancellationToken:Threading.CancellationToken -&gt; &#39;T</div>
+<div class="tip" id="fs20">val parsingOptions : FSharpParsingOptions</div>
+<div class="tip" id="fs21">val _errors : FSharpErrorInfo list</div>
+<div class="tip" id="fs22">val parseFileResults : FSharpParseFileResults</div>
+<div class="tip" id="fs23">val checkFileAnswer : FSharpCheckFileAnswer</div>
+<div class="tip" id="fs24">val parseResults2 : FSharpParseFileResults</div>
+<div class="tip" id="fs25">val checkFileAnswer2 : FSharpCheckFileAnswer</div>
+<div class="tip" id="fs26">val checkFileResults : FSharpCheckFileResults</div>
+<div class="tip" id="fs27">type FSharpCheckFileAnswer =<br />&#160;&#160;| Aborted<br />&#160;&#160;| Succeeded of FSharpCheckFileResults</div>
+<div class="tip" id="fs28">union case FSharpCheckFileAnswer.Succeeded: FSharpCheckFileResults -&gt; FSharpCheckFileAnswer</div>
+<div class="tip" id="fs29">val res : FSharpCheckFileResults</div>
+<div class="tip" id="fs30">val res : FSharpCheckFileAnswer</div>
+<div class="tip" id="fs31">val failwithf : format:Printf.StringFormat&lt;&#39;T,&#39;Result&gt; -&gt; &#39;T</div>
+<div class="tip" id="fs32">val identToken : int</div>
+<div class="tip" id="fs33">module FSharpTokenTag<br /><br />from FSharp.Compiler.SourceCodeServices</div>
+<div class="tip" id="fs34">val Identifier : int</div>
+<div class="tip" id="fs35">val tip : Async&lt;FSharpToolTipText&gt;</div>
+<div class="tip" id="fs36">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+<div class="tip" id="fs37">val decls : FSharpDeclarationListInfo</div>
+<div class="tip" id="fs38">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs39">type PartialLongName =<br />&#160;&#160;{ QualifyingIdents: string list<br />&#160;&#160;&#160;&#160;PartialIdent: string<br />&#160;&#160;&#160;&#160;EndColumn: int<br />&#160;&#160;&#160;&#160;LastDotPos: int option }<br />&#160;&#160;&#160;&#160;static member Empty : endColumn:int -&gt; PartialLongName</div>
+<div class="tip" id="fs40">static member PartialLongName.Empty : endColumn:int -&gt; PartialLongName</div>
+<div class="tip" id="fs41">val item : FSharpDeclarationListItem</div>
+<div class="tip" id="fs42">val methods : FSharpMethodGroup</div>
+<div class="tip" id="fs43">val mi : FSharpMethodGroupItem</div>
+<div class="tip" id="fs44">val p : FSharpMethodGroupItemParameter</div>
+<div class="tip" id="fs45">Multiple items<br />type String =<br />&#160;&#160;new : value:char[] -&gt; string + 8 overloads<br />&#160;&#160;member Chars : int -&gt; char<br />&#160;&#160;member Clone : unit -&gt; obj<br />&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;member Contains : value:string -&gt; bool + 3 overloads<br />&#160;&#160;member CopyTo : sourceIndex:int * destination:char[] * destinationIndex:int * count:int -&gt; unit<br />&#160;&#160;member EndsWith : value:string -&gt; bool + 3 overloads<br />&#160;&#160;member EnumerateRunes : unit -&gt; StringRuneEnumerator<br />&#160;&#160;member Equals : obj:obj -&gt; bool + 2 overloads<br />&#160;&#160;member GetEnumerator : unit -&gt; CharEnumerator<br />&#160;&#160;...<br /><br />--------------------<br />String(value: char []) : String<br />String(value: nativeptr&lt;char&gt;) : String<br />String(value: nativeptr&lt;sbyte&gt;) : String<br />String(value: ReadOnlySpan&lt;char&gt;) : String<br />String(c: char, count: int) : String<br />String(value: char [], startIndex: int, length: int) : String<br />String(value: nativeptr&lt;char&gt;, startIndex: int, length: int) : String<br />String(value: nativeptr&lt;sbyte&gt;, startIndex: int, length: int) : String<br />String(value: nativeptr&lt;sbyte&gt;, startIndex: int, length: int, enc: Text.Encoding) : String</div>
+<div class="tip" id="fs46">val concat : sep:string -&gt; strings:seq&lt;string&gt; -&gt; string</div>
+
+
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

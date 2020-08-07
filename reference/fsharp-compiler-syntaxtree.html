@@ -1,0 +1,1311 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | SyntaxTree
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link menu-group-link-active">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <div class="api-page">
+            <h2>
+              SyntaxTree
+            </h2>
+            <b>
+              Namespace: 
+            </b>
+            <a href="FSharp.Compiler.html">
+              FSharp.Compiler
+            </a>
+            <br/>
+            <b>
+              Parent: 
+            </b>
+            <a href="FSharp.Compiler.html">
+              FSharp.Compiler
+            </a>
+            <span>
+              
+
+            </span>
+            <br/>
+            <b>
+              Declared Types
+            </b>
+            <table>
+              <tr>
+                <th width="35%">
+                  Type
+                </th>
+                <th width="65%">
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-blockseparator.html">
+                    BlockSeparator
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the location of the separator block + optional position
+of the semicolon (used for tooling support)</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-debugpointatfinally.html">
+                    DebugPointAtFinally
+                  </a>
+                </td>
+                <td>
+                  <p>Represents whether a debug point should be present for the 'finally' in a 'try .. finally',
+that is whether the construct corresponds to a debug point in the original source.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-debugpointatfor.html">
+                    DebugPointAtFor
+                  </a>
+                </td>
+                <td>
+                  <p>Represents whether a debug point should be present for the 'for' in a 'for...' loop,
+that is whether the construct corresponds to a debug point in the original source.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-debugpointatsequential.html">
+                    DebugPointAtSequential
+                  </a>
+                </td>
+                <td>
+                  <p>Represents whether a debug point should be present for either the
+first or second part of a sequential execution, that is whether the
+construct corresponds to a debug point in the original source.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-debugpointattry.html">
+                    DebugPointAtTry
+                  </a>
+                </td>
+                <td>
+                  <p>Represents whether a debug point should be present for a 'try', that is whether
+the construct corresponds to a debug point in the original source.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-debugpointatwhile.html">
+                    DebugPointAtWhile
+                  </a>
+                </td>
+                <td>
+                  <p>Represents whether a debug point should be present for the 'while' in a 'while...' loop,
+that is whether the construct corresponds to a debug point in the original source.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-debugpointatwith.html">
+                    DebugPointAtWith
+                  </a>
+                </td>
+                <td>
+                  <p>Represents whether a debug point should be present for the 'with' in a 'try .. with',
+that is whether the construct corresponds to a debug point in the original source.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-debugpointforbinding.html">
+                    DebugPointForBinding
+                  </a>
+                </td>
+                <td>
+                  <p>Represents whether a debug point should be present for a 'let' binding,
+that is whether the construct corresponds to a debug point in the original source.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-debugpointfortarget.html">
+                    DebugPointForTarget
+                  </a>
+                </td>
+                <td>
+                  <p>Represents whether a debug point should be present for the target
+of a decision tree, that is whether the construct corresponds to a debug
+point in the original source.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-expratomicflag.html">
+                    ExprAtomicFlag
+                  </a>
+                </td>
+                <td>
+                  <p>Indicates if an expression is an atomic expression.</p>
+<p>An atomic expression has no whitespace unless enclosed in parentheses, e.g.
+1, "3", ident, ident.[expr] and (expr). If an atomic expression has type T,
+then the largest expression ending at the same range as the atomic expression
+also has type T.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-ident.html">
+                    Ident
+                  </a>
+                </td>
+                <td>
+                  <p>Represents an identifier in F# code</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-longident.html">
+                    LongIdent
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a long identifier e.g. 'A.B.C'</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-longidentwithdots.html">
+                    LongIdentWithDots
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a long identifier with possible '.' at end.</p>
+<p>Typically dotms.Length = lid.Length-1, but they may be same if (incomplete) code ends in a dot, e.g. "Foo.Bar."
+The dots mostly matter for parsing, and are typically ignored by the typechecker, but
+if dotms.Length = lid.Length, then the parser must have reported an error, so the typechecker is allowed
+more freedom about typechecking these expressions.
+LongIdent can be empty list - it is used to denote that name of some AST element is absent (i.e. empty type name in inherit)</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-memberflags.html">
+                    MemberFlags
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the flags for a 'member' declaration</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-memberkind.html">
+                    MemberKind
+                  </a>
+                </td>
+                <td>
+                  <p>Note the member kind is actually computed partially by a syntax tree transformation in tc.fs</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-parsedfsiinteraction.html">
+                    ParsedFsiInteraction
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a parsed syntax tree for an F# Interactive interaction</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-parsedhashdirective.html">
+                    ParsedHashDirective
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a parsed hash directive</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-parsedimplfile.html">
+                    ParsedImplFile
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a parsed implementation file made up of fragments</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-parsedimplfilefragment.html">
+                    ParsedImplFileFragment
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree for the contents of a parsed implementation file</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-parsedimplfileinput.html">
+                    ParsedImplFileInput
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the full syntax tree, file name and other parsing information for an implementation file</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-parsedinput.html">
+                    ParsedInput
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree for a parsed implementation or signature file</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-parsedsigfile.html">
+                    ParsedSigFile
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a parsed signature file made up of fragments</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-parsedsigfilefragment.html">
+                    ParsedSigFileFragment
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree for the contents of a parsed signature file</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-parsedsigfileinput.html">
+                    ParsedSigFileInput
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the full syntax tree, file name and other parsing information for a signature file</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-parserdetail.html">
+                    ParserDetail
+                  </a>
+                </td>
+                <td>
+                  <p>Indicates if the construct arises from error recovery</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-qualifiednameoffile.html">
+                    QualifiedNameOfFile
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a qualifying name for anonymous module specifications and implementations,</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-recordfieldname.html">
+                    RecordFieldName
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a record field name plus a flag indicating if given record field name is syntactically
+correct and can be used in name resolution.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-scopedpragma.html">
+                    ScopedPragma
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a scoped pragma</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-seqexpronly.html">
+                    SeqExprOnly
+                  </a>
+                </td>
+                <td>
+                  <p>Indicates if a for loop is 'for x in e1 -&gt; e2', only valid in sequence expressions</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synaccess.html">
+                    SynAccess
+                  </a>
+                </td>
+                <td>
+                  <p>Represents an accessibility modifier in F# syntax</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synarginfo.html">
+                    SynArgInfo
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the argument names and other metadata for a parameter for a member or function</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synargpats.html">
+                    SynArgPats
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a syntax tree for arguments patterns</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synattribute.html">
+                    SynAttribute
+                  </a>
+                </td>
+                <td>
+                  <p>Represents an attribute</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synattributelist.html">
+                    SynAttributeList
+                  </a>
+                </td>
+                <td>
+                  <p>List of attributes enclosed in [< ... >].</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synattributes.html">
+                    SynAttributes
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synbinding.html">
+                    SynBinding
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a binding for a 'let' or 'member' declaration</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synbindingkind.html">
+                    SynBindingKind
+                  </a>
+                </td>
+                <td>
+                  <p>The kind associated with a binding - "let", "do" or a standalone expression</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synbindingreturninfo.html">
+                    SynBindingReturnInfo
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the return information in a binding for a 'let' or 'member' declaration</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syncomponentinfo.html">
+                    SynComponentInfo
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree associated with the name of a type definition or module
+in signature or implementation.</p>
+<p>This includes the name, attributes, type parameters, constraints, documentation and accessibility
+for a type definition or module. For modules, entries such as the type parameters are
+always empty.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synconst.html">
+                    SynConst
+                  </a>
+                </td>
+                <td>
+                  <p>The unchecked abstract syntax tree of constants in F# types and expressions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synenumcase.html">
+                    SynEnumCase
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree for one case in an enum definition.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synexceptiondefn.html">
+                    SynExceptionDefn
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the right hand side of an exception declaration 'exception E = ... ' plus
+any member definitions for the exception</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synexceptiondefnrepr.html">
+                    SynExceptionDefnRepr
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the right hand side of an exception declaration 'exception E = ... '</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synexceptionsig.html">
+                    SynExceptionSig
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the right hand side of an exception definition in a signature file</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synexpr.html">
+                    SynExpr
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a syntax tree for F# expressions</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synfield.html">
+                    SynField
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree for a field declaration in a record or class</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synindexerarg.html">
+                    SynIndexerArg
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a syntax tree for an F# indexer expression argument</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syninterfaceimpl.html">
+                    SynInterfaceImpl
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a set of bindings that implement an interface</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syninterpolatedstringpart.html">
+                    SynInterpolatedStringPart
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synmatchclause.html">
+                    SynMatchClause
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a clause in a 'match' expression</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synmeasure.html">
+                    SynMeasure
+                  </a>
+                </td>
+                <td>
+                  <p>Represents an unchecked syntax tree of F# unit of measure annotations.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synmemberdefn.html">
+                    SynMemberDefn
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a definition element within a type definition, e.g. 'member ... '</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synmemberdefns.html">
+                    SynMemberDefns
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synmembersig.html">
+                    SynMemberSig
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree for a member signature (used in signature files, abstract member declarations
+and member constraints)</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synmoduledecl.html">
+                    SynModuleDecl
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a definition within a module</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synmoduleornamespace.html">
+                    SynModuleOrNamespace
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the definition of a module or namespace</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synmoduleornamespacekind.html">
+                    SynModuleOrNamespaceKind
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the kind of a module or namespace definition</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synmoduleornamespacesig.html">
+                    SynModuleOrNamespaceSig
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the definition of a module or namespace in a signature file</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synmodulesigdecl.html">
+                    SynModuleSigDecl
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a definition within a module or namespace in a signature file</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synpat.html">
+                    SynPat
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a syntax tree for an F# pattern</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synrationalconst.html">
+                    SynRationalConst
+                  </a>
+                </td>
+                <td>
+                  <p>Represents an unchecked syntax tree of F# unit of measure exponents.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synreturninfo.html">
+                    SynReturnInfo
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntactic elements associated with the "return" of a function or method.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synsimplepat.html">
+                    SynSimplePat
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a syntax tree for simple F# patterns</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synsimplepatalternativeidinfo.html">
+                    SynSimplePatAlternativeIdInfo
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the alternative identifier for a simple pattern</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synsimplepats.html">
+                    SynSimplePats
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a simple set of variable bindings a, (a, b) or (a: Type, b: Type) at a lambda,
+function definition or other binding point, after the elimination of pattern matching
+from the construct, e.g. after changing a "function pat1 -&gt; rule1 | ..." to a
+"fun v -&gt; match v with ..."</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synstaticoptimizationconstraint.html">
+                    SynStaticOptimizationConstraint
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a syntax tree for a static optimization constraint in the F# core library</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syntypar.html">
+                    SynTypar
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a syntactic type parameter</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syntypardecl.html">
+                    SynTyparDecl
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the explicit declaration of a type parameter</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syntype.html">
+                    SynType
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a syntax tree for F# types</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syntypeconstraint.html">
+                    SynTypeConstraint
+                  </a>
+                </td>
+                <td>
+                  <p>The unchecked abstract syntax tree of F# type constraints</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syntypedefn.html">
+                    SynTypeDefn
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a type or exception declaration 'type C = ... ' plus
+any additional member definitions for the type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syntypedefnkind.html">
+                    SynTypeDefnKind
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the kind of a type definition whether explicit or inferred</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syntypedefnrepr.html">
+                    SynTypeDefnRepr
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the right hand side of a type or exception declaration 'type C = ... ' plus
+any additional member definitions for the type</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syntypedefnsig.html">
+                    SynTypeDefnSig
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree for a type definition in a signature</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syntypedefnsigrepr.html">
+                    SynTypeDefnSigRepr
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree for the right-hand-side of a type definition in a signature.
+Note: in practice, using a discriminated union to make a distinction between
+"simple" types and "object oriented" types is not particularly useful.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-syntypedefnsimplerepr.html">
+                    SynTypeDefnSimpleRepr
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree for the core of a simple type definition, in either signature
+or implementation.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synunioncase.html">
+                    SynUnionCase
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree for one case in a union definition.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synunioncasetype.html">
+                    SynUnionCaseType
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree for the right-hand-side of union definition, excluding members,
+in either a signature or implementation.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synvaldata.html">
+                    SynValData
+                  </a>
+                </td>
+                <td>
+                  <p>Represents extra information about the declaration of a value</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synvalinfo.html">
+                    SynValInfo
+                  </a>
+                </td>
+                <td>
+                  <p>The argument names and other metadata for a member or function</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synvalsig.html">
+                    SynValSig
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the syntax tree for a 'val' definition in an abstract slot or a signature file</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-synvaltypardecls.html">
+                    SynValTyparDecls
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the names and other metadata for the type parameters for a member or function</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-syntaxtree-typarstaticreq.html">
+                    TyparStaticReq
+                  </a>
+                </td>
+                <td>
+                  <p>Represents whether a type parameter has a static requirement or not (^T or 'T)</p>
+
+
+                </td>
+              </tr>
+            </table>
+            <br/>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

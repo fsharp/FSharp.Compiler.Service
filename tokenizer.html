@@ -1,0 +1,380 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | F# Language Tokenizer
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link menu-group-link-active">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu submenu-active">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="active-link padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <h1>Compiler Services: Using the F# tokenizer</h1>
+<p>This tutorial demonstrates how to call the F# language tokenizer. Given F#
+source code, the tokenizer generates a list of source code lines that contain
+information about tokens on each line. For each token, you can get the type
+of the token, exact location as well as color kind of the token (keyword,
+identifier, number, operator, etc.).</p>
+<blockquote>
+<p><strong>NOTE:</strong> The FSharp.Compiler.Service API is subject to change when later versions of the nuget package are published</p>
+</blockquote>
+<h2>Creating the tokenizer</h2>
+<p>To use the tokenizer, reference <code>FSharp.Compiler.Service.dll</code> and open the
+<code>SourceCodeServices</code> namespace:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">#r</span> <span class="hljs-string">&quot;FSharp.Compiler.Service.dll&quot;</span>
+<span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="hljs-function">FSharp</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="hljs-function">Compiler</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="hljs-function">SourceCodeServices</span>
+</code></pre>
+<p>Now you can create an instance of <code>FSharpSourceTokenizer</code>. The class takes two
+arguments - the first is the list of defined symbols and the second is the
+file name of the source code. The defined symbols are required because the
+tokenizer handles <code>#if</code> directives. The file name is required only to specify
+locations of the source code (and it does not have to exist):</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="hljs-function">sourceTok</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="hljs-type">FSharpSourceTokenizer</span><span class="hljs-keyword">(</span><span class="hljs-keyword">[</span><span class="hljs-keyword">]</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs6', 6)" onmouseover="showTip(event, 'fs6', 6)" class="hljs-type">Some</span> <span class="hljs-string">&quot;C:\\test.fsx&quot;</span><span class="hljs-keyword">)</span>
+</code></pre>
+<p>Using the <code>sourceTok</code> object, we can now (repeatedly) tokenize lines of
+F# source code.</p>
+<h2>Tokenizing F# code</h2>
+<p>The tokenizer operates on individual lines rather than on the entire source
+file. After getting a token, the tokenizer also returns new state (as <code>int64</code> value).
+This can be used to tokenize F# code more efficiently. When source code changes,
+you do not need to re-tokenize the entire file - only the parts that have changed.</p>
+<h3>Tokenizing single line</h3>
+<p>To tokenize a single line, we create a <code>FSharpLineTokenizer</code> by calling <code>CreateLineTokenizer</code>
+on the <code>FSharpSourceTokenizer</code> object that we created earlier:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs7', 7)" onmouseover="showTip(event, 'fs7', 7)" class="hljs-function">tokenizer</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs4', 8)" onmouseover="showTip(event, 'fs4', 8)" class="hljs-function">sourceTok</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs8', 9)" onmouseover="showTip(event, 'fs8', 9)" class="hljs-function">CreateLineTokenizer</span><span class="hljs-keyword">(</span><span class="hljs-string">&quot;let answer=42&quot;</span><span class="hljs-keyword">)</span>
+</code></pre>
+<p>Now, we can write a simple recursive function that calls <code>ScanToken</code> on the <code>tokenizer</code>
+until it returns <code>None</code> (indicating the end of line). When the function succeeds, it
+returns <code>FSharpTokenInfo</code> object with all the interesting details:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">/// Tokenize a single line of F# code</span>
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">rec</span> <span onmouseout="hideTip(event, 'fs9', 10)" onmouseover="showTip(event, 'fs9', 10)" class="hljs-function">tokenizeLine</span> <span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs7', 11)" onmouseover="showTip(event, 'fs7', 11)" class="hljs-function">tokenizer</span><span class="hljs-keyword">:</span><span onmouseout="hideTip(event, 'fs10', 12)" onmouseover="showTip(event, 'fs10', 12)" class="hljs-type">FSharpLineTokenizer</span><span class="hljs-keyword">)</span> <span onmouseout="hideTip(event, 'fs11', 13)" onmouseover="showTip(event, 'fs11', 13)" class="hljs-function">state</span> <span class="hljs-keyword">=</span>
+  <span class="hljs-keyword">match</span> <span onmouseout="hideTip(event, 'fs7', 14)" onmouseover="showTip(event, 'fs7', 14)" class="hljs-function">tokenizer</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs12', 15)" onmouseover="showTip(event, 'fs12', 15)" class="hljs-function">ScanToken</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs11', 16)" onmouseover="showTip(event, 'fs11', 16)" class="hljs-function">state</span><span class="hljs-keyword">)</span> <span class="hljs-keyword">with</span>
+  <span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs6', 17)" onmouseover="showTip(event, 'fs6', 17)" class="hljs-type">Some</span> <span onmouseout="hideTip(event, 'fs13', 18)" onmouseover="showTip(event, 'fs13', 18)" class="hljs-function">tok</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs11', 19)" onmouseover="showTip(event, 'fs11', 19)" class="hljs-function">state</span> <span class="hljs-keyword">-&gt;</span>
+      <span class="hljs-comment">// Print token name</span>
+      <span onmouseout="hideTip(event, 'fs14', 20)" onmouseover="showTip(event, 'fs14', 20)" class="hljs-function">printf</span> <span class="hljs-string">&quot;</span><span class="hljs-regexp">%s</span><span class="hljs-string"> &quot;</span> <span onmouseout="hideTip(event, 'fs13', 21)" onmouseover="showTip(event, 'fs13', 21)" class="hljs-function">tok</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs15', 22)" onmouseover="showTip(event, 'fs15', 22)" class="hljs-function">TokenName</span>
+      <span class="hljs-comment">// Tokenize the rest, in the new state</span>
+      <span onmouseout="hideTip(event, 'fs9', 23)" onmouseover="showTip(event, 'fs9', 23)" class="hljs-function">tokenizeLine</span> <span onmouseout="hideTip(event, 'fs7', 24)" onmouseover="showTip(event, 'fs7', 24)" class="hljs-function">tokenizer</span> <span onmouseout="hideTip(event, 'fs11', 25)" onmouseover="showTip(event, 'fs11', 25)" class="hljs-function">state</span>
+  <span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs16', 26)" onmouseover="showTip(event, 'fs16', 26)" class="hljs-type">None</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs11', 27)" onmouseover="showTip(event, 'fs11', 27)" class="hljs-function">state</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs11', 28)" onmouseover="showTip(event, 'fs11', 28)" class="hljs-function">state</span>
+</code></pre>
+<p>The function returns the new state, which is needed if you need to tokenize multiple lines
+and an earlier line ends with a multi-line comment. As an initial state, we can use <code>0L</code>:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span onmouseout="hideTip(event, 'fs9', 29)" onmouseover="showTip(event, 'fs9', 29)" class="hljs-function">tokenizeLine</span> <span onmouseout="hideTip(event, 'fs7', 30)" onmouseover="showTip(event, 'fs7', 30)" class="hljs-function">tokenizer</span> <span onmouseout="hideTip(event, 'fs17', 31)" onmouseover="showTip(event, 'fs17', 31)" class="hljs-type">FSharpTokenizerLexState</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs18', 32)" onmouseover="showTip(event, 'fs18', 32)" class="hljs-function">Initial</span>
+</code></pre>
+<p>The result is a sequence of tokens with names LET, WHITESPACE, IDENT, EQUALS and INT32.
+There is a number of interesting properties on <code>FSharpTokenInfo</code> including:</p>
+<ul>
+<li>
+<code>CharClass</code> and <code>ColorClass</code> return information about the token category that
+can be used for colorizing F# code.
+</li>
+<li><code>LeftColumn</code> and <code>RightColumn</code> return the location of the token inside the line.</li>
+<li><code>TokenName</code> is the name of the token (as defined in the F# lexer)</li>
+</ul>
+<p>Note that the tokenizer is stateful - if you want to tokenize single line multiple times,
+you need to call <code>CreateLineTokenizer</code> again.</p>
+<h3>Tokenizing sample code</h3>
+<p>To run the tokenizer on a longer sample code or an entire file, you need to read the
+sample input as a collection of <code>string</code> values:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs19', 33)" onmouseover="showTip(event, 'fs19', 33)" class="hljs-function">lines</span> <span class="hljs-keyword">=</span> <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">  // Hello world</span>
+<span class="hljs-string">  let hello() =</span>
+<span class="hljs-string">     printfn &quot;Hello world!&quot; &quot;&quot;&quot;</span><span class="hljs-keyword">.</span><span class="hljs-function">Split</span><span class="hljs-keyword">(</span><span class="hljs-string">&#39;\r&#39;</span><span class="hljs-keyword">,</span><span class="hljs-string">&#39;\n&#39;</span><span class="hljs-keyword">)</span>
+</code></pre>
+<p>To tokenize multi-line input, we again need a recursive function that keeps the current
+state. The following function takes the lines as a list of strings (together with line number
+and the current state). We create a new tokenizer for each line and call <code>tokenizeLine</code>
+using the state from the <em>end</em> of the previous line:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">/// Print token names for multiple lines of code</span>
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">rec</span> <span onmouseout="hideTip(event, 'fs20', 34)" onmouseover="showTip(event, 'fs20', 34)" class="hljs-function">tokenizeLines</span> <span onmouseout="hideTip(event, 'fs11', 35)" onmouseover="showTip(event, 'fs11', 35)" class="hljs-function">state</span> <span onmouseout="hideTip(event, 'fs21', 36)" onmouseover="showTip(event, 'fs21', 36)" class="hljs-function">count</span> <span onmouseout="hideTip(event, 'fs22', 37)" onmouseover="showTip(event, 'fs22', 37)" class="hljs-function">lines</span> <span class="hljs-keyword">=</span>
+  <span class="hljs-keyword">match</span> <span onmouseout="hideTip(event, 'fs22', 38)" onmouseover="showTip(event, 'fs22', 38)" class="hljs-function">lines</span> <span class="hljs-keyword">with</span>
+  <span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs23', 39)" onmouseover="showTip(event, 'fs23', 39)" class="hljs-function">line</span><span class="hljs-type">::</span><span onmouseout="hideTip(event, 'fs22', 40)" onmouseover="showTip(event, 'fs22', 40)" class="hljs-function">lines</span> <span class="hljs-keyword">-&gt;</span>
+      <span class="hljs-comment">// Create tokenizer &amp; tokenize single line</span>
+      <span onmouseout="hideTip(event, 'fs24', 41)" onmouseover="showTip(event, 'fs24', 41)" class="hljs-function">printfn</span> <span class="hljs-string">&quot;\nLine </span><span class="hljs-regexp">%d</span><span class="hljs-string">&quot;</span> <span onmouseout="hideTip(event, 'fs21', 42)" onmouseover="showTip(event, 'fs21', 42)" class="hljs-function">count</span>
+      <span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs7', 43)" onmouseover="showTip(event, 'fs7', 43)" class="hljs-function">tokenizer</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs4', 44)" onmouseover="showTip(event, 'fs4', 44)" class="hljs-function">sourceTok</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs8', 45)" onmouseover="showTip(event, 'fs8', 45)" class="hljs-function">CreateLineTokenizer</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs23', 46)" onmouseover="showTip(event, 'fs23', 46)" class="hljs-function">line</span><span class="hljs-keyword">)</span>
+      <span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs11', 47)" onmouseover="showTip(event, 'fs11', 47)" class="hljs-function">state</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs9', 48)" onmouseover="showTip(event, 'fs9', 48)" class="hljs-function">tokenizeLine</span> <span onmouseout="hideTip(event, 'fs7', 49)" onmouseover="showTip(event, 'fs7', 49)" class="hljs-function">tokenizer</span> <span onmouseout="hideTip(event, 'fs11', 50)" onmouseover="showTip(event, 'fs11', 50)" class="hljs-function">state</span>
+      <span class="hljs-comment">// Tokenize the rest using new state</span>
+      <span onmouseout="hideTip(event, 'fs20', 51)" onmouseover="showTip(event, 'fs20', 51)" class="hljs-function">tokenizeLines</span> <span onmouseout="hideTip(event, 'fs11', 52)" onmouseover="showTip(event, 'fs11', 52)" class="hljs-function">state</span> <span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs21', 53)" onmouseover="showTip(event, 'fs21', 53)" class="hljs-function">count</span><span class="hljs-keyword">+</span><span class="hljs-number">1</span><span class="hljs-keyword">)</span> <span onmouseout="hideTip(event, 'fs22', 54)" onmouseover="showTip(event, 'fs22', 54)" class="hljs-function">lines</span>
+  <span class="hljs-keyword">|</span> <span class="hljs-keyword">[</span><span class="hljs-keyword">]</span> <span class="hljs-keyword">-&gt;</span> <span class="hljs-keyword">(</span><span class="hljs-keyword">)</span>
+</code></pre>
+<p>The function simply calls <code>tokenizeLine</code> (defined earlier) to print the names of all
+the tokens on each line. We can call it on the previous input with <code>0L</code> as the initial
+state and <code>1</code> as the number of the first line:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span onmouseout="hideTip(event, 'fs19', 55)" onmouseover="showTip(event, 'fs19', 55)" class="hljs-function">lines</span>
+<span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs25', 56)" onmouseover="showTip(event, 'fs25', 56)" class="hljs-type">List</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs26', 57)" onmouseover="showTip(event, 'fs26', 57)" class="hljs-function">ofSeq</span>
+<span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs20', 58)" onmouseover="showTip(event, 'fs20', 58)" class="hljs-function">tokenizeLines</span> <span onmouseout="hideTip(event, 'fs17', 59)" onmouseover="showTip(event, 'fs17', 59)" class="hljs-type">FSharpTokenizerLexState</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs18', 60)" onmouseover="showTip(event, 'fs18', 60)" class="hljs-function">Initial</span> <span class="hljs-number">1</span>
+</code></pre>
+<p>Ignoring some unimportant details (like whitespace at the beginning of each line and
+the first line which is just whitespace), the code generates the following output:</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="text">Line 1
+  LINE_COMMENT LINE_COMMENT (...) LINE_COMMENT
+Line 2
+  LET WHITESPACE IDENT LPAREN RPAREN WHITESPACE EQUALS
+Line 3
+  IDENT WHITESPACE STRING_TEXT (...) STRING_TEXT STRING
+</code></pre></td></tr></table>
+<p>It is worth noting that the tokenizer yields multiple <code>LINE_COMMENT</code> tokens and multiple
+<code>STRING_TEXT</code> tokens for each single comment or string (roughly, one for each word), so
+if you want to get the entire text of a comment/string, you need to concatenate the
+tokens.</p>
+<div class="tip" id="fs1">Multiple items<br />namespace FSharp<br /><br />--------------------<br />namespace Microsoft.FSharp</div>
+<div class="tip" id="fs2">namespace FSharp.Compiler</div>
+<div class="tip" id="fs3">namespace FSharp.Compiler.SourceCodeServices</div>
+<div class="tip" id="fs4">val sourceTok : FSharpSourceTokenizer</div>
+<div class="tip" id="fs5">Multiple items<br />type FSharpSourceTokenizer =<br />&#160;&#160;new : conditionalDefines:string list * fileName:string option -&gt; FSharpSourceTokenizer<br />&#160;&#160;member CreateBufferTokenizer : bufferFiller:(char [] * int * int -&gt; int) -&gt; FSharpLineTokenizer<br />&#160;&#160;member CreateLineTokenizer : lineText:string -&gt; FSharpLineTokenizer<br /><br />--------------------<br />new : conditionalDefines:string list * fileName:string option -&gt; FSharpSourceTokenizer</div>
+<div class="tip" id="fs6">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs7">val tokenizer : FSharpLineTokenizer</div>
+<div class="tip" id="fs8">member FSharpSourceTokenizer.CreateLineTokenizer : lineText:string -&gt; FSharpLineTokenizer</div>
+<div class="tip" id="fs9">val tokenizeLine : tokenizer:FSharpLineTokenizer -&gt; state:FSharpTokenizerLexState -&gt; FSharpTokenizerLexState<br /><em><br /><br />&#160;Tokenize a single line of F# code</em></div>
+<div class="tip" id="fs10">type FSharpLineTokenizer =<br />&#160;&#160;member ScanToken : lexState:FSharpTokenizerLexState -&gt; FSharpTokenInfo option * FSharpTokenizerLexState<br />&#160;&#160;static member ColorStateOfLexState : FSharpTokenizerLexState -&gt; FSharpTokenizerColorState<br />&#160;&#160;static member LexStateOfColorState : FSharpTokenizerColorState -&gt; FSharpTokenizerLexState</div>
+<div class="tip" id="fs11">[&lt;Struct&gt;]<br />val state : FSharpTokenizerLexState</div>
+<div class="tip" id="fs12">member FSharpLineTokenizer.ScanToken : lexState:FSharpTokenizerLexState -&gt; FSharpTokenInfo option * FSharpTokenizerLexState</div>
+<div class="tip" id="fs13">val tok : FSharpTokenInfo</div>
+<div class="tip" id="fs14">val printf : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+<div class="tip" id="fs15">FSharpTokenInfo.TokenName: string</div>
+<div class="tip" id="fs16">union case Option.None: Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs17">[&lt;Struct&gt;]<br />type FSharpTokenizerLexState =<br />&#160;&#160;{ PosBits: int64<br />&#160;&#160;&#160;&#160;OtherBits: int64 }<br />&#160;&#160;&#160;&#160;member Equals : FSharpTokenizerLexState -&gt; bool<br />&#160;&#160;&#160;&#160;static member Initial : FSharpTokenizerLexState</div>
+<div class="tip" id="fs18">property FSharpTokenizerLexState.Initial: FSharpTokenizerLexState with get</div>
+<div class="tip" id="fs19">val lines : string []</div>
+<div class="tip" id="fs20">val tokenizeLines : state:FSharpTokenizerLexState -&gt; count:int -&gt; lines:string list -&gt; unit<br /><em><br /><br />&#160;Print token names for multiple lines of code</em></div>
+<div class="tip" id="fs21">val count : int</div>
+<div class="tip" id="fs22">val lines : string list</div>
+<div class="tip" id="fs23">val line : string</div>
+<div class="tip" id="fs24">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+<div class="tip" id="fs25">Multiple items<br />module List<br /><br />from Microsoft.FSharp.Collections<br /><br />--------------------<br />type List&lt;&#39;T&gt; =<br />&#160;&#160;| ( [] )<br />&#160;&#160;| ( :: ) of Head: &#39;T * Tail: &#39;T list<br />&#160;&#160;&#160;&#160;interface IReadOnlyList&lt;&#39;T&gt;<br />&#160;&#160;&#160;&#160;interface IReadOnlyCollection&lt;&#39;T&gt;<br />&#160;&#160;&#160;&#160;interface IEnumerable<br />&#160;&#160;&#160;&#160;interface IEnumerable&lt;&#39;T&gt;<br />&#160;&#160;&#160;&#160;member GetReverseIndex : rank:int * offset:int -&gt; int<br />&#160;&#160;&#160;&#160;member GetSlice : startIndex:int option * endIndex:int option -&gt; &#39;T list<br />&#160;&#160;&#160;&#160;member Head : &#39;T<br />&#160;&#160;&#160;&#160;member IsEmpty : bool<br />&#160;&#160;&#160;&#160;member Item : index:int -&gt; &#39;T with get<br />&#160;&#160;&#160;&#160;member Length : int<br />&#160;&#160;&#160;&#160;...</div>
+<div class="tip" id="fs26">val ofSeq : source:seq&lt;&#39;T&gt; -&gt; &#39;T list</div>
+
+
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

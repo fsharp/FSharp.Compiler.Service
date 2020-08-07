@@ -1,0 +1,516 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | F# Interactiveの組み込み
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link menu-group-link-active">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+              F# コンパイラサービス
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/devnotes.html" class="padding">
+              開発者用メモ
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu submenu-active">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/tokenizer.html" class="padding">
+              F#トークナイザを使用する
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/untypedtree.html" class="padding">
+              型無し構文木の処理
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/editor.html" class="padding">
+              エディタサービス
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/symbols.html" class="padding">
+              シンボルの処理
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/project.html" class="padding">
+              プロジェクトの分析
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/interactive.html" class="active-link padding">
+              F# Interactiveの組み込み
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/compiler.html" class="padding">
+              コンパイラの組み込み
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/filesystem.html" class="padding">
+              ファイルシステム仮想化
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/corelib.html" class="padding">
+              FSharp.Core.dll についてのメモ
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="menu-group-link-active padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <h1>インタラクティブサービス: F# Interactiveの組み込み</h1>
+<p>このチュートリアルでは、独自のアプリケーションに
+F# Interactiveを組み込む方法について紹介します。
+F# Interactiveは対話式のスクリプティング環境で、
+F#コードを高度に最適化されたILコードへとコンパイルしつつ、
+それを即座に実行することができます。
+F# Interactiveサービスを使用すると、独自のアプリケーションに
+F#の評価機能を追加できます。</p>
+<blockquote>
+<p><strong>注意:</strong> F# Interactiveは様々な方法で組み込むことができます。
+最も簡単な方法は <code>fsi.exe</code> プロセスとの間で標準入出力経由でやりとりする方法です。
+このチュートリアルではF# Interactiveの機能を.NET APIで
+直接呼び出す方法について紹介します。
+ただし入力用のコントロールを備えていない場合、別プロセスでF# Interactiveを
+起動するのはよい方法だといえます。
+理由の1つとしては <code>StackOverflowException</code> を処理する方法がないため、
+出来の悪いスクリプトによってはホストプロセスが停止させられてしまう
+場合があるからです。
+<strong>.NET APIを通じてF# Interactiveを呼び出すとしても、 <code>--shadowcopyreferences</code>
+オプションは無視されることを覚えておきましょう。</strong>
+詳細な議論については、<a href="https://github.com/fsharp/FSharp.Compiler.Service/issues/292">このスレッド</a>
+に目を通してみてください。
+<strong>注意:</strong> もし<code>FSharp.Core.dll</code> が見つからないというエラーが出て <code>FsiEvaluationSession.Create</code>
+に失敗した場合、 <code>FSharp.Core.sigdata</code> と <code>FSharp.Core.optdata</code> というファイルを追加してください。
+詳しい内容は<a href="https://fsharp.github.io/FSharp.Compiler.Service/ja/corelib.html">こちら</a>
+にあります。</p>
+</blockquote>
+<p>しかしそれでもF# InteractiveサービスにはF# Interactiveを実行ファイルに埋め込んで
+実行出来る(そしてアプリケーションの各機能とやりとり出来る)、あるいは
+機能限定されたF#コード(たとえば独自のDSLによって生成されたコード)だけを
+実行させることが出来るという便利さがあります。</p>
+<h2>F# Interactiveの開始</h2>
+<p>まずF# Interactiveサービスを含むライブラリへの参照を追加します:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">#r</span> <span class="hljs-string">&quot;FSharp.Compiler.Service.dll&quot;</span>
+<span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="hljs-function">FSharp</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="hljs-function">Compiler</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="hljs-function">SourceCodeServices</span>
+<span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="hljs-function">FSharp</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="hljs-function">Compiler</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="hljs-function">Interactive</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="hljs-function">Shell</span>
+</code></pre>
+<p>F# Interactiveとやりとりするには、入出力を表すストリームを作成する必要があります。
+これらのストリームを使用することで、
+いくつかのF#コードに対する評価結果を後から出力することができます:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs7', 8)" onmouseover="showTip(event, 'fs7', 8)" class="hljs-function">System</span>
+<span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs7', 9)" onmouseover="showTip(event, 'fs7', 9)" class="hljs-function">System</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs8', 10)" onmouseover="showTip(event, 'fs8', 10)" class="hljs-function">IO</span>
+<span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs7', 11)" onmouseover="showTip(event, 'fs7', 11)" class="hljs-function">System</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs9', 12)" onmouseover="showTip(event, 'fs9', 12)" class="hljs-function">Text</span>
+
+<span class="hljs-comment">// 入出力のストリームを初期化</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs10', 13)" onmouseover="showTip(event, 'fs10', 13)" class="hljs-function">sbOut</span> <span class="hljs-keyword">=</span> <span class="hljs-keyword">new</span> <span onmouseout="hideTip(event, 'fs11', 14)" onmouseover="showTip(event, 'fs11', 14)" class="hljs-type">StringBuilder</span><span class="hljs-keyword">(</span><span class="hljs-keyword">)</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs12', 15)" onmouseover="showTip(event, 'fs12', 15)" class="hljs-function">sbErr</span> <span class="hljs-keyword">=</span> <span class="hljs-keyword">new</span> <span onmouseout="hideTip(event, 'fs11', 16)" onmouseover="showTip(event, 'fs11', 16)" class="hljs-type">StringBuilder</span><span class="hljs-keyword">(</span><span class="hljs-keyword">)</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs13', 17)" onmouseover="showTip(event, 'fs13', 17)" class="hljs-function">inStream</span> <span class="hljs-keyword">=</span> <span class="hljs-keyword">new</span> <span onmouseout="hideTip(event, 'fs14', 18)" onmouseover="showTip(event, 'fs14', 18)" class="hljs-symbol">StringReader</span><span class="hljs-keyword">(</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-keyword">)</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs15', 19)" onmouseover="showTip(event, 'fs15', 19)" class="hljs-function">outStream</span> <span class="hljs-keyword">=</span> <span class="hljs-keyword">new</span> <span onmouseout="hideTip(event, 'fs16', 20)" onmouseover="showTip(event, 'fs16', 20)" class="hljs-symbol">StringWriter</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs10', 21)" onmouseover="showTip(event, 'fs10', 21)" class="hljs-function">sbOut</span><span class="hljs-keyword">)</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs17', 22)" onmouseover="showTip(event, 'fs17', 22)" class="hljs-function">errStream</span> <span class="hljs-keyword">=</span> <span class="hljs-keyword">new</span> <span onmouseout="hideTip(event, 'fs16', 23)" onmouseover="showTip(event, 'fs16', 23)" class="hljs-symbol">StringWriter</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs12', 24)" onmouseover="showTip(event, 'fs12', 24)" class="hljs-function">sbErr</span><span class="hljs-keyword">)</span>
+
+<span class="hljs-comment">// コマンドライン引数を組み立てて、FSIセッションを開始する</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs18', 25)" onmouseover="showTip(event, 'fs18', 25)" class="hljs-function">argv</span> <span class="hljs-keyword">=</span> <span class="hljs-keyword">[|</span> <span class="hljs-string">&quot;C:\\fsi.exe&quot;</span> <span class="hljs-keyword">|]</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs19', 26)" onmouseover="showTip(event, 'fs19', 26)" class="hljs-function">allArgs</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs20', 27)" onmouseover="showTip(event, 'fs20', 27)" class="hljs-type">Array</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs21', 28)" onmouseover="showTip(event, 'fs21', 28)" class="hljs-function">append</span> <span onmouseout="hideTip(event, 'fs18', 29)" onmouseover="showTip(event, 'fs18', 29)" class="hljs-function">argv</span> <span class="hljs-keyword">[|</span><span class="hljs-string">&quot;--noninteractive&quot;</span><span class="hljs-keyword">|]</span>
+
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs22', 30)" onmouseover="showTip(event, 'fs22', 30)" class="hljs-function">fsiConfig</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs23', 31)" onmouseover="showTip(event, 'fs23', 31)" class="hljs-symbol">FsiEvaluationSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs24', 32)" onmouseover="showTip(event, 'fs24', 32)" class="hljs-function">GetDefaultConfiguration</span><span class="hljs-keyword">(</span><span class="hljs-keyword">)</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs25', 33)" onmouseover="showTip(event, 'fs25', 33)" class="hljs-function">fsiSession</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs23', 34)" onmouseover="showTip(event, 'fs23', 34)" class="hljs-symbol">FsiEvaluationSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs26', 35)" onmouseover="showTip(event, 'fs26', 35)" class="hljs-function">Create</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs22', 36)" onmouseover="showTip(event, 'fs22', 36)" class="hljs-function">fsiConfig</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs19', 37)" onmouseover="showTip(event, 'fs19', 37)" class="hljs-function">allArgs</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs13', 38)" onmouseover="showTip(event, 'fs13', 38)" class="hljs-function">inStream</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs15', 39)" onmouseover="showTip(event, 'fs15', 39)" class="hljs-function">outStream</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs17', 40)" onmouseover="showTip(event, 'fs17', 40)" class="hljs-function">errStream</span><span class="hljs-keyword">)</span>
+</code></pre>
+<h2>コードの評価および実行</h2>
+<p>F# Interactiveサービスにはコードを評価するためのメソッドがいくつか用意されています。
+最初の1つは <code>EvalExpression</code> で、式を評価してその結果を返します。
+結果には戻り値が( <code>obj</code> として)含まれる他、値に対して静的に推論された型も含まれます:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">/// 式を評価して結果を返す</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs27', 41)" onmouseover="showTip(event, 'fs27', 41)" class="hljs-function">evalExpression</span> <span onmouseout="hideTip(event, 'fs28', 42)" onmouseover="showTip(event, 'fs28', 42)" class="hljs-function">text</span> <span class="hljs-keyword">=</span>
+  <span class="hljs-keyword">match</span> <span onmouseout="hideTip(event, 'fs25', 43)" onmouseover="showTip(event, 'fs25', 43)" class="hljs-function">fsiSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 44)" onmouseover="showTip(event, 'fs29', 44)" class="hljs-function">EvalExpression</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs28', 45)" onmouseover="showTip(event, 'fs28', 45)" class="hljs-function">text</span><span class="hljs-keyword">)</span> <span class="hljs-keyword">with</span>
+  <span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs30', 46)" onmouseover="showTip(event, 'fs30', 46)" class="hljs-type">Some</span> <span onmouseout="hideTip(event, 'fs31', 47)" onmouseover="showTip(event, 'fs31', 47)" class="hljs-function">value</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs32', 48)" onmouseover="showTip(event, 'fs32', 48)" class="hljs-function">printfn</span> <span class="hljs-string">&quot;</span><span class="hljs-regexp">%A</span><span class="hljs-string">&quot;</span> <span onmouseout="hideTip(event, 'fs31', 49)" onmouseover="showTip(event, 'fs31', 49)" class="hljs-function">value</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 50)" onmouseover="showTip(event, 'fs29', 50)" class="hljs-function">ReflectionValue</span>
+  <span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs33', 51)" onmouseover="showTip(event, 'fs33', 51)" class="hljs-type">None</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs32', 52)" onmouseover="showTip(event, 'fs32', 52)" class="hljs-function">printfn</span> <span class="hljs-string">&quot;結果が得られませんでした！&quot;</span>
+</code></pre>
+<p>これは引数に文字列を取り、それをF#コードとして評価(つまり実行)します。</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span onmouseout="hideTip(event, 'fs27', 53)" onmouseover="showTip(event, 'fs27', 53)" class="hljs-function">evalExpression</span> <span class="hljs-string">&quot;42+1&quot;</span> <span class="hljs-comment">// &#39;43&#39; を表示する</span>
+</code></pre>
+<p>これは以下のように強く型付けされた方法で使うことができます:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">/// 式を評価して、強く型付けされた結果を返す</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs34', 54)" onmouseover="showTip(event, 'fs34', 54)" class="hljs-function">evalExpressionTyped</span><span class="hljs-keyword">&lt;</span><span class="hljs-type">&#39;</span><span class="hljs-function">T</span><span class="hljs-keyword">&gt;</span> <span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs28', 55)" onmouseover="showTip(event, 'fs28', 55)" class="hljs-function">text</span><span class="hljs-keyword">)</span> <span class="hljs-keyword">=</span>
+    <span class="hljs-keyword">match</span> <span onmouseout="hideTip(event, 'fs25', 56)" onmouseover="showTip(event, 'fs25', 56)" class="hljs-function">fsiSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 57)" onmouseover="showTip(event, 'fs29', 57)" class="hljs-function">EvalExpression</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs28', 58)" onmouseover="showTip(event, 'fs28', 58)" class="hljs-function">text</span><span class="hljs-keyword">)</span> <span class="hljs-keyword">with</span>
+    <span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs30', 59)" onmouseover="showTip(event, 'fs30', 59)" class="hljs-type">Some</span> <span onmouseout="hideTip(event, 'fs31', 60)" onmouseover="showTip(event, 'fs31', 60)" class="hljs-function">value</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs31', 61)" onmouseover="showTip(event, 'fs31', 61)" class="hljs-function">value</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 62)" onmouseover="showTip(event, 'fs29', 62)" class="hljs-function">ReflectionValue</span> <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs35', 63)" onmouseover="showTip(event, 'fs35', 63)" class="hljs-function">unbox</span><span class="hljs-keyword">&lt;</span><span class="hljs-type">&#39;</span><span class="hljs-function">T</span><span class="hljs-keyword">&gt;</span>
+    <span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs33', 64)" onmouseover="showTip(event, 'fs33', 64)" class="hljs-type">None</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs36', 65)" onmouseover="showTip(event, 'fs36', 65)" class="hljs-function">failwith</span> <span class="hljs-string">&quot;結果が得られませんでした！&quot;</span>
+
+<span onmouseout="hideTip(event, 'fs34', 66)" onmouseover="showTip(event, 'fs34', 66)" class="hljs-function">evalExpressionTyped</span><span class="hljs-keyword">&lt;</span><span onmouseout="hideTip(event, 'fs37', 67)" onmouseover="showTip(event, 'fs37', 67)" class="hljs-type">int</span><span class="hljs-keyword">&gt;</span> <span class="hljs-string">&quot;42+1&quot;</span>  <span class="hljs-comment">// &#39;43&#39; になる</span>
+</code></pre>
+<p><code>EvalInteraction</code> メソッドは画面出力機能や宣言、
+F#の式としては不正なものの、F# Interactiveコンソールには入力できるようなものなど、
+副作用を伴う命令を評価する場合に使用できます。
+たとえば <code>#time "on"</code> (あるいはその他のディレクティブ)や <code>open System</code> 、
+その他の宣言やトップレベルステートメントなどが該当します。
+指定するコードの終端に <code>;;</code> を入力する必要はありません。
+実行したいコードだけを入力します:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span onmouseout="hideTip(event, 'fs25', 68)" onmouseover="showTip(event, 'fs25', 68)" class="hljs-function">fsiSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 69)" onmouseover="showTip(event, 'fs29', 69)" class="hljs-function">EvalInteraction</span> <span class="hljs-string">&quot;printfn \&quot;bye\&quot;&quot;</span>
+</code></pre>
+<p><code>EvalScript</code> メソッドを使用すると、完全な .fsx スクリプトを評価することができます。</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span onmouseout="hideTip(event, 'fs38', 70)" onmouseover="showTip(event, 'fs38', 70)" class="hljs-type">File</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs39', 71)" onmouseover="showTip(event, 'fs39', 71)" class="hljs-function">WriteAllText</span><span class="hljs-keyword">(</span><span class="hljs-string">&quot;sample.fsx&quot;</span><span class="hljs-keyword">,</span> <span class="hljs-string">&quot;let twenty = 10 + 10&quot;</span><span class="hljs-keyword">)</span>
+<span onmouseout="hideTip(event, 'fs25', 72)" onmouseover="showTip(event, 'fs25', 72)" class="hljs-function">fsiSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 73)" onmouseover="showTip(event, 'fs29', 73)" class="hljs-function">EvalScript</span> <span class="hljs-string">&quot;sample.fsx&quot;</span>
+</code></pre>
+<h2>例外処理</h2>
+<p>コードに型チェックの警告やエラーがあった場合、または評価して例外で失敗した場合、
+<code>EvalExpression</code> 、 <code>EvalInteraction</code> そして <code>EvalScript</code> ではあまりうまく処理されません。
+これらのケースでは、 <code>EvalExpressionNonThrowing</code> 、 <code>EvalInteractionNonThrowing</code>
+そして <code>EvalScriptNonThrowing</code> を使うことが出来ます。
+これらは結果と <code>FSharpErrorInfo</code> 値の配列の組を返します。
+これらはエラーと警告を表します。結果の部分は実際の結果と例外のいずれかを表す
+<code>Choice&lt;_,_&gt;</code> です。</p>
+<p><code>EvalExpression</code> および <code>EvalExpressionNonThrowing</code> の結果部分は
+オプションの <code>FSharpValue</code> 値です。
+その値が存在しない場合、式が .NET オブジェクトとして表現できる具体的な結果を
+持っていなかったということを指し示しています。
+この状況は実際には入力されたどんな通常の式に対しても発生すべきではなく、
+ライブラリ内で使われるプリミティブ値に対してのみ発生すべきです。</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span onmouseout="hideTip(event, 'fs38', 74)" onmouseover="showTip(event, 'fs38', 74)" class="hljs-type">File</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs39', 75)" onmouseover="showTip(event, 'fs39', 75)" class="hljs-function">WriteAllText</span><span class="hljs-keyword">(</span><span class="hljs-string">&quot;sample.fsx&quot;</span><span class="hljs-keyword">,</span> <span class="hljs-string">&quot;let twenty = &#39;a&#39; + 10.0&quot;</span><span class="hljs-keyword">)</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs40', 76)" onmouseover="showTip(event, 'fs40', 76)" class="hljs-function">result</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs41', 77)" onmouseover="showTip(event, 'fs41', 77)" class="hljs-function">warnings</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs25', 78)" onmouseover="showTip(event, 'fs25', 78)" class="hljs-function">fsiSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 79)" onmouseover="showTip(event, 'fs29', 79)" class="hljs-function">EvalScriptNonThrowing</span> <span class="hljs-string">&quot;sample.fsx&quot;</span>
+
+<span class="hljs-comment">// 結果を表示する</span>
+<span class="hljs-keyword">match</span> <span onmouseout="hideTip(event, 'fs40', 80)" onmouseover="showTip(event, 'fs40', 80)" class="hljs-function">result</span> <span class="hljs-keyword">with</span>
+<span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs42', 81)" onmouseover="showTip(event, 'fs42', 81)" class="hljs-type">Choice1Of2</span> <span class="hljs-keyword">(</span><span class="hljs-keyword">)</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs32', 82)" onmouseover="showTip(event, 'fs32', 82)" class="hljs-function">printfn</span> <span class="hljs-string">&quot;チェックと実行はOKでした&quot;</span>
+<span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs43', 83)" onmouseover="showTip(event, 'fs43', 83)" class="hljs-type">Choice2Of2</span> <span onmouseout="hideTip(event, 'fs44', 84)" onmouseover="showTip(event, 'fs44', 84)" class="hljs-function">exn</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs32', 85)" onmouseover="showTip(event, 'fs32', 85)" class="hljs-function">printfn</span> <span class="hljs-string">&quot;実行例外: </span><span class="hljs-regexp">%s</span><span class="hljs-string">&quot;</span> <span onmouseout="hideTip(event, 'fs44', 86)" onmouseover="showTip(event, 'fs44', 86)" class="hljs-function">exn</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 87)" onmouseover="showTip(event, 'fs29', 87)" class="hljs-function">Message</span>
+</code></pre>
+<p>は次のようになります:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-function">実行例外</span><span class="hljs-keyword">:</span> <span class="hljs-function">Operation</span> <span class="hljs-function">could</span> <span onmouseout="hideTip(event, 'fs45', 88)" onmouseover="showTip(event, 'fs45', 88)" class="hljs-function">not</span> <span class="hljs-function">be</span> <span class="hljs-function">completed</span> <span class="hljs-function">due</span> <span class="hljs-keyword">to</span> <span class="hljs-function">earlier</span> <span class="hljs-function">error</span>
+</code></pre>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-comment">// エラーと警告を表示する</span>
+<span class="hljs-keyword">for</span> <span onmouseout="hideTip(event, 'fs46', 89)" onmouseover="showTip(event, 'fs46', 89)" class="hljs-function">w</span> <span class="hljs-keyword">in</span> <span onmouseout="hideTip(event, 'fs41', 90)" onmouseover="showTip(event, 'fs41', 90)" class="hljs-function">warnings</span> <span class="hljs-keyword">do</span>
+   <span onmouseout="hideTip(event, 'fs32', 91)" onmouseover="showTip(event, 'fs32', 91)" class="hljs-function">printfn</span> <span class="hljs-string">&quot;警告 </span><span class="hljs-regexp">%s</span><span class="hljs-string"> 場所 </span><span class="hljs-regexp">%d</span><span class="hljs-string">,</span><span class="hljs-regexp">%d</span><span class="hljs-string">&quot;</span> <span onmouseout="hideTip(event, 'fs46', 92)" onmouseover="showTip(event, 'fs46', 92)" class="hljs-function">w</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 93)" onmouseover="showTip(event, 'fs29', 93)" class="hljs-function">Message</span> <span onmouseout="hideTip(event, 'fs46', 94)" onmouseover="showTip(event, 'fs46', 94)" class="hljs-function">w</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 95)" onmouseover="showTip(event, 'fs29', 95)" class="hljs-function">StartLineAlternate</span> <span onmouseout="hideTip(event, 'fs46', 96)" onmouseover="showTip(event, 'fs46', 96)" class="hljs-function">w</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 97)" onmouseover="showTip(event, 'fs29', 97)" class="hljs-function">StartColumn</span>
+</code></pre>
+<p>は次のようになります:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-function">警告</span> <span class="hljs-function">The</span> <span class="hljs-keyword">type</span> <span class="hljs-function">&#39;</span><span class="hljs-function">float&#39;</span> <span class="hljs-function">does</span> <span onmouseout="hideTip(event, 'fs45', 98)" onmouseover="showTip(event, 'fs45', 98)" class="hljs-function">not</span> <span class="hljs-keyword">match</span> <span class="hljs-function">the</span> <span class="hljs-keyword">type</span> <span class="hljs-function">&#39;</span><span class="hljs-function">char&#39;</span> <span class="hljs-function">場所</span> <span class="hljs-number">1</span><span class="hljs-keyword">,</span><span class="hljs-number">19</span>
+<span class="hljs-function">警告</span> <span class="hljs-function">The</span> <span class="hljs-keyword">type</span> <span class="hljs-function">&#39;</span><span class="hljs-function">float&#39;</span> <span class="hljs-function">does</span> <span onmouseout="hideTip(event, 'fs45', 99)" onmouseover="showTip(event, 'fs45', 99)" class="hljs-function">not</span> <span class="hljs-keyword">match</span> <span class="hljs-function">the</span> <span class="hljs-keyword">type</span> <span class="hljs-function">&#39;</span><span class="hljs-function">char&#39;</span> <span class="hljs-function">場所</span> <span class="hljs-number">1</span><span class="hljs-keyword">,</span><span class="hljs-number">17</span>
+</code></pre>
+<p>式に対しては:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs47', 100)" onmouseover="showTip(event, 'fs47', 100)" class="hljs-function">evalExpressionTyped2</span><span class="hljs-keyword">&lt;</span><span class="hljs-type">&#39;</span><span class="hljs-function">T</span><span class="hljs-keyword">&gt;</span> <span onmouseout="hideTip(event, 'fs28', 101)" onmouseover="showTip(event, 'fs28', 101)" class="hljs-function">text</span> <span class="hljs-keyword">=</span>
+   <span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs48', 102)" onmouseover="showTip(event, 'fs48', 102)" class="hljs-function">res</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs41', 103)" onmouseover="showTip(event, 'fs41', 103)" class="hljs-function">warnings</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs25', 104)" onmouseover="showTip(event, 'fs25', 104)" class="hljs-function">fsiSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 105)" onmouseover="showTip(event, 'fs29', 105)" class="hljs-function">EvalExpressionNonThrowing</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs28', 106)" onmouseover="showTip(event, 'fs28', 106)" class="hljs-function">text</span><span class="hljs-keyword">)</span>
+   <span class="hljs-keyword">for</span> <span onmouseout="hideTip(event, 'fs46', 107)" onmouseover="showTip(event, 'fs46', 107)" class="hljs-function">w</span> <span class="hljs-keyword">in</span> <span onmouseout="hideTip(event, 'fs41', 108)" onmouseover="showTip(event, 'fs41', 108)" class="hljs-function">warnings</span> <span class="hljs-keyword">do</span>
+       <span onmouseout="hideTip(event, 'fs32', 109)" onmouseover="showTip(event, 'fs32', 109)" class="hljs-function">printfn</span> <span class="hljs-string">&quot;警告 </span><span class="hljs-regexp">%s</span><span class="hljs-string"> 場所 </span><span class="hljs-regexp">%d</span><span class="hljs-string">,</span><span class="hljs-regexp">%d</span><span class="hljs-string">&quot;</span> <span onmouseout="hideTip(event, 'fs46', 110)" onmouseover="showTip(event, 'fs46', 110)" class="hljs-function">w</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 111)" onmouseover="showTip(event, 'fs29', 111)" class="hljs-function">Message</span> <span onmouseout="hideTip(event, 'fs46', 112)" onmouseover="showTip(event, 'fs46', 112)" class="hljs-function">w</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 113)" onmouseover="showTip(event, 'fs29', 113)" class="hljs-function">StartLineAlternate</span> <span onmouseout="hideTip(event, 'fs46', 114)" onmouseover="showTip(event, 'fs46', 114)" class="hljs-function">w</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 115)" onmouseover="showTip(event, 'fs29', 115)" class="hljs-function">StartColumn</span>
+   <span class="hljs-keyword">match</span> <span onmouseout="hideTip(event, 'fs48', 116)" onmouseover="showTip(event, 'fs48', 116)" class="hljs-function">res</span> <span class="hljs-keyword">with</span>
+   <span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs42', 117)" onmouseover="showTip(event, 'fs42', 117)" class="hljs-type">Choice1Of2</span> <span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs30', 118)" onmouseover="showTip(event, 'fs30', 118)" class="hljs-type">Some</span> <span onmouseout="hideTip(event, 'fs31', 119)" onmouseover="showTip(event, 'fs31', 119)" class="hljs-function">value</span><span class="hljs-keyword">)</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs31', 120)" onmouseover="showTip(event, 'fs31', 120)" class="hljs-function">value</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 121)" onmouseover="showTip(event, 'fs29', 121)" class="hljs-function">ReflectionValue</span> <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs35', 122)" onmouseover="showTip(event, 'fs35', 122)" class="hljs-function">unbox</span><span class="hljs-keyword">&lt;</span><span class="hljs-type">&#39;</span><span class="hljs-function">T</span><span class="hljs-keyword">&gt;</span>
+   <span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs42', 123)" onmouseover="showTip(event, 'fs42', 123)" class="hljs-type">Choice1Of2</span> <span onmouseout="hideTip(event, 'fs33', 124)" onmouseover="showTip(event, 'fs33', 124)" class="hljs-type">None</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs36', 125)" onmouseover="showTip(event, 'fs36', 125)" class="hljs-function">failwith</span> <span class="hljs-string">&quot;null または結果がありません&quot;</span>
+   <span class="hljs-keyword">|</span> <span onmouseout="hideTip(event, 'fs43', 126)" onmouseover="showTip(event, 'fs43', 126)" class="hljs-type">Choice2Of2</span> <span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs44', 127)" onmouseover="showTip(event, 'fs44', 127)" class="hljs-function">exn</span><span class="hljs-keyword">:</span><span onmouseout="hideTip(event, 'fs44', 128)" onmouseover="showTip(event, 'fs44', 128)" class="hljs-type">exn</span><span class="hljs-keyword">)</span> <span class="hljs-keyword">-&gt;</span> <span onmouseout="hideTip(event, 'fs36', 129)" onmouseover="showTip(event, 'fs36', 129)" class="hljs-function">failwith</span> <span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs49', 130)" onmouseover="showTip(event, 'fs49', 130)" class="hljs-function">sprintf</span> <span class="hljs-string">&quot;例外 </span><span class="hljs-regexp">%s</span><span class="hljs-string">&quot;</span> <span onmouseout="hideTip(event, 'fs44', 131)" onmouseover="showTip(event, 'fs44', 131)" class="hljs-function">exn</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 132)" onmouseover="showTip(event, 'fs29', 132)" class="hljs-function">Message</span><span class="hljs-keyword">)</span>
+
+<span onmouseout="hideTip(event, 'fs47', 133)" onmouseover="showTip(event, 'fs47', 133)" class="hljs-function">evalExpressionTyped2</span><span class="hljs-keyword">&lt;</span><span onmouseout="hideTip(event, 'fs37', 134)" onmouseover="showTip(event, 'fs37', 134)" class="hljs-type">int</span><span class="hljs-keyword">&gt;</span> <span class="hljs-string">&quot;42+1&quot;</span>  <span class="hljs-comment">// &#39;43&#39; になる</span>
+</code></pre>
+<h2>並列実行</h2>
+<p>デフォルトでは <code>EvalExpression</code> に渡したコードは即時実行されます。
+並列に実行するために、タスクを開始する計算を投入します:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs7', 135)" onmouseover="showTip(event, 'fs7', 135)" class="hljs-function">System</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs50', 136)" onmouseover="showTip(event, 'fs50', 136)" class="hljs-function">Threading</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs51', 137)" onmouseover="showTip(event, 'fs51', 137)" class="hljs-function">Tasks</span>
+
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs52', 138)" onmouseover="showTip(event, 'fs52', 138)" class="hljs-function">sampleLongRunningExpr</span> <span class="hljs-keyword">=</span>
+    <span class="hljs-string">&quot;&quot;&quot;</span>
+<span class="hljs-string">async {</span>
+<span class="hljs-string">    // 実行したいコード</span>
+<span class="hljs-string">    do System.Threading.Thread.Sleep 5000</span>
+<span class="hljs-string">    return 10</span>
+<span class="hljs-string">}</span>
+<span class="hljs-string">  |&gt; Async.StartAsTask&quot;&quot;&quot;</span>
+
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs53', 139)" onmouseover="showTip(event, 'fs53', 139)" class="hljs-function">task1</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs34', 140)" onmouseover="showTip(event, 'fs34', 140)" class="hljs-function">evalExpressionTyped</span><span class="hljs-keyword">&lt;</span><span onmouseout="hideTip(event, 'fs54', 141)" onmouseover="showTip(event, 'fs54', 141)" class="hljs-symbol">Task</span><span class="hljs-keyword">&lt;</span><span onmouseout="hideTip(event, 'fs37', 142)" onmouseover="showTip(event, 'fs37', 142)" class="hljs-type">int</span><span class="hljs-keyword">&gt;</span><span class="hljs-keyword">&gt;</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs52', 143)" onmouseover="showTip(event, 'fs52', 143)" class="hljs-function">sampleLongRunningExpr</span><span class="hljs-keyword">)</span>
+<span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs55', 144)" onmouseover="showTip(event, 'fs55', 144)" class="hljs-function">task2</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs34', 145)" onmouseover="showTip(event, 'fs34', 145)" class="hljs-function">evalExpressionTyped</span><span class="hljs-keyword">&lt;</span><span onmouseout="hideTip(event, 'fs54', 146)" onmouseover="showTip(event, 'fs54', 146)" class="hljs-symbol">Task</span><span class="hljs-keyword">&lt;</span><span onmouseout="hideTip(event, 'fs37', 147)" onmouseover="showTip(event, 'fs37', 147)" class="hljs-type">int</span><span class="hljs-keyword">&gt;</span><span class="hljs-keyword">&gt;</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs52', 148)" onmouseover="showTip(event, 'fs52', 148)" class="hljs-function">sampleLongRunningExpr</span><span class="hljs-keyword">)</span>
+</code></pre>
+<p>両方の計算がいま開始しました。結果を取得することが出来ます:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span onmouseout="hideTip(event, 'fs53', 149)" onmouseover="showTip(event, 'fs53', 149)" class="hljs-function">task1</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 150)" onmouseover="showTip(event, 'fs29', 150)" class="hljs-function">Result</span> <span class="hljs-comment">// 完了後に結果が出てくる (最大5秒)</span>
+<span onmouseout="hideTip(event, 'fs55', 151)" onmouseover="showTip(event, 'fs55', 151)" class="hljs-function">task2</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 152)" onmouseover="showTip(event, 'fs29', 152)" class="hljs-function">Result</span> <span class="hljs-comment">// 完了後に結果が出てくる (最大5秒)</span>
+</code></pre>
+<h2>評価コンテキスト内での型チェック</h2>
+<p>F# Interactiveの一連のスクリプティングセッション中で
+コードの型チェックを実行したいような状況を考えてみましょう。
+たとえばまず宣言を評価します:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span onmouseout="hideTip(event, 'fs25', 153)" onmouseover="showTip(event, 'fs25', 153)" class="hljs-function">fsiSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 154)" onmouseover="showTip(event, 'fs29', 154)" class="hljs-function">EvalInteraction</span> <span class="hljs-string">&quot;let xxx = 1 + 1&quot;</span>
+</code></pre>
+<p>次に部分的に完全な <code>xxx + xx</code> というコードの型チェックを実行したいとします:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs56', 155)" onmouseover="showTip(event, 'fs56', 155)" class="hljs-function">parseResults</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs57', 156)" onmouseover="showTip(event, 'fs57', 156)" class="hljs-function">checkResults</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs58', 157)" onmouseover="showTip(event, 'fs58', 157)" class="hljs-function">checkProjectResults</span> <span class="hljs-keyword">=</span>
+    <span onmouseout="hideTip(event, 'fs25', 158)" onmouseover="showTip(event, 'fs25', 158)" class="hljs-function">fsiSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 159)" onmouseover="showTip(event, 'fs29', 159)" class="hljs-function">ParseAndCheckInteraction</span><span class="hljs-keyword">(</span><span class="hljs-string">&quot;xxx + xx&quot;</span><span class="hljs-keyword">)</span> <span class="hljs-keyword">|&gt;</span> <span onmouseout="hideTip(event, 'fs59', 160)" onmouseover="showTip(event, 'fs59', 160)" class="hljs-type">Async</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs60', 161)" onmouseover="showTip(event, 'fs60', 161)" class="hljs-function">RunSynchronously</span>
+</code></pre>
+<p><code>parseResults</code> と <code>checkResults</code> はそれぞれ <a href="editor.html">エディタ</a>
+のページで説明している <code>ParseFileResults</code> と <code>CheckFileResults</code> 型です。
+たとえば以下のようなコードでエラーを確認出来ます:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span onmouseout="hideTip(event, 'fs57', 162)" onmouseover="showTip(event, 'fs57', 162)" class="hljs-function">checkResults</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 163)" onmouseover="showTip(event, 'fs29', 163)" class="hljs-function">Errors</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 164)" onmouseover="showTip(event, 'fs29', 164)" class="hljs-function">Length</span> <span class="hljs-comment">// 1</span>
+</code></pre>
+<p>コードはF# Interactiveセッション内において、その時点までに実行された
+有効な宣言からなる論理的な型コンテキストと結びつく形でチェックされます。</p>
+<p>また、宣言リスト情報やツールチップテキスト、シンボルの解決といった処理を
+要求することもできます:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">open</span> <span onmouseout="hideTip(event, 'fs4', 165)" onmouseover="showTip(event, 'fs4', 165)" class="hljs-function">FSharp</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs2', 166)" onmouseover="showTip(event, 'fs2', 166)" class="hljs-function">Compiler</span>
+
+<span class="hljs-comment">// ツールチップを取得する</span>
+<span onmouseout="hideTip(event, 'fs57', 167)" onmouseover="showTip(event, 'fs57', 167)" class="hljs-function">checkResults</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 168)" onmouseover="showTip(event, 'fs29', 168)" class="hljs-function">GetToolTipText</span><span class="hljs-keyword">(</span><span class="hljs-number">1</span><span class="hljs-keyword">,</span> <span class="hljs-number">2</span><span class="hljs-keyword">,</span> <span class="hljs-string">&quot;xxx + xx&quot;</span><span class="hljs-keyword">,</span> <span class="hljs-keyword">[</span><span class="hljs-string">&quot;xxx&quot;</span><span class="hljs-keyword">]</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs61', 169)" onmouseover="showTip(event, 'fs61', 169)" class="hljs-type">FSharpTokenTag</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs62', 170)" onmouseover="showTip(event, 'fs62', 170)" class="hljs-function">IDENT</span><span class="hljs-keyword">)</span>
+
+<span onmouseout="hideTip(event, 'fs57', 171)" onmouseover="showTip(event, 'fs57', 171)" class="hljs-function">checkResults</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 172)" onmouseover="showTip(event, 'fs29', 172)" class="hljs-function">GetSymbolUseAtLocation</span><span class="hljs-keyword">(</span><span class="hljs-number">1</span><span class="hljs-keyword">,</span> <span class="hljs-number">2</span><span class="hljs-keyword">,</span> <span class="hljs-string">&quot;xxx + xx&quot;</span><span class="hljs-keyword">,</span> <span class="hljs-keyword">[</span><span class="hljs-string">&quot;xxx&quot;</span><span class="hljs-keyword">]</span><span class="hljs-keyword">)</span> <span class="hljs-comment">// シンボル xxx</span>
+</code></pre>
+<h2>'fsi'オブジェクト</h2>
+<p>スクリプトのコードが'fsi'オブジェクトにアクセスできるようにしたい場合、
+このオブジェクトの実装を明示的に渡さなければなりません。
+通常、FSharp.Compiler.Interactive.Settings.dll由来の1つが使われます。</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs63', 173)" onmouseover="showTip(event, 'fs63', 173)" class="hljs-function">fsiConfig2</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs23', 174)" onmouseover="showTip(event, 'fs23', 174)" class="hljs-symbol">FsiEvaluationSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs24', 175)" onmouseover="showTip(event, 'fs24', 175)" class="hljs-function">GetDefaultConfiguration</span><span class="hljs-keyword">(</span><span class="hljs-function">fsi</span><span class="hljs-keyword">)</span>
+</code></pre>
+<h2>収集可能なコード生成</h2>
+<p>FsiEvaluationSessionを使用してコードを評価すると、
+.NET の動的アセンブリを生成し、他のリソースを使用します。
+<code>collectible=true</code> を渡すことで、生成されたコードを収集可能に出来ます。
+しかしながら、例えば <code>EvalExpression</code> から返される <code>FsiValue</code> のような型を必要とする未解放のオブジェクト参照が無く、
+かつ <code>FsiEvaluationSession</code> を破棄したに違いない場合に限ってコードが収集されます。
+<a href="https://msdn.microsoft.com/ja-jp/library/dd554932%28v=vs.110%29.aspx#Anchor_1">収集可能なアセンブリに対する制限</a>
+も参照してください。</p>
+<p>以下の例は200個の評価セッションを生成しています。 <code>collectible=true</code> と <code>use session = ...</code>
+の両方を使っていることに気をつけてください。</p>
+<p>収集可能なコードが正しく動いた場合、全体としてのリソース使用量は
+評価が進んでも線形には増加しないでしょう。</p>
+<pre class="fssnip highlighted"><code class="language-fsharp"><span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs64', 176)" onmouseover="showTip(event, 'fs64', 176)" class="hljs-function">collectionTest</span><span class="hljs-keyword">(</span><span class="hljs-keyword">)</span> <span class="hljs-keyword">=</span>
+
+    <span class="hljs-keyword">for</span> <span onmouseout="hideTip(event, 'fs65', 177)" onmouseover="showTip(event, 'fs65', 177)" class="hljs-function">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">1</span> <span class="hljs-keyword">..</span> <span class="hljs-number">200</span> <span class="hljs-keyword">do</span>
+        <span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs66', 178)" onmouseover="showTip(event, 'fs66', 178)" class="hljs-function">defaultArgs</span> <span class="hljs-keyword">=</span> <span class="hljs-keyword">[|</span><span class="hljs-string">&quot;fsi.exe&quot;</span><span class="hljs-keyword">;</span><span class="hljs-string">&quot;--noninteractive&quot;</span><span class="hljs-keyword">;</span><span class="hljs-string">&quot;--nologo&quot;</span><span class="hljs-keyword">;</span><span class="hljs-string">&quot;--gui-&quot;</span><span class="hljs-keyword">|]</span>
+        <span class="hljs-keyword">use</span> <span onmouseout="hideTip(event, 'fs13', 179)" onmouseover="showTip(event, 'fs13', 179)" class="hljs-function">inStream</span> <span class="hljs-keyword">=</span> <span class="hljs-keyword">new</span> <span onmouseout="hideTip(event, 'fs14', 180)" onmouseover="showTip(event, 'fs14', 180)" class="hljs-symbol">StringReader</span><span class="hljs-keyword">(</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-keyword">)</span>
+        <span class="hljs-keyword">use</span> <span onmouseout="hideTip(event, 'fs15', 181)" onmouseover="showTip(event, 'fs15', 181)" class="hljs-function">outStream</span> <span class="hljs-keyword">=</span> <span class="hljs-keyword">new</span> <span onmouseout="hideTip(event, 'fs16', 182)" onmouseover="showTip(event, 'fs16', 182)" class="hljs-symbol">StringWriter</span><span class="hljs-keyword">(</span><span class="hljs-keyword">)</span>
+        <span class="hljs-keyword">use</span> <span onmouseout="hideTip(event, 'fs17', 183)" onmouseover="showTip(event, 'fs17', 183)" class="hljs-function">errStream</span> <span class="hljs-keyword">=</span> <span class="hljs-keyword">new</span> <span onmouseout="hideTip(event, 'fs16', 184)" onmouseover="showTip(event, 'fs16', 184)" class="hljs-symbol">StringWriter</span><span class="hljs-keyword">(</span><span class="hljs-keyword">)</span>
+
+        <span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs22', 185)" onmouseover="showTip(event, 'fs22', 185)" class="hljs-function">fsiConfig</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs23', 186)" onmouseover="showTip(event, 'fs23', 186)" class="hljs-symbol">FsiEvaluationSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs24', 187)" onmouseover="showTip(event, 'fs24', 187)" class="hljs-function">GetDefaultConfiguration</span><span class="hljs-keyword">(</span><span class="hljs-keyword">)</span>
+        <span class="hljs-keyword">use</span> <span onmouseout="hideTip(event, 'fs67', 188)" onmouseover="showTip(event, 'fs67', 188)" class="hljs-function">session</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs23', 189)" onmouseover="showTip(event, 'fs23', 189)" class="hljs-symbol">FsiEvaluationSession</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs68', 190)" onmouseover="showTip(event, 'fs68', 190)" class="hljs-function">Create</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs22', 191)" onmouseover="showTip(event, 'fs22', 191)" class="hljs-function">fsiConfig</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs66', 192)" onmouseover="showTip(event, 'fs66', 192)" class="hljs-function">defaultArgs</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs13', 193)" onmouseover="showTip(event, 'fs13', 193)" class="hljs-function">inStream</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs15', 194)" onmouseover="showTip(event, 'fs15', 194)" class="hljs-function">outStream</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs17', 195)" onmouseover="showTip(event, 'fs17', 195)" class="hljs-function">errStream</span><span class="hljs-keyword">,</span> <span class="hljs-function">collectible</span><span class="hljs-keyword">=</span><span class="hljs-keyword">true</span><span class="hljs-keyword">)</span>
+
+        <span onmouseout="hideTip(event, 'fs67', 196)" onmouseover="showTip(event, 'fs67', 196)" class="hljs-function">session</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 197)" onmouseover="showTip(event, 'fs29', 197)" class="hljs-function">EvalInteraction</span> <span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs49', 198)" onmouseover="showTip(event, 'fs49', 198)" class="hljs-function">sprintf</span> <span class="hljs-string">&quot;type D = { v : int }&quot;</span><span class="hljs-keyword">)</span>
+        <span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs69', 199)" onmouseover="showTip(event, 'fs69', 199)" class="hljs-function">v</span> <span class="hljs-keyword">=</span> <span onmouseout="hideTip(event, 'fs67', 200)" onmouseover="showTip(event, 'fs67', 200)" class="hljs-function">session</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 201)" onmouseover="showTip(event, 'fs29', 201)" class="hljs-function">EvalExpression</span> <span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs49', 202)" onmouseover="showTip(event, 'fs49', 202)" class="hljs-function">sprintf</span> <span class="hljs-string">&quot;{ v = 42 * </span><span class="hljs-regexp">%d</span><span class="hljs-string"> }&quot;</span> <span onmouseout="hideTip(event, 'fs65', 203)" onmouseover="showTip(event, 'fs65', 203)" class="hljs-function">i</span><span class="hljs-keyword">)</span>
+        <span onmouseout="hideTip(event, 'fs32', 204)" onmouseover="showTip(event, 'fs32', 204)" class="hljs-function">printfn</span> <span class="hljs-string">&quot;その </span><span class="hljs-regexp">%d</span><span class="hljs-string">, 結果 = </span><span class="hljs-regexp">%A</span><span class="hljs-string">&quot;</span> <span onmouseout="hideTip(event, 'fs65', 205)" onmouseover="showTip(event, 'fs65', 205)" class="hljs-function">i</span> <span onmouseout="hideTip(event, 'fs69', 206)" onmouseover="showTip(event, 'fs69', 206)" class="hljs-function">v</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 207)" onmouseover="showTip(event, 'fs29', 207)" class="hljs-function">Value</span><span class="hljs-keyword">.</span><span onmouseout="hideTip(event, 'fs29', 208)" onmouseover="showTip(event, 'fs29', 208)" class="hljs-function">ReflectionValue</span>
+
+<span class="hljs-comment">// collectionTest()  &lt;-- このようにテストを実行する</span>
+</code></pre>
+<div class="tip" id="fs1">Multiple items<br />namespace FSharp<br /><br />--------------------<br />namespace Microsoft.FSharp</div>
+<div class="tip" id="fs2">namespace FSharp.Compiler</div>
+<div class="tip" id="fs3">namespace FSharp.Compiler.SourceCodeServices</div>
+<div class="tip" id="fs4">Multiple items<br />namespace FSharp<br /><br />--------------------<br />namespace Microsoft.FSharp<br /><br />--------------------<br />type FSharpAttribute =<br />&#160;&#160;member Format : context:FSharpDisplayContext -&gt; string<br />&#160;&#160;member AttributeType : FSharpEntity<br />&#160;&#160;member ConstructorArguments : IList&lt;FSharpType * obj&gt;<br />&#160;&#160;member IsUnresolved : bool<br />&#160;&#160;member NamedArguments : IList&lt;FSharpType * string * bool * obj&gt;</div>
+<div class="tip" id="fs5">namespace FSharp.Compiler.Interactive</div>
+<div class="tip" id="fs6">module Shell<br /><br />from FSharp.Compiler.Interactive</div>
+<div class="tip" id="fs7">namespace System</div>
+<div class="tip" id="fs8">namespace System.IO</div>
+<div class="tip" id="fs9">namespace System.Text</div>
+<div class="tip" id="fs10">val sbOut : StringBuilder</div>
+<div class="tip" id="fs11">Multiple items<br />type StringBuilder =<br />&#160;&#160;new : unit -&gt; StringBuilder + 5 overloads<br />&#160;&#160;member Append : value:string -&gt; StringBuilder + 23 overloads<br />&#160;&#160;member AppendFormat : format:string * arg0:obj -&gt; StringBuilder + 7 overloads<br />&#160;&#160;member AppendJoin : separator:string * [&lt;ParamArray&gt;] values:obj[] -&gt; StringBuilder + 5 overloads<br />&#160;&#160;member AppendLine : unit -&gt; StringBuilder + 1 overload<br />&#160;&#160;member Capacity : int with get, set<br />&#160;&#160;member Chars : int -&gt; char with get, set<br />&#160;&#160;member Clear : unit -&gt; StringBuilder<br />&#160;&#160;member CopyTo : sourceIndex:int * destination:Span&lt;char&gt; * count:int -&gt; unit + 1 overload<br />&#160;&#160;member EnsureCapacity : capacity:int -&gt; int<br />&#160;&#160;...<br />&#160;&#160;nested type ChunkEnumerator<br /><br />--------------------<br />StringBuilder() : StringBuilder<br />StringBuilder(capacity: int) : StringBuilder<br />StringBuilder(value: string) : StringBuilder<br />StringBuilder(value: string, capacity: int) : StringBuilder<br />StringBuilder(capacity: int, maxCapacity: int) : StringBuilder<br />StringBuilder(value: string, startIndex: int, length: int, capacity: int) : StringBuilder</div>
+<div class="tip" id="fs12">val sbErr : StringBuilder</div>
+<div class="tip" id="fs13">val inStream : StringReader</div>
+<div class="tip" id="fs14">Multiple items<br />type StringReader =<br />&#160;&#160;inherit TextReader<br />&#160;&#160;new : s:string -&gt; StringReader<br />&#160;&#160;member Close : unit -&gt; unit<br />&#160;&#160;member Peek : unit -&gt; int<br />&#160;&#160;member Read : unit -&gt; int + 2 overloads<br />&#160;&#160;member ReadAsync : buffer:Memory&lt;char&gt; * ?cancellationToken:CancellationToken -&gt; ValueTask&lt;int&gt; + 1 overload<br />&#160;&#160;member ReadBlock : buffer:Span&lt;char&gt; -&gt; int<br />&#160;&#160;member ReadBlockAsync : buffer:Memory&lt;char&gt; * ?cancellationToken:CancellationToken -&gt; ValueTask&lt;int&gt; + 1 overload<br />&#160;&#160;member ReadLine : unit -&gt; string<br />&#160;&#160;member ReadLineAsync : unit -&gt; Task&lt;string&gt;<br />&#160;&#160;member ReadToEnd : unit -&gt; string<br />&#160;&#160;...<br /><br />--------------------<br />StringReader(s: string) : StringReader</div>
+<div class="tip" id="fs15">val outStream : StringWriter</div>
+<div class="tip" id="fs16">Multiple items<br />type StringWriter =<br />&#160;&#160;inherit TextWriter<br />&#160;&#160;new : unit -&gt; StringWriter + 3 overloads<br />&#160;&#160;member Close : unit -&gt; unit<br />&#160;&#160;member Encoding : Encoding<br />&#160;&#160;member FlushAsync : unit -&gt; Task<br />&#160;&#160;member GetStringBuilder : unit -&gt; StringBuilder<br />&#160;&#160;member ToString : unit -&gt; string<br />&#160;&#160;member Write : value:char -&gt; unit + 4 overloads<br />&#160;&#160;member WriteAsync : value:char -&gt; Task + 4 overloads<br />&#160;&#160;member WriteLine : buffer:ReadOnlySpan&lt;char&gt; -&gt; unit + 1 overload<br />&#160;&#160;member WriteLineAsync : value:char -&gt; Task + 4 overloads<br /><br />--------------------<br />StringWriter() : StringWriter<br />StringWriter(formatProvider: IFormatProvider) : StringWriter<br />StringWriter(sb: StringBuilder) : StringWriter<br />StringWriter(sb: StringBuilder, formatProvider: IFormatProvider) : StringWriter</div>
+<div class="tip" id="fs17">val errStream : StringWriter</div>
+<div class="tip" id="fs18">val argv : string []</div>
+<div class="tip" id="fs19">val allArgs : string []</div>
+<div class="tip" id="fs20">type Array =<br />&#160;&#160;member Clone : unit -&gt; obj<br />&#160;&#160;member CopyTo : array:Array * index:int -&gt; unit + 1 overload<br />&#160;&#160;member GetEnumerator : unit -&gt; IEnumerator<br />&#160;&#160;member GetLength : dimension:int -&gt; int<br />&#160;&#160;member GetLongLength : dimension:int -&gt; int64<br />&#160;&#160;member GetLowerBound : dimension:int -&gt; int<br />&#160;&#160;member GetUpperBound : dimension:int -&gt; int<br />&#160;&#160;member GetValue : [&lt;ParamArray&gt;] indices:int[] -&gt; obj + 7 overloads<br />&#160;&#160;member Initialize : unit -&gt; unit<br />&#160;&#160;member IsFixedSize : bool<br />&#160;&#160;...</div>
+<div class="tip" id="fs21">val append : array1:&#39;T [] -&gt; array2:&#39;T [] -&gt; &#39;T []</div>
+<div class="tip" id="fs22">val fsiConfig : FsiEvaluationSessionHostConfig</div>
+<div class="tip" id="fs23">type FsiEvaluationSession =<br />&#160;&#160;interface IDisposable<br />&#160;&#160;member AddBoundValue : name:string * value:obj -&gt; unit<br />&#160;&#160;member EvalExpression : code:string -&gt; FsiValue option<br />&#160;&#160;member EvalExpressionNonThrowing : code:string -&gt; Choice&lt;FsiValue option,exn&gt; * FSharpErrorInfo []<br />&#160;&#160;member EvalInteraction : code:string * ?cancellationToken:CancellationToken -&gt; unit<br />&#160;&#160;member EvalInteractionNonThrowing : code:string * ?cancellationToken:CancellationToken -&gt; Choice&lt;FsiValue option,exn&gt; * FSharpErrorInfo []<br />&#160;&#160;member EvalScript : filePath:string -&gt; unit<br />&#160;&#160;member EvalScriptNonThrowing : filePath:string -&gt; Choice&lt;unit,exn&gt; * FSharpErrorInfo []<br />&#160;&#160;member FormatValue : reflectionValue:obj * reflectionType:Type -&gt; string<br />&#160;&#160;member GetBoundValues : unit -&gt; FsiBoundValue list<br />&#160;&#160;...</div>
+<div class="tip" id="fs24">static member FsiEvaluationSession.GetDefaultConfiguration : unit -&gt; FsiEvaluationSessionHostConfig<br />static member FsiEvaluationSession.GetDefaultConfiguration : fsiObj:obj -&gt; FsiEvaluationSessionHostConfig<br />static member FsiEvaluationSession.GetDefaultConfiguration : fsiObj:obj * useFsiAuxLib:bool -&gt; FsiEvaluationSessionHostConfig</div>
+<div class="tip" id="fs25">val fsiSession : FsiEvaluationSession</div>
+<div class="tip" id="fs26">static member FsiEvaluationSession.Create : fsiConfig:FsiEvaluationSessionHostConfig * argv:string [] * inReader:TextReader * outWriter:TextWriter * errorWriter:TextWriter * ?collectible:bool * ?legacyReferenceResolver:FSharp.Compiler.ReferenceResolver.Resolver -&gt; FsiEvaluationSession</div>
+<div class="tip" id="fs27">val evalExpression : text:string -&gt; unit<br /><em><br /><br />&#160;式を評価して結果を返す</em></div>
+<div class="tip" id="fs28">val text : string</div>
+<div class="tip" id="fs29"></div>
+<div class="tip" id="fs30">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs31">val value : FsiValue</div>
+<div class="tip" id="fs32">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+<div class="tip" id="fs33">union case Option.None: Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs34">val evalExpressionTyped : text:string -&gt; &#39;T<br /><em><br /><br />&#160;式を評価して、強く型付けされた結果を返す</em></div>
+<div class="tip" id="fs35">val unbox : value:obj -&gt; &#39;T</div>
+<div class="tip" id="fs36">val failwith : message:string -&gt; &#39;T</div>
+<div class="tip" id="fs37">Multiple items<br />val int : value:&#39;T -&gt; int (requires member op_Explicit)<br /><br />--------------------<br />type int = int32<br /><br />--------------------<br />type int&lt;&#39;Measure&gt; = int</div>
+<div class="tip" id="fs38">type File =<br />&#160;&#160;static member AppendAllLines : path:string * contents:IEnumerable&lt;string&gt; -&gt; unit + 1 overload<br />&#160;&#160;static member AppendAllLinesAsync : path:string * contents:IEnumerable&lt;string&gt; * ?cancellationToken:CancellationToken -&gt; Task + 1 overload<br />&#160;&#160;static member AppendAllText : path:string * contents:string -&gt; unit + 1 overload<br />&#160;&#160;static member AppendAllTextAsync : path:string * contents:string * ?cancellationToken:CancellationToken -&gt; Task + 1 overload<br />&#160;&#160;static member AppendText : path:string -&gt; StreamWriter<br />&#160;&#160;static member Copy : sourceFileName:string * destFileName:string -&gt; unit + 1 overload<br />&#160;&#160;static member Create : path:string -&gt; FileStream + 2 overloads<br />&#160;&#160;static member CreateText : path:string -&gt; StreamWriter<br />&#160;&#160;static member Decrypt : path:string -&gt; unit<br />&#160;&#160;static member Delete : path:string -&gt; unit<br />&#160;&#160;...</div>
+<div class="tip" id="fs39">File.WriteAllText(path: string, contents: string) : unit<br />File.WriteAllText(path: string, contents: string, encoding: Encoding) : unit</div>
+<div class="tip" id="fs40">val result : Choice&lt;unit,exn&gt;</div>
+<div class="tip" id="fs41">val warnings : FSharpErrorInfo []</div>
+<div class="tip" id="fs42">union case Choice.Choice1Of2: &#39;T1 -&gt; Choice&lt;&#39;T1,&#39;T2&gt;</div>
+<div class="tip" id="fs43">union case Choice.Choice2Of2: &#39;T2 -&gt; Choice&lt;&#39;T1,&#39;T2&gt;</div>
+<div class="tip" id="fs44">Multiple items<br />val exn : exn<br /><br />--------------------<br />type exn = Exception</div>
+<div class="tip" id="fs45">val not : value:bool -&gt; bool</div>
+<div class="tip" id="fs46">val w : FSharpErrorInfo</div>
+<div class="tip" id="fs47">val evalExpressionTyped2 : text:string -&gt; &#39;T</div>
+<div class="tip" id="fs48">val res : Choice&lt;FsiValue option,exn&gt;</div>
+<div class="tip" id="fs49">val sprintf : format:Printf.StringFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+<div class="tip" id="fs50">namespace System.Threading</div>
+<div class="tip" id="fs51">namespace System.Threading.Tasks</div>
+<div class="tip" id="fs52">val sampleLongRunningExpr : string</div>
+<div class="tip" id="fs53">val task1 : Task&lt;int&gt;</div>
+<div class="tip" id="fs54">Multiple items<br />type Task =<br />&#160;&#160;new : action:Action -&gt; Task + 7 overloads<br />&#160;&#160;member AsyncState : obj<br />&#160;&#160;member ConfigureAwait : continueOnCapturedContext:bool -&gt; ConfiguredTaskAwaitable<br />&#160;&#160;member ContinueWith : continuationAction:Action&lt;Task&gt; -&gt; Task + 19 overloads<br />&#160;&#160;member CreationOptions : TaskCreationOptions<br />&#160;&#160;member Dispose : unit -&gt; unit<br />&#160;&#160;member Exception : AggregateException<br />&#160;&#160;member GetAwaiter : unit -&gt; TaskAwaiter<br />&#160;&#160;member Id : int<br />&#160;&#160;member IsCanceled : bool<br />&#160;&#160;...<br /><br />--------------------<br />type Task&lt;&#39;TResult&gt; =<br />&#160;&#160;inherit Task<br />&#160;&#160;new : function:Func&lt;&#39;TResult&gt; -&gt; Task&lt;&#39;TResult&gt; + 7 overloads<br />&#160;&#160;member ConfigureAwait : continueOnCapturedContext:bool -&gt; ConfiguredTaskAwaitable&lt;&#39;TResult&gt;<br />&#160;&#160;member ContinueWith : continuationAction:Action&lt;Task&lt;&#39;TResult&gt;&gt; -&gt; Task + 19 overloads<br />&#160;&#160;member GetAwaiter : unit -&gt; TaskAwaiter&lt;&#39;TResult&gt;<br />&#160;&#160;member Result : &#39;TResult<br />&#160;&#160;static member Factory : TaskFactory&lt;&#39;TResult&gt;<br /><br />--------------------<br />Task(action: Action) : Task<br />Task(action: Action, cancellationToken: Threading.CancellationToken) : Task<br />Task(action: Action, creationOptions: TaskCreationOptions) : Task<br />Task(action: Action&lt;obj&gt;, state: obj) : Task<br />Task(action: Action, cancellationToken: Threading.CancellationToken, creationOptions: TaskCreationOptions) : Task<br />Task(action: Action&lt;obj&gt;, state: obj, cancellationToken: Threading.CancellationToken) : Task<br />Task(action: Action&lt;obj&gt;, state: obj, creationOptions: TaskCreationOptions) : Task<br />Task(action: Action&lt;obj&gt;, state: obj, cancellationToken: Threading.CancellationToken, creationOptions: TaskCreationOptions) : Task<br /><br />--------------------<br />Task(function: Func&lt;&#39;TResult&gt;) : Task&lt;&#39;TResult&gt;<br />Task(function: Func&lt;&#39;TResult&gt;, cancellationToken: Threading.CancellationToken) : Task&lt;&#39;TResult&gt;<br />Task(function: Func&lt;&#39;TResult&gt;, creationOptions: TaskCreationOptions) : Task&lt;&#39;TResult&gt;<br />Task(function: Func&lt;obj,&#39;TResult&gt;, state: obj) : Task&lt;&#39;TResult&gt;<br />Task(function: Func&lt;&#39;TResult&gt;, cancellationToken: Threading.CancellationToken, creationOptions: TaskCreationOptions) : Task&lt;&#39;TResult&gt;<br />Task(function: Func&lt;obj,&#39;TResult&gt;, state: obj, cancellationToken: Threading.CancellationToken) : Task&lt;&#39;TResult&gt;<br />Task(function: Func&lt;obj,&#39;TResult&gt;, state: obj, creationOptions: TaskCreationOptions) : Task&lt;&#39;TResult&gt;<br />Task(function: Func&lt;obj,&#39;TResult&gt;, state: obj, cancellationToken: Threading.CancellationToken, creationOptions: TaskCreationOptions) : Task&lt;&#39;TResult&gt;</div>
+<div class="tip" id="fs55">val task2 : Task&lt;int&gt;</div>
+<div class="tip" id="fs56">val parseResults : FSharpParseFileResults</div>
+<div class="tip" id="fs57">val checkResults : FSharpCheckFileResults</div>
+<div class="tip" id="fs58">val checkProjectResults : FSharpCheckProjectResults</div>
+<div class="tip" id="fs59">Multiple items<br />type Async =<br />&#160;&#160;static member AsBeginEnd : computation:(&#39;Arg -&gt; Async&lt;&#39;T&gt;) -&gt; (&#39;Arg * AsyncCallback * obj -&gt; IAsyncResult) * (IAsyncResult -&gt; &#39;T) * (IAsyncResult -&gt; unit)<br />&#160;&#160;static member AwaitEvent : event:IEvent&lt;&#39;Del,&#39;T&gt; * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt; (requires delegate and &#39;Del :&gt; Delegate)<br />&#160;&#160;static member AwaitIAsyncResult : iar:IAsyncResult * ?millisecondsTimeout:int -&gt; Async&lt;bool&gt;<br />&#160;&#160;static member AwaitTask : task:Task -&gt; Async&lt;unit&gt;<br />&#160;&#160;static member AwaitTask : task:Task&lt;&#39;T&gt; -&gt; Async&lt;&#39;T&gt;<br />&#160;&#160;static member AwaitWaitHandle : waitHandle:WaitHandle * ?millisecondsTimeout:int -&gt; Async&lt;bool&gt;<br />&#160;&#160;static member CancelDefaultToken : unit -&gt; unit<br />&#160;&#160;static member Catch : computation:Async&lt;&#39;T&gt; -&gt; Async&lt;Choice&lt;&#39;T,exn&gt;&gt;<br />&#160;&#160;static member Choice : computations:seq&lt;Async&lt;&#39;T option&gt;&gt; -&gt; Async&lt;&#39;T option&gt;<br />&#160;&#160;static member FromBeginEnd : beginAction:(AsyncCallback * obj -&gt; IAsyncResult) * endAction:(IAsyncResult -&gt; &#39;T) * ?cancelAction:(unit -&gt; unit) -&gt; Async&lt;&#39;T&gt;<br />&#160;&#160;...<br /><br />--------------------<br />type Async&lt;&#39;T&gt; =</div>
+<div class="tip" id="fs60">static member Async.RunSynchronously : computation:Async&lt;&#39;T&gt; * ?timeout:int * ?cancellationToken:Threading.CancellationToken -&gt; &#39;T</div>
+<div class="tip" id="fs61">module FSharpTokenTag<br /><br />from FSharp.Compiler.SourceCodeServices</div>
+<div class="tip" id="fs62">val IDENT : int</div>
+<div class="tip" id="fs63">val fsiConfig2 : FsiEvaluationSessionHostConfig</div>
+<div class="tip" id="fs64">val collectionTest : unit -&gt; unit</div>
+<div class="tip" id="fs65">val i : int32</div>
+<div class="tip" id="fs66">val defaultArgs : string []</div>
+<div class="tip" id="fs67">val session : FsiEvaluationSession</div>
+<div class="tip" id="fs68">static member FsiEvaluationSession.Create : fsiConfig:FsiEvaluationSessionHostConfig * argv:string [] * inReader:TextReader * outWriter:TextWriter * errorWriter:TextWriter * ?collectible:bool * ?legacyReferenceResolver:ReferenceResolver.Resolver -&gt; FsiEvaluationSession</div>
+<div class="tip" id="fs69">val v : FsiValue option</div>
+
+
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

@@ -1,0 +1,856 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | FsiEvaluationSession
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link menu-group-link-active">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <div class="api-page">
+            <h2>
+              FsiEvaluationSession
+            </h2>
+            <b>
+              Namespace: 
+            </b>
+            <a href="FSharp.Compiler.Interactive.html">
+              FSharp.Compiler.Interactive
+            </a>
+            <br/>
+            <b>
+              Parent: 
+            </b>
+            <a href="fsharp-compiler-interactive-shell.html">
+              Shell
+            </a>
+            <span>
+              <p>Represents an F# Interactive evaluation session.</p>
+
+
+            </span>
+            <br/>
+            <b>
+              Attributes:
+            </b>
+            <br/>
+            <code>
+              ClassAttribute
+            </code>
+            <br/>
+            <table>
+              <tr>
+                <th width="35%">
+                  Name
+                </th>
+                <th width="65%">
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <b>
+                    Instance Members
+                  </b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    AddBoundValue
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (name:string * value:obj) -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>Creates a root-level value with the given name and .NET object.
+If the .NET object contains types from assemblies that are not referenced in the interactive session, it will try to implicitly resolve them by default configuration.
+Name must be a valid identifier.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    EvalExpression
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  code:string -> FsiValue option
+                  <br/>
+                </td>
+                <td>
+                  <p>Execute the code as if it had been entered as one or more interactions, with an
+implicit termination at the end of the input. Stop on first error, discarding the rest
+of the input. Errors are sent to the output writer. Parsing is performed on the current thread, and execution is performed
+synchronously on the 'main' thread.</p>
+<p>Due to a current limitation, it is not fully thread-safe to run this operation concurrently with evaluation triggered
+by input from 'stdin'.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    EvalExpressionNonThrowing
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  code:string -> Choice<FsiValue option,exn> * FSharpErrorInfo []
+                  <br/>
+                </td>
+                <td>
+                  <p>Execute the code as if it had been entered as one or more interactions, with an
+implicit termination at the end of the input. Stop on first error, discarding the rest
+of the input. Errors and warnings are collected apart from any exception arising from execution
+which is returned via a Choice. Parsing is performed on the current thread, and execution is performed
+synchronously on the 'main' thread.</p>
+<p>Due to a current limitation, it is not fully thread-safe to run this operation concurrently with evaluation triggered
+by input from 'stdin'.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    EvalInteraction
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (code:string * cancellationToken:CancellationToken option) -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>Execute the code as if it had been entered as one or more interactions, with an
+implicit termination at the end of the input. Stop on first error, discarding the rest
+of the input. Errors are sent to the output writer, a 'true' return value indicates there
+were no errors overall. Execution is performed on the 'Run()' thread.</p>
+<p>Due to a current limitation, it is not fully thread-safe to run this operation concurrently with evaluation triggered
+by input from 'stdin'.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    EvalInteractionNonThrowing
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (code:string * cancellationToken:CancellationToken option) -> Choice<FsiValue option,exn> * FSharpErrorInfo []
+                  <br/>
+                </td>
+                <td>
+                  <p>Execute the code as if it had been entered as one or more interactions, with an
+implicit termination at the end of the input. Stop on first error, discarding the rest
+of the input. Errors and warnings are collected apart from any exception arising from execution
+which is returned via a Choice. Execution is performed on the 'Run()' thread.</p>
+<p>Due to a current limitation, it is not fully thread-safe to run this operation concurrently with evaluation triggered
+by input from 'stdin'.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    EvalScript
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  filePath:string -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>Execute the given script. Stop on first error, discarding the rest
+of the script. Errors are sent to the output writer, a 'true' return value indicates there
+were no errors overall. Execution is performed on the 'Run()' thread.</p>
+<p>Due to a current limitation, it is not fully thread-safe to run this operation concurrently with evaluation triggered
+by input from 'stdin'.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    EvalScriptNonThrowing
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  filePath:string -> Choice<unit,exn> * FSharpErrorInfo []
+                  <br/>
+                </td>
+                <td>
+                  <p>Execute the given script. Stop on first error, discarding the rest
+of the script. Errors and warnings are collected apart from any exception arising from execution
+which is returned via a Choice. Execution is performed on the 'Run()' thread.</p>
+<p>Due to a current limitation, it is not fully thread-safe to run this operation concurrently with evaluation triggered
+by input from 'stdin'.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    FormatValue
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (reflectionValue:obj * reflectionType:Type) -> string
+                  <br/>
+                </td>
+                <td>
+                  <p>Format a value to a string using the current PrintDepth, PrintLength etc settings provided by the active fsi configuration object</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetBoundValues
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> FsiBoundValue list
+                  <br/>
+                </td>
+                <td>
+                  <p>Gets the root-level values that are bound to an identifier</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetCompletions
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  longIdent:string -> seq<string>
+                  <br/>
+                </td>
+                <td>
+                  <p>A host calls this to get the completions for a long identifier, e.g. in the console</p>
+<p>Due to a current limitation, it is not fully thread-safe to run this operation concurrently with evaluation triggered
+by input from 'stdin'.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Interrupt
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>A host calls this to request an interrupt on the evaluation thread.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ParseAndCheckInteraction
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  code:string -> Async<FSharpParseFileResults * FSharpCheckFileResults * FSharpCheckProjectResults>
+                  <br/>
+                </td>
+                <td>
+                  <p>Typecheck the given script fragment in the type checking context implied by the current state
+of F# Interactive. The results can be used to access intellisense, perform resolutions,
+check brace matching and other information.</p>
+<p>Operations may be run concurrently with other requests to the InteractiveChecker.</p>
+<p>Due to a current limitation, it is not fully thread-safe to run this operation concurrently with evaluation triggered
+by input from 'stdin'.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ReportUnhandledException
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  exn:exn -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>A host calls this to report an unhandled exception in a standard way, e.g. an exception on the GUI thread gets printed to stderr</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Run
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>Load the dummy interaction, load the initial files, and,
+if interacting, start the background thread to read the standard input.</p>
+<p>Performs these steps:
+- Load the dummy interaction, if any
+- Set up exception handling, if any
+- Load the initial files, if any
+- Start the background thread to read the standard input, if any
+- Sit in the GUI event loop indefinitely, if needed</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    TryFindBoundValue
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  name:string -> FsiBoundValue option
+                  <br/>
+                </td>
+                <td>
+                  <p>Tries to find a root-level value that is bound to the given identifier</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ValueBound
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IEvent<obj * Type * string>
+                  <br/>
+                </td>
+                <td>
+                  <p>Event fires when a root-level value is bound to an identifier, e.g., via <code>let x = ...</code>.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    PartialAssemblySignatureUpdated
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IEvent<unit>
+                  <br/>
+                </td>
+                <td>
+                  <p>Raised when an interaction is successfully typechecked and executed, resulting in an update to the
+type checking state.</p>
+<p>This event is triggered after parsing and checking, either via input from 'stdin', or via a call to EvalInteraction.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    LCID
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int option
+                  <br/>
+                </td>
+                <td>
+                  <p>A host calls this to get the active language ID if provided by fsi-server-lcid</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsGui
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>A host calls this to determine if the --gui parameter is active</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    InteractiveChecker
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpChecker
+                  <br/>
+                </td>
+                <td>
+                  <p>The single, global interactive checker to use in conjunction with other operations
+on the FsiEvaluationSession.</p>
+<p>If you are using an FsiEvaluationSession in this process, you should only use this InteractiveChecker
+for additional checking operations.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DynamicAssembly
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  Assembly
+                  <br/>
+                </td>
+                <td>
+                  <p>Get a handle to the dynamically generated assembly</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    CurrentPartialAssemblySignature
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpAssemblySignature
+                  <br/>
+                </td>
+                <td>
+                  <p>Get a handle to the resolved view of the current signature of the incrementally generated assembly.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <b>
+                    Static Members
+                  </b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Create
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (fsiConfig:FsiEvaluationSessionHostConfig * argv:string [] * inReader:TextReader * outWriter:TextWriter * errorWriter:TextWriter * collectible:bool option * legacyReferenceResolver:Resolver option) -> FsiEvaluationSession
+                  <br/>
+                </td>
+                <td>
+                  <p>Create an FsiEvaluationSession, reading from the given text input, writing to the given text output and error writers.</p>
+<summary>Create an FsiEvaluationSession, reading from the given text input, writing to the given text output and error writers</summary>
+<param name="fsiConfig">The dynamic configuration of the evaluation session</param>
+<param name="argv">The command line arguments for the evaluation session</param>
+<param name="inReader">Read input from the given reader</param>
+<param name="outWriter">Write output to the given writer</param>
+<param name="collectible">Optionally make the dynamic assembly for the session collectible</param>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetDefaultConfiguration
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> FsiEvaluationSessionHostConfig
+                  <br/>
+                </td>
+                <td>
+                  <p>Get a configuration that uses a private inbuilt implementation of the 'fsi' object and does not
+implicitly reference FSharp.Compiler.Interactive.Settings.dll.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetDefaultConfiguration
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  fsiObj:obj -> FsiEvaluationSessionHostConfig
+                  <br/>
+                </td>
+                <td>
+                  <p>Get a configuration that uses the 'fsi' object (normally from FSharp.Compiler.Interactive.Settings.dll,
+an object from another DLL with identical characteristics) to provide an implementation of the configuration.
+FSharp.Compiler.Interactive.Settings.dll  is referenced by default.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetDefaultConfiguration
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (fsiObj:obj * useFsiAuxLib:bool) -> FsiEvaluationSessionHostConfig
+                  <br/>
+                </td>
+                <td>
+                  <p>Get a configuration that uses the 'fsi' object (normally from FSharp.Compiler.Interactive.Settings.dll,
+an object from another DLL with identical characteristics) to provide an implementation of the configuration.
+The flag indicates if FSharp.Compiler.Interactive.Settings.dll  is referenced by default.</p>
+
+
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

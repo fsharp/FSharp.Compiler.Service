@@ -1,0 +1,287 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | 開発者用メモ
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link menu-group-link-active">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu submenu-active">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+              F# コンパイラサービス
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/devnotes.html" class="active-link padding">
+              開発者用メモ
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/tokenizer.html" class="padding">
+              F#トークナイザを使用する
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/untypedtree.html" class="padding">
+              型無し構文木の処理
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/editor.html" class="padding">
+              エディタサービス
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/symbols.html" class="padding">
+              シンボルの処理
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/project.html" class="padding">
+              プロジェクトの分析
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/interactive.html" class="padding">
+              F# Interactiveの組み込み
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/compiler.html" class="padding">
+              コンパイラの組み込み
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/filesystem.html" class="padding">
+              ファイルシステム仮想化
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/corelib.html" class="padding">
+              FSharp.Core.dll についてのメモ
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="menu-group-link-active padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <h1>開発者用メモ</h1>
+<p>F#コンパイラの修正版クローンではクライアントの編集機能やF#コンパイラの埋め込み、
+F# Interactiveをサービスとして動作させるための機能が追加されています。</p>
+<h2>コンポーネント</h2>
+<p>まず <code>FSharp.Compiler.Service.dll</code> というコンポーネントがあります。
+このコンポーネントにはリファクタリングやその他の編集ツールが完全なF# ASTやパーサ機能を利用できるように
+可視性を変更するというマイナーな変更だけが加えられています。
+主な狙いとしては、メインコンパイラの安定版かつドキュメントが備えられたフォークを用意することにより、
+このコンポーネントにある共通コードを様々なツールで共有できるようにすることです。</p>
+<p>2つ目のコンポーネントはF# Interactiveをサービスとして組み込めるようにするためのもので、
+<code>fsi.exe</code> のソースコードに多数の変更が加えられており、
+<code>EvalExpression</code> や <code>EvalInteraction</code> といった関数が追加されています。</p>
+<p>このレポジトリは以下の点を除けば 'fsharp' と <strong>同一</strong> です:</p>
+<ul>
+<li>
+<p><code>FSharp.Compiler.Service.dll</code> のビルド、特に以下の点に関する変更:</p>
+<ul>
+<li>アセンブリ名の変更</li>
+<li><p><code>FSharp.Compiler.Service.dll</code> のみビルドされる</p></li>
+<li>
+<p>ブートストラッパーやプロトコンパイラを使用しない。
+F#コンパイラがインストール済みであることを想定。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>FAKEを使用するビルドスクリプト。
+すべてのコードのビルドとNuGetパッケージ、ドキュメントの生成、
+NuGetパッケージの配布に必要なファイルの生成などがFAKEによって行われる。
+(<a href="https://github.com/fsprojects/FSharp.ProjectScaffold">F# プロジェクト スキャフォールド</a> に準拠)</p>
+</li>
+<li>
+<p>新機能追加のためにコンパイラのソースコードを変更。
+また、評価用関数を実装するためにF# Interactiveサービスに対する変更を追加。</p>
+</li>
+<li>F#編集用クライアントで使用されるAPIを改善するためにコンパイラのソースコードを変更。</li>
+<li>コンパイラサービスAPIに新機能を追加するためにコンパイラのソースコードを変更。</li>
+</ul>
+<p><code>fsharp/fsharp</code> のレポジトリに言語あるいはコンパイラが追加コミットされた場合、
+それらはこのレポジトリにもマージされるべきで、同時に新しいNuGetパッケージもリリースする必要があります。</p>
+<h2>ビルドとNuGet</h2>
+<p>ビルドの手順は <a href="https://github.com/fsprojects/FSharp.ProjectScaffold">F# プロジェクト スキャフォールド</a>
+で推奨されているものに準じます。
+プロジェクトを独自にビルドする場合、以下の手順に従ってください:</p>
+<table class="pre"><tr><td class="snippet"><pre class="fssnip"><code lang="text">git clone https://github.com/fsharp/FSharp.Compiler.Service
+cd FSharp.Compiler.Service
+</code></pre></td></tr></table>
+<p>次に、(Windowsであれば) <code>build.cmd</code> または(LinuxやMac OSであれば) <code>build.sh</code> を実行してすべてをビルドします。
+ファイルは <code>bin</code> ディレクトリ内に出力されます。
+ドキュメントやNuGetパッケージもビルドしたい場合には <code>build Release</code> を実行します
+(このコマンドはGitHub上のドキュメントを更新しようとしますが、GitHubのレポジトリに適切な権限を持っている場合にのみ有効です)。</p>
+<h2>クライアント</h2>
+<p>このコンポーネントは以下のようなツールで使用されています:</p>
+<ul>
+<li><a href="https://github.com/dungpa/fantomas">Fantomas</a> - F# コードフォーマットツール</li>
+<li><a href="https://github.com/Lewix/fsharp-refactor">Fsharp-Refactor</a> - F#用リファクタリングツール</li>
+<li><a href="https://github.com/fsharp/fsharpbinding">FSharpbinding</a> - Xamarin Studio バインディング</li>
+<li><a href="http://fssnip.net/">F# Snippets web site</a> - F# 版のpastebin</li>
+<li><a href="https://github.com/BayardRock/FSharpWebIntellisense/">F# ACE Code Editor</a> - Web上のF#編集ツール</li>
+</ul>
+
+
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

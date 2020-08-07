@@ -1,0 +1,740 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | FSharpCheckFileResults
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link menu-group-link-active">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <div class="api-page">
+            <h2>
+              FSharpCheckFileResults
+            </h2>
+            <b>
+              Namespace: 
+            </b>
+            <a href="FSharp.Compiler.SourceCodeServices.html">
+              FSharp.Compiler.SourceCodeServices
+            </a>
+            <br/>
+            <b>
+              Parent: 
+            </b>
+            <a href="FSharp.Compiler.SourceCodeServices.html">
+              FSharp.Compiler.SourceCodeServices
+            </a>
+            <span>
+              <p>A handle to the results of CheckFileInProject.</p>
+
+
+            </span>
+            <br/>
+            <b>
+              Attributes:
+            </b>
+            <br/>
+            <code>
+              SealedAttribute
+            </code>
+            <br/>
+            <table>
+              <tr>
+                <th width="35%">
+                  Name
+                </th>
+                <th width="65%">
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <b>
+                    Instance Members
+                  </b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetAllUsesOfAllSymbolsInFile
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> Async<FSharpSymbolUse []>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get all textual usages of all symbols throughout the file</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetDeclarationListInfo
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ParsedFileResultsOpt:FSharpParseFileResults option * line:int * lineText:string * partialName:PartialLongName * getAllEntities:(unit -> AssemblySymbol list) option * hasTextChangedSinceLastTypecheck:(obj * range -> bool) option * userOpName:string option) -> Async<FSharpDeclarationListInfo>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the items for a declaration list</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetDeclarationListSymbols
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ParsedFileResultsOpt:FSharpParseFileResults option * line:int * lineText:string * partialName:PartialLongName * getAllEntities:(unit -> AssemblySymbol list) option * hasTextChangedSinceLastTypecheck:(obj * range -> bool) option * userOpName:string option) -> Async<FSharpSymbolUse list list>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the items for a declaration list in FSharpSymbol format</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetDeclarationLocation
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (line:int * colAtEndOfNames:int * lineText:string * names:string list * preferFlag:bool option * userOpName:string option) -> Async<FSharpFindDeclResult>
+                  <br/>
+                </td>
+                <td>
+                  <p>Resolve the names at the given location to the declaration location of the corresponding construct.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetDisplayContextForPos
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  pos:pos -> Async<FSharpDisplayContext option>
+                  <br/>
+                </td>
+                <td>
+                  <p>Find the most precise display environment for the given line and column.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetF1Keyword
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (line:int * colAtEndOfNames:int * lineText:string * names:string list * userOpName:string option) -> Async<string option>
+                  <br/>
+                </td>
+                <td>
+                  <p>Compute the Visual Studio F1-help key identifier for the given location, based on name resolution results</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetFormatSpecifierLocations
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> range []
+                  <br/>
+                  <b>
+                    Attributes:
+                  </b>
+                  <code>
+                    ObsoleteAttribute
+                  </code>
+                </td>
+                <td>
+                  <p>Get the locations of format specifiers</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetFormatSpecifierLocationsAndArity
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> (range * int) []
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the locations of and number of arguments associated with format specifiers</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetMethods
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (line:int * colAtEndOfNames:int * lineText:string * names:string list option * userOpName:string option) -> Async<FSharpMethodGroup>
+                  <br/>
+                </td>
+                <td>
+                  <p>Compute a set of method overloads to show in a dialog relevant to the given code location.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetMethodsAsSymbols
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (line:int * colAtEndOfNames:int * lineText:string * names:string list * userOpName:string option) -> Async<FSharpSymbolUse list option>
+                  <br/>
+                </td>
+                <td>
+                  <p>Compute a set of method overloads to show in a dialog relevant to the given code location.  The resulting method overloads are returned as symbols.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetSemanticClassification
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (range option) -> (range * SemanticClassificationType) []
+                  <br/>
+                </td>
+                <td>
+                  <p>Get any extra colorization info that is available after the typecheck</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetStructuredToolTipText
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (line:int * colAtEndOfNames:int * lineText:string * names:string list * tokenTag:int * userOpName:string option) -> Async<FSharpStructuredToolTipText>
+                  <br/>
+                </td>
+                <td>
+                  <p>Compute a formatted tooltip for the given location</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetSymbolUseAtLocation
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (line:int * colAtEndOfNames:int * lineText:string * names:string list * userOpName:string option) -> Async<FSharpSymbolUse option>
+                  <br/>
+                </td>
+                <td>
+                  <p>Resolve the names at the given location to a use of symbol.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetToolTipText
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (line:int * colAtEndOfNames:int * lineText:string * names:string list * tokenTag:int * userOpName:string option) -> Async<FSharpToolTipText>
+                  <br/>
+                </td>
+                <td>
+                  <p>Compute a formatted tooltip for the given location</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetUsesOfSymbolInFile
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  symbol:FSharpSymbol -> Async<FSharpSymbolUse []>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the textual usages that resolved to the given symbol throughout the file</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    IsRelativeNameResolvableFromSymbol
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (cursorPos:pos * plid:string list * symbol:FSharpSymbol * userOpName:string option) -> Async<bool>
+                  <br/>
+                </td>
+                <td>
+                  <p>Determines if a long ident is resolvable at a specific point.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ProjectContext
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpProjectContext
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the resolution of the ProjectOptions</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    PartialAssemblySignature
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpAssemblySignature
+                  <br/>
+                </td>
+                <td>
+                  <p>Get a view of the contents of the assembly up to and including the file just checked</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    OpenDeclarations
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpOpenDeclaration []
+                  <br/>
+                </td>
+                <td>
+                  <p>Open declarations in the file, including auto open modules.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ImplementationFile
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpImplementationFileContents option
+                  <br/>
+                </td>
+                <td>
+                  <p>Represents complete typechecked implementation file, including its typechecked signatures if any.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    HasFullTypeCheckInfo
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates whether type checking successfully occurred with some results returned. If false, indicates that
+an unrecoverable error in earlier checking/parsing/resolution steps.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Errors
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpErrorInfo []
+                  <br/>
+                </td>
+                <td>
+                  <p>The errors returned by parsing a source file.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    DependencyFiles
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  string []
+                  <br/>
+                </td>
+                <td>
+                  <p>Indicates the set of files which must be watched to accurately track changes that affect these results,
+Clients interested in reacting to updates to these files should watch these files and take actions as described
+in the documentation for compiler service.</p>
+
+
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

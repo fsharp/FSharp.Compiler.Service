@@ -1,0 +1,1297 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | FSharpChecker
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link menu-group-link-active">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <div class="api-page">
+            <h2>
+              FSharpChecker
+            </h2>
+            <b>
+              Namespace: 
+            </b>
+            <a href="FSharp.Compiler.SourceCodeServices.html">
+              FSharp.Compiler.SourceCodeServices
+            </a>
+            <br/>
+            <b>
+              Parent: 
+            </b>
+            <a href="FSharp.Compiler.SourceCodeServices.html">
+              FSharp.Compiler.SourceCodeServices
+            </a>
+            <span>
+              <p>Used to parse and check F# source code.</p>
+
+
+            </span>
+            <br/>
+            <b>
+              Attributes:
+            </b>
+            <br/>
+            <code>
+              SealedAttribute
+            </code>
+            <br/>
+            <code>
+              AutoSerializableAttribute
+            </code>
+            <br/>
+            <table>
+              <tr>
+                <th width="35%">
+                  Name
+                </th>
+                <th width="65%">
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <b>
+                    Instance Members
+                  </b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    CheckFileInProject
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (parsed:FSharpParseFileResults * filename:string * fileversion:int * sourceText:ISourceText * options:FSharpProjectOptions * textSnapshotInfo:obj option * userOpName:string option) -> Async<FSharpCheckFileAnswer>
+                  <br/>
+                </td>
+                <td>
+                  <p>Check a source code file, returning a handle to the results</p>
+<p>Note: all files except the one being checked are read from the FileSystem API</p>
+<p>Return FSharpCheckFileAnswer.Aborted if a parse tree was not available.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    CheckFileInProjectAllowingStaleCachedResults
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (parsed:FSharpParseFileResults * filename:string * fileversion:int * source:string * options:FSharpProjectOptions * textSnapshotInfo:obj option * userOpName:string option) -> Async<FSharpCheckFileAnswer option>
+                  <br/>
+                  <b>
+                    Attributes:
+                  </b>
+                  <code>
+                    ObsoleteAttribute
+                  </code>
+                </td>
+                <td>
+                  <p>Check a source code file, returning a handle to the results of the parse including
+the reconstructed types in the file.All files except the one being checked are read from the FileSystem APINote: returns NoAntecedent if the background builder is not yet done preparing the type check context for the
+file (e.g. loading references and parsing/checking files in the project that this file depends upon).
+In this case, the caller can either retry, or wait for FileTypeCheckStateIsDirty to be raised for this file.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    CheckProjectInBackground
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (options:FSharpProjectOptions * userOpName:string option) -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>Set the project to be checked in the background.  Overrides any previous call to <c>CheckProjectInBackground</c></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ClearCache
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (options:seq<FSharpProjectOptions> * userOpName:string option) -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>Clear the internal cache of the given projects.
+<param name="options">The given project options.</param>
+<param name="userOpName">An optional string used for tracing compiler operations associated with this request.</param></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ClearLanguageServiceRootCachesAndCollectAndFinalizeAllTransients
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>Flush all caches and garbage collect</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Compile
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ast:ParsedInput list * assemblyName:string * outFile:string * dependencies:string list * pdbFile:string option * executable:bool option * noframework:bool option * userOpName:string option) -> Async<FSharpErrorInfo [] * int>
+                  <br/>
+                </td>
+                <td>
+                  <p>TypeCheck and compile provided AST</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Compile
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (argv:string [] * userOpName:string option) -> Async<FSharpErrorInfo [] * int>
+                  <br/>
+                </td>
+                <td>
+                  <p>Compile using the given flags.  Source files names are resolved via the FileSystem API.
+The output file must be given by a -o flag.
+The first argument is ignored and can just be "fsc.exe".</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    CompileToDynamicAssembly
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (ast:ParsedInput list * assemblyName:string * dependencies:string list * execute:(TextWriter * TextWriter) option * debug:bool option * noframework:bool option * userOpName:string option) -> Async<FSharpErrorInfo [] * int * Assembly option>
+                  <br/>
+                </td>
+                <td>
+                  <p>TypeCheck and compile provided AST</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    CompileToDynamicAssembly
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (otherFlags:string [] * execute:(TextWriter * TextWriter) option * userOpName:string option) -> Async<FSharpErrorInfo [] * int * Assembly option>
+                  <br/>
+                </td>
+                <td>
+                  <p>Compiles to a dynamic assembly using the given flags.</p>
+<p>The first argument is ignored and can just be "fsc.exe".</p>
+<p>Any source files names are resolved via the FileSystem API. An output file name must be given by a -o flag, but this will not
+be written - instead a dynamic assembly will be created and loaded.</p>
+<p>If the 'execute' parameter is given the entry points for the code are executed and
+the given TextWriters are used for the stdout and stderr streams respectively. In this
+case, a global setting is modified during the execution.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    FindBackgroundReferencesInFile
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (filename:string * options:FSharpProjectOptions * symbol:FSharpSymbol * canInvalidateProject:bool option * userOpName:string option) -> Async<seq<range>>
+                  <br/>
+                </td>
+                <td>
+                  <p>Optimized find references for a given symbol in a file of project.All files are read from the FileSystem API, including the file being checked.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetBackgroundCheckResultsForFileInProject
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (filename:string * options:FSharpProjectOptions * userOpName:string option) -> Async<FSharpParseFileResults * FSharpCheckFileResults>
+                  <br/>
+                </td>
+                <td>
+                  <p>Like CheckFileInProject, but uses the existing results from the background builder.All files are read from the FileSystem API, including the file being checked.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetBackgroundParseResultsForFileInProject
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (filename:string * options:FSharpProjectOptions * userOpName:string option) -> Async<FSharpParseFileResults>
+                  <br/>
+                </td>
+                <td>
+                  <p>Like ParseFile, but uses results from the background builder.All files are read from the FileSystem API, including the file being checked.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetBackgroundSemanticClassificationForFile
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (filename:string * options:FSharpProjectOptions * userOpName:string option) -> Async<(range * SemanticClassificationType) []>
+                  <br/>
+                </td>
+                <td>
+                  <p>Get semantic classification for a file.All files are read from the FileSystem API, including the file being checked.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetParsingOptionsFromCommandLineArgs
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (argv:string list * isInteractive:bool option) -> FSharpParsingOptions * FSharpErrorInfo list
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the FSharpParsingOptions implied by a set of command line arguments.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetParsingOptionsFromCommandLineArgs
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (sourceFiles:string list * argv:string list * isInteractive:bool option) -> FSharpParsingOptions * FSharpErrorInfo list
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the FSharpParsingOptions implied by a set of command line arguments and list of source files.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetParsingOptionsFromProjectOptions
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpProjectOptions -> FSharpParsingOptions * FSharpErrorInfo list
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the FSharpParsingOptions implied by a FSharpProjectOptions.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetProjectOptionsFromCommandLineArgs
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (projectFileName:string * argv:string [] * loadedTimeStamp:DateTime option * extraProjectInfo:obj option) -> FSharpProjectOptions
+                  <br/>
+                </td>
+                <td>
+                  <p>Get the FSharpProjectOptions implied by a set of command line arguments.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GetProjectOptionsFromScript
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (filename:string * sourceText:ISourceText * previewEnabled:bool option * loadedTimeStamp:DateTime option * otherFlags:string [] option * useFsiAuxLib:bool option * useSdkRefs:bool option * assumeDotNetFramework:bool option * extraProjectInfo:obj option * optionsStamp:int64 option * userOpName:string option) -> Async<FSharpProjectOptions * FSharpErrorInfo list>
+                  <br/>
+                </td>
+                <td>
+                  <p>For a given script file, get the FSharpProjectOptions implied by the #load closure.All files are read from the FileSystem API, except the file being checked.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    InvalidateAll
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>This function is called when the entire environment is known to have changed for reasons not encoded in the ProjectOptions of any project/compilation.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    InvalidateConfiguration
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (options:FSharpProjectOptions * startBackgroundCompileIfAlreadySeen:bool option * userOpName:string option) -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>This function is called when the configuration is known to have changed for reasons not encoded in the ProjectOptions.
+For example, dependent references may have been deleted or created.
+<param name="startBackgroundCompileIfAlreadySeen">Start a background compile of the project if a project with the same name has already been seen before.</param>
+<param name="userOpName">An optional string used for tracing compiler operations associated with this request.</param></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    MatchBraces
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (filename:string * source:string * options:FSharpProjectOptions * userOpName:string option) -> Async<(range * range) []>
+                  <br/>
+                  <b>
+                    Attributes:
+                  </b>
+                  <code>
+                    ObsoleteAttribute
+                  </code>
+                </td>
+                <td>
+                  <p>Parse a source code file, returning information about brace matching in the file.
+Return an enumeration of the matching parenthetical tokens in the file.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    MatchBraces
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (filename:string * sourceText:ISourceText * options:FSharpParsingOptions * userOpName:string option) -> Async<(range * range) []>
+                  <br/>
+                </td>
+                <td>
+                  <p>Parse a source code file, returning information about brace matching in the file.
+Return an enumeration of the matching parenthetical tokens in the file.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    NotifyProjectCleaned
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (options:FSharpProjectOptions * userOpName:string option) -> Async<unit>
+                  <br/>
+                </td>
+                <td>
+                  <p>This function is called when a project has been cleaned/rebuilt, and thus any live type providers should be refreshed.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ParseAndCheckFileInProject
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (filename:string * fileversion:int * sourceText:ISourceText * options:FSharpProjectOptions * textSnapshotInfo:obj option * userOpName:string option) -> Async<FSharpParseFileResults * FSharpCheckFileAnswer>
+                  <br/>
+                </td>
+                <td>
+                  <p>Parse and check a source code file, returning a handle to the results</p>
+<p>Note: all files except the one being checked are read from the FileSystem API</p>
+<p>Return FSharpCheckFileAnswer.Aborted if a parse tree was not available.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ParseAndCheckProject
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (options:FSharpProjectOptions * userOpName:string option) -> Async<FSharpCheckProjectResults>
+                  <br/>
+                </td>
+                <td>
+                  <p>Parse and typecheck all files in a project.All files are read from the FileSystem API</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ParseFile
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (filename:string * sourceText:ISourceText * options:FSharpParsingOptions * userOpName:string option) -> Async<FSharpParseFileResults>
+                  <br/>
+                </td>
+                <td>
+                  <p>Parses a source code for a file and caches the results. Returns an AST that can be traversed for various features.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ParseFileInProject
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (filename:string * source:string * options:FSharpProjectOptions * userOpName:string option) -> Async<FSharpParseFileResults>
+                  <br/>
+                  <b>
+                    Attributes:
+                  </b>
+                  <code>
+                    ObsoleteAttribute
+                  </code>
+                </td>
+                <td>
+                  <p>Parses a source code for a file. Returns an AST that can be traversed for various features.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ParseFileNoCache
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (filename:string * sourceText:ISourceText * options:FSharpParsingOptions * userOpName:string option) -> Async<FSharpParseFileResults>
+                  <br/>
+                </td>
+                <td>
+                  <p>Parses a source code for a file. Returns an AST that can be traversed for various features.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    StopBackgroundCompile
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>Stop the background compile.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    TokenizeFile
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  source:string -> FSharpTokenInfo [] []
+                  <br/>
+                </td>
+                <td>
+                  <p>Tokenize an entire file, line by line</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    TokenizeLine
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (line:string * state:FSharpTokenizerLexState) -> FSharpTokenInfo [] * FSharpTokenizerLexState
+                  <br/>
+                </td>
+                <td>
+                  <p>Tokenize a single line, returning token information and a tokenization state represented by an integer</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    TryGetRecentCheckResultsForFile
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (filename:string * options:FSharpProjectOptions * sourceText:ISourceText option * userOpName:string option) -> (FSharpParseFileResults * FSharpCheckFileResults * int) option
+                  <br/>
+                </td>
+                <td>
+                  <p>Try to get type check results for a file. This looks up the results of recent type checks of the
+same file, regardless of contents. The version tag specified in the original check of the file is returned.
+If the source of the file has changed the results returned by this function may be out of date, though may
+still be usable for generating intellisense menus and information.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    WaitForBackgroundCompile
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>Block until the background compile finishes.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ImplicitlyStartBackgroundWork
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> bool
+                  <br/>
+                </td>
+                <td>
+                  <p>Get or set a flag which controls if background work is started implicitly.</p>
+<p>If true, calls to CheckFileInProject implicitly start a background check of that project, replacing
+any other background checks in progress. This is useful in IDE applications with spare CPU cycles as
+it prepares the project analysis results for use.  The default is 'true'.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    MaxMemory
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> int
+                  <br/>
+                </td>
+                <td>
+                  <p>A maximum number of megabytes of allocated memory. If the figure reported by <c>System.GC.GetTotalMemory(false)</c> goes over this limit, the FSharpChecker object will attempt to free memory and reduce cache sizes to a minimum.</param></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    PauseBeforeBackgroundWork
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> int
+                  <br/>
+                </td>
+                <td>
+                  <p>Get or set the pause time in milliseconds before background work is started.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    PauseBeforeBackgroundWork
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>Get or set the pause time in milliseconds before background work is started.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    MaxMemory
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>A maximum number of megabytes of allocated memory. If the figure reported by <c>System.GC.GetTotalMemory(false)</c> goes over this limit, the FSharpChecker object will attempt to free memory and reduce cache sizes to a minimum.</param></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ImplicitlyStartBackgroundWork
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  unit -> unit
+                  <br/>
+                </td>
+                <td>
+                  <p>Get or set a flag which controls if background work is started implicitly.</p>
+<p>If true, calls to CheckFileInProject implicitly start a background check of that project, replacing
+any other background checks in progress. This is useful in IDE applications with spare CPU cycles as
+it prepares the project analysis results for use.  The default is 'true'.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    ProjectChecked
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IEvent<string * obj option>
+                  <br/>
+                </td>
+                <td>
+                  <p>Notify the host that a project has been fully checked in the background (using file contents provided by the file system API)</p>
+<p>The event may be raised on a background thread.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    MaxMemoryReached
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IEvent<unit>
+                  <br/>
+                </td>
+                <td>
+                  <p>Raised after the maxMB memory threshold limit is reached</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    FileParsed
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IEvent<string * obj option>
+                  <br/>
+                </td>
+                <td>
+                  <p>Raised after a parse of a file in the background analysis.</p>
+<p>The event will be raised on a background thread.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    FileChecked
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IEvent<string * obj option>
+                  <br/>
+                </td>
+                <td>
+                  <p>Raised after a check of a file in the background analysis.</p>
+<p>The event will be raised on a background thread.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    CurrentQueueLength
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Current queue length of the service, for debug purposes.
+In addition, a single async operation or a step of a background build
+may be in progress - such an operation is not counted in the queue length.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    BeforeBackgroundFileCheck
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  IEvent<string * obj option>
+                  <br/>
+                </td>
+                <td>
+                  <p>Notify the host that the logical type checking context for a file has now been updated internally
+and that the file has become eligible to be re-typechecked for errors.</p>
+<p>The event will be raised on a background thread.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="3">
+                  <b>
+                    Static Members
+                  </b>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Create
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  (projectCacheSize:int option * keepAssemblyContents:bool option * keepAllBackgroundResolutions:bool option * legacyReferenceResolver:Resolver option * tryGetMetadataSnapshot:ILReaderTryGetMetadataSnapshot option * suggestNamesForErrors:bool option * keepAllBackgroundSymbolUses:bool option * enableBackgroundItemKeyStoreAndSemanticClassification:bool option) -> FSharpChecker
+                  <br/>
+                </td>
+                <td>
+                  <p>Create an instance of an FSharpChecker.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    Instance
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  FSharpChecker
+                  <br/>
+                  <b>
+                    Attributes:
+                  </b>
+                  <code>
+                    ObsoleteAttribute
+                  </code>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GlobalForegroundTypeCheckCountStatistic
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Report a statistic for testability</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <code>
+                    GlobalForegroundParseCountStatistic
+                  </code>
+                  <br/>
+                  <br/>
+                  <b>
+                    Signature: 
+                  </b>
+                  int
+                  <br/>
+                </td>
+                <td>
+                  <p>Report a statistic for testability</p>
+
+
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

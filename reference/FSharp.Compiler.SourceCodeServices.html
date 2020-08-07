@@ -1,0 +1,1871 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | FSharp.Compiler.SourceCodeServices
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link menu-group-link-active">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <div class="api-page">
+            <h2>
+              FSharp.Compiler.SourceCodeServices
+            </h2>
+            <b>
+              Declared Types
+            </b>
+            <table>
+              <tr>
+                <th width="35%">
+                  Type
+                </th>
+                <th width="65%">
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-assemblycontenttype.html">
+                    AssemblyContentType
+                  </a>
+                </td>
+                <td>
+                  <p>Assembly content type.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-assemblypath.html">
+                    AssemblyPath
+                  </a>
+                </td>
+                <td>
+                  <p>Assembly path.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-assemblysymbol.html">
+                    AssemblySymbol
+                  </a>
+                </td>
+                <td>
+                  <p>Represents type, module, member, function or value in a compiled assembly.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-compilerenvironment.html">
+                    CompilerEnvironment
+                  </a>
+                </td>
+                <td>
+                  <p>Information about the compilation environment</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-completioncontext.html">
+                    CompletionContext
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-completionitemkind.html">
+                    CompletionItemKind
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-completionpath.html">
+                    CompletionPath
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-entity.html">
+                    Entity
+                  </a>
+                </td>
+                <td>
+                  <p>Helper data structure representing a symbol, suitable for implementing unresolved identifiers resolution code fixes.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-entitycache.html">
+                    EntityCache
+                  </a>
+                </td>
+                <td>
+                  <p>Thread safe wrapper over <code>IAssemblyContentCache</code>.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-entitykind.html">
+                    EntityKind
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-externalsymbol.html">
+                    ExternalSymbol
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a symbol in an external (non F#) assembly</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-externaltype.html">
+                    ExternalType
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a type in an external (non F#) assembly.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpabstractparameter.html">
+                    FSharpAbstractParameter
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a parameter in an abstract method of a class or interface</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpabstractsignature.html">
+                    FSharpAbstractSignature
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the signature of an abstract slot of a class or interface</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpaccessibility.html">
+                    FSharpAccessibility
+                  </a>
+                </td>
+                <td>
+                  <p>Indicates the accessibility of a symbol, as seen by the F# language</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpaccessibilityrights.html">
+                    FSharpAccessibilityRights
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the rights of a compilation to access symbols</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpactivepatterncase.html">
+                    FSharpActivePatternCase
+                  </a>
+                </td>
+                <td>
+                  <p>A subtype of FSharpSymbol that represents a single case within an active pattern</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpactivepatterngroup.html">
+                    FSharpActivePatternGroup
+                  </a>
+                </td>
+                <td>
+                  <p>Represents all cases within an active pattern</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpanonrecordtypedetails.html">
+                    FSharpAnonRecordTypeDetails
+                  </a>
+                </td>
+                <td>
+                  <p>A subtype of FSharpSymbol that represents a record or union case field as seen by the F# language</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpassembly.html">
+                    FSharpAssembly
+                  </a>
+                </td>
+                <td>
+                  <p>Represents an assembly as seen by the F# language</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpassemblycontents.html">
+                    FSharpAssemblyContents
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the definitional contents of an assembly, as seen by the F# language</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpassemblysignature.html">
+                    FSharpAssemblySignature
+                  </a>
+                </td>
+                <td>
+                  <p>Represents an inferred signature of part of an assembly as seen by the F# language</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpattribute.html">
+                    FSharpAttribute
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a custom attribute attached to F# source code or a compiler .NET component</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpcheckfileanswer.html">
+                    FSharpCheckFileAnswer
+                  </a>
+                </td>
+                <td>
+                  <p>The result of calling TypeCheckResult including the possibility of abort and background compiler not caught up.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpcheckfileresults.html">
+                    FSharpCheckFileResults
+                  </a>
+                </td>
+                <td>
+                  <p>A handle to the results of CheckFileInProject.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpcheckprojectresults.html">
+                    FSharpCheckProjectResults
+                  </a>
+                </td>
+                <td>
+                  <p>A handle to the results of CheckFileInProject.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpchecker.html">
+                    FSharpChecker
+                  </a>
+                </td>
+                <td>
+                  <p>Used to parse and check F# source code.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpdeclarationlistinfo.html">
+                    FSharpDeclarationListInfo
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a set of declarations in F# source code, with information attached ready for display by an editor.
+Returned by GetDeclarations.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpdeclarationlistitem.html">
+                    FSharpDeclarationListItem
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a declaration in F# source code, with information attached ready for display by an editor.
+Returned by GetDeclarations.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpdelegatesignature.html">
+                    FSharpDelegateSignature
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a delegate signature in an F# symbol</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpdisplaycontext.html">
+                    FSharpDisplayContext
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the information needed to format types and other information in a style
+suitable for use in F# source text at a particular source location.</p>
+<p>Acquired via GetDisplayEnvAtLocationAlternate and similar methods. May be passed
+to the Format method on FSharpType and other methods.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpenclosingentitykind.html">
+                    FSharpEnclosingEntityKind
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpentity.html">
+                    FSharpEntity
+                  </a>
+                </td>
+                <td>
+                  <p>A subtype of FSharpSymbol that represents a type definition or module as seen by the F# language</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharperrorinfo.html">
+                    FSharpErrorInfo
+                  </a>
+                </td>
+                <td>
+                  <p>Object model for diagnostics</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharperrorseverity.html">
+                    FSharpErrorSeverity
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpexpr.html">
+                    FSharpExpr
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a checked and reduced expression, as seen by the F# language.  The active patterns
+in 'FSharp.Compiler.SourceCodeServices' can be used to analyze information about the expression.</p>
+<p>Pattern matching is reduced to decision trees and conditional tests. Some other
+constructs may be represented in reduced form.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpfield.html">
+                    FSharpField
+                  </a>
+                </td>
+                <td>
+                  <p>A subtype of FSharpSymbol that represents a record or union case field as seen by the F# language</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpfinddeclfailurereason.html">
+                    FSharpFindDeclFailureReason
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the reason why the GetDeclarationLocation operation failed.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpfinddeclresult.html">
+                    FSharpFindDeclResult
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the result of the GetDeclarationLocation operation.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpgenericparameter.html">
+                    FSharpGenericParameter
+                  </a>
+                </td>
+                <td>
+                  <p>A subtype of FSharpSymbol that represents a generic parameter for an FSharpSymbol</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpgenericparameterconstraint.html">
+                    FSharpGenericParameterConstraint
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a constraint on a generic type parameter</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpgenericparameterdefaultstoconstraint.html">
+                    FSharpGenericParameterDefaultsToConstraint
+                  </a>
+                </td>
+                <td>
+                  <p>Represents further information about a 'defaults to' constraint on a generic type parameter</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpgenericparameterdelegateconstraint.html">
+                    FSharpGenericParameterDelegateConstraint
+                  </a>
+                </td>
+                <td>
+                  <p>Represents further information about a delegate constraint on a generic type parameter</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpgenericparametermemberconstraint.html">
+                    FSharpGenericParameterMemberConstraint
+                  </a>
+                </td>
+                <td>
+                  <p>Represents further information about a member constraint on a generic type parameter</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpglyph.html">
+                    FSharpGlyph
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpimplementationfilecontents.html">
+                    FSharpImplementationFileContents
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the definitional contents of a single file or fragment in an assembly, as seen by the F# language</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpimplementationfiledeclaration.html">
+                    FSharpImplementationFileDeclaration
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a declaration in an implementation file, as seen by the F# language</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpinlineannotation.html">
+                    FSharpInlineAnnotation
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharplinetokenizer.html">
+                    FSharpLineTokenizer
+                  </a>
+                </td>
+                <td>
+                  <p>Object to tokenize a line of F# source code, starting with the given lexState.  The lexState should be FSharpTokenizerLexState.Initial for
+the first line of text. Returns an array of ranges of the text and two enumerations categorizing the
+tokens and characters covered by that range, i.e. FSharpTokenColorKind and FSharpTokenCharKind.  The enumerations
+are somewhat adhoc but useful enough to give good colorization options to the user in an IDE.</p>
+<p>A new lexState is also returned.  An IDE-plugin should in general cache the lexState
+values for each line of the edited code.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpmemberorfunctionorvalue.html">
+                    FSharpMemberOrFunctionOrValue
+                  </a>
+                </td>
+                <td>
+                  <p>A subtype of F# symbol that represents an F# method, property, event, function or value, including extension members.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpmethodgroup.html">
+                    FSharpMethodGroup
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a group of methods (or other items) returned by GetMethods.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpmethodgroupitem.html">
+                    FSharpMethodGroupItem
+                  </a>
+                </td>
+                <td>
+                  <p>Represents one method (or other item) in a method group. The item may represent either a method or
+a single, non-overloaded item such as union case or a named function value.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpmethodgroupitemparameter.html">
+                    FSharpMethodGroupItemParameter
+                  </a>
+                </td>
+                <td>
+                  <p>Represents one parameter for one method (or other item) in a group.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpnavigationdeclarationitem.html">
+                    FSharpNavigationDeclarationItem
+                  </a>
+                </td>
+                <td>
+                  <p>Represents an item to be displayed in the navigation bar</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpnavigationdeclarationitemkind.html">
+                    FSharpNavigationDeclarationItemKind
+                  </a>
+                </td>
+                <td>
+                  <p>Indicates a kind of item to show in an F# navigation bar</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpnavigationitems.html">
+                    FSharpNavigationItems
+                  </a>
+                </td>
+                <td>
+                  <p>Represents result of 'GetNavigationItems' operation - this contains
+all the members and currently selected indices. First level correspond to
+types &amp; modules and second level are methods etc.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpnavigationtopleveldeclaration.html">
+                    FSharpNavigationTopLevelDeclaration
+                  </a>
+                </td>
+                <td>
+                  <p>Represents top-level declarations (that should be in the type drop-down)
+with nested declarations (that can be shown in the member drop-down)</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpnoteworthyparaminfolocations.html">
+                    FSharpNoteworthyParamInfoLocations
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the locations relevant to activating parameter info in an IDE</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpobjectexproverride.html">
+                    FSharpObjectExprOverride
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a checked method in an object expression, as seen by the F# language.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpopendeclaration.html">
+                    FSharpOpenDeclaration
+                  </a>
+                </td>
+                <td>
+                  <p>Represents open declaration in F# code.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpparameter.html">
+                    FSharpParameter
+                  </a>
+                </td>
+                <td>
+                  <p>A subtype of FSharpSymbol that represents a parameter</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpparsefileresults.html">
+                    FSharpParseFileResults
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the results of parsing an F# file</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpparsingoptions.html">
+                    FSharpParsingOptions
+                  </a>
+                </td>
+                <td>
+                  <p>Options used to determine active --define conditionals and other options relevant to parsing files in a project</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpprojectcontext.html">
+                    FSharpProjectContext
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the checking context implied by the ProjectOptions</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpprojectoptions.html">
+                    FSharpProjectOptions
+                  </a>
+                </td>
+                <td>
+                  <p>A set of information describing a project or script build configuration.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpsourcetokenizer.html">
+                    FSharpSourceTokenizer
+                  </a>
+                </td>
+                <td>
+                  <p>Tokenizer for a source file. Holds some expensive-to-compute resources at the scope of the file.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpstaticparameter.html">
+                    FSharpStaticParameter
+                  </a>
+                </td>
+                <td>
+                  <p>A subtype of FSharpSymbol that represents a static parameter to an F# type provider</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpstructuredtooltipelement.html">
+                    FSharpStructuredToolTipElement
+                  </a>
+                </td>
+                <td>
+                  <p>A single data tip display element with where text is expressed as <see cref="Layout"/></p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpstructuredtooltiptext.html">
+                    FSharpStructuredToolTipText
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpsymbol.html">
+                    FSharpSymbol
+                  </a>
+                </td>
+                <td>
+                  <p>Represents a symbol in checked F# source code or a compiled .NET component.</p>
+<p>The subtype of the symbol may reveal further information and can be one of FSharpEntity, FSharpUnionCase
+FSharpField, FSharpGenericParameter, FSharpStaticParameter, FSharpMemberOrFunctionOrValue, FSharpParameter,
+or FSharpActivePatternCase.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpsymboluse.html">
+                    FSharpSymbolUse
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the use of an F# symbol from F# source code</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptokencharkind.html">
+                    FSharpTokenCharKind
+                  </a>
+                </td>
+                <td>
+                  <p>Gives an indication of the class to assign to the characters of the token an IDE</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptokencolorkind.html">
+                    FSharpTokenColorKind
+                  </a>
+                </td>
+                <td>
+                  <p>Gives an indication of the color class to assign to the token an IDE</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptokeninfo.html">
+                    FSharpTokenInfo
+                  </a>
+                </td>
+                <td>
+                  <p>Information about a particular token from the tokenizer</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptokentriggerclass.html">
+                    FSharpTokenTriggerClass
+                  </a>
+                </td>
+                <td>
+                  <p>Gives an indication of what should happen when the token is typed in an IDE</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptokenizercolorstate.html">
+                    FSharpTokenizerColorState
+                  </a>
+                </td>
+                <td>
+                  <p>Represents stable information for the state of the lexing engine at the end of a line</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptokenizerlexstate.html">
+                    FSharpTokenizerLexState
+                  </a>
+                </td>
+                <td>
+                  <p>Represents encoded information for the end-of-line continuation of lexing</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptooltipelement-1.html">
+                    FSharpToolTipElement<'T>
+                  </a>
+                </td>
+                <td>
+                  <p>A single tool tip display element</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptooltipelement.html">
+                    FSharpToolTipElement
+                  </a>
+                </td>
+                <td>
+                  <p>A single data tip display element with where text is expressed as string</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptooltipelementdata-1.html">
+                    FSharpToolTipElementData<'T>
+                  </a>
+                </td>
+                <td>
+                  <p>A single data tip display element</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptooltiptext-1.html">
+                    FSharpToolTipText<'T>
+                  </a>
+                </td>
+                <td>
+                  <p>Information for building a tool tip box.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptooltiptext.html">
+                    FSharpToolTipText
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptype.html">
+                    FSharpType
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpunioncase.html">
+                    FSharpUnionCase
+                  </a>
+                </td>
+                <td>
+                  <p>A subtype of FSharpSymbol that represents a union case as seen by the F# language</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpxmldoc.html">
+                    FSharpXmlDoc
+                  </a>
+                </td>
+                <td>
+                  <p>Describe a comment as either a block of text or a file+signature reference into an intellidoc file.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-iassemblycontentcache.html">
+                    IAssemblyContentCache
+                  </a>
+                </td>
+                <td>
+                  <p>Assembly content cache.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-idents.html">
+                    Idents
+                  </a>
+                </td>
+                <td>
+                  <p>An array of <code>ShortIdent</code>.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-inheritancecontext.html">
+                    InheritanceContext
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-insertcontext.html">
+                    InsertContext
+                  </a>
+                </td>
+                <td>
+                  <p>Insert open namespace context.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-interfacedata.html">
+                    InterfaceData
+                  </a>
+                </td>
+                <td>
+                  <p>Capture information about an interface in ASTs</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-layout.html">
+                    Layout
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-lookuptype.html">
+                    LookupType
+                  </a>
+                </td>
+                <td>
+                  <p>Entity lookup type.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-maybeunresolvedident.html">
+                    MaybeUnresolvedIdent
+                  </a>
+                </td>
+                <td>
+                  <p><code>ShortIdent</code> with a flag indicating if it's resolved in some scope.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-maybeunresolvedidents.html">
+                    MaybeUnresolvedIdents
+                  </a>
+                </td>
+                <td>
+                  <p>Array of <code>MaybeUnresolvedIdent</code>.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-modulekind.html">
+                    ModuleKind
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-openstatementinsertionpoint.html">
+                    OpenStatementInsertionPoint
+                  </a>
+                </td>
+                <td>
+                  <p>Where open statements should be added.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-paramtypesymbol.html">
+                    ParamTypeSymbol
+                  </a>
+                </td>
+                <td>
+                  <p>Represents the type of a single method parameter</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-position.html">
+                    Position
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-range.html">
+                    Range
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-recordcontext.html">
+                    RecordContext
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-scopekind.html">
+                    ScopeKind
+                  </a>
+                </td>
+                <td>
+                  <p>Kind of lexical scope.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-semanticclassificationtype.html">
+                    SemanticClassificationType
+                  </a>
+                </td>
+                <td>
+                  <p>A kind that determines what range in a source's text is semantically classified as after type-checking.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-shortident.html">
+                    ShortIdent
+                  </a>
+                </td>
+                <td>
+                  <p>Short identifier, i.e. an identifier that contains no dots.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-stringlongident.html">
+                    StringLongIdent
+                  </a>
+                </td>
+                <td>
+                  <p>Long identifier (i.e. it may contain dots).</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-unresolvedreferencesset.html">
+                    UnresolvedReferencesSet
+                  </a>
+                </td>
+                <td>
+                  <p>Unused in this API</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-unresolvedsymbol.html">
+                    UnresolvedSymbol
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-xmldocable.html">
+                    XmlDocable
+                  </a>
+                </td>
+                <td>
+                  <p>Represent an Xml documentation block in source code</p>
+
+
+                </td>
+              </tr>
+            </table>
+            <br/>
+            <b>
+              Declared Modules
+            </b>
+            <table>
+              <tr>
+                <th width="35%">
+                  Module
+                </th>
+                <th width="65%">
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-assemblycontentprovider.html">
+                    AssemblyContentProvider
+                  </a>
+                </td>
+                <td>
+                  <p>Provides assembly content.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-asttraversal.html">
+                    AstTraversal
+                  </a>
+                </td>
+                <td>
+                  <p>A range of utility functions to assist with traversing an AST</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-basicpatterns.html">
+                    BasicPatterns
+                  </a>
+                </td>
+                <td>
+                  <p>A collection of active patterns to analyze expressions</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-compilerenvironmentmodule.html">
+                    CompilerEnvironment
+                  </a>
+                </td>
+                <td>
+                  <p>Information about the compilation environment</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-debuggerenvironment.html">
+                    DebuggerEnvironment
+                  </a>
+                </td>
+                <td>
+                  <p>Information about the debugging environment</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-extensions.html">
+                    Extensions
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-externaltypemodule.html">
+                    ExternalType
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpfileutilities.html">
+                    FSharpFileUtilities
+                  </a>
+                </td>
+                <td>
+                  <p>A set of helpers for dealing with F# files.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharpnavigation.html">
+                    FSharpNavigation
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-fsharptokentag.html">
+                    FSharpTokenTag
+                  </a>
+                </td>
+                <td>
+                  <p>Some of the values in the field FSharpTokenInfo.Tag</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-interfacestubgenerator.html">
+                    InterfaceStubGenerator
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-keywords.html">
+                    Keywords
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-lexer.html">
+                    Lexer
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-navigateto.html">
+                    NavigateTo
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-paramtypesymbolmodule.html">
+                    ParamTypeSymbol
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-parsedinput.html">
+                    ParsedInput
+                  </a>
+                </td>
+                <td>
+                  <p>Parse AST helpers.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-prettynaming.html">
+                    PrettyNaming
+                  </a>
+                </td>
+                <td>
+                  <p>A set of helpers related to naming of identifiers</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-simplifynames.html">
+                    SimplifyNames
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-sourcefile.html">
+                    SourceFile
+                  </a>
+                </td>
+                <td>
+                  <p>Information about F# source file names</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-structure.html">
+                    Structure
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-symbol.html">
+                    Symbol
+                  </a>
+                </td>
+                <td>
+                  <p>Patterns over FSharpSymbol and derivatives.</p>
+
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-tooltips.html">
+                    Tooltips
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-untypedparseimpl.html">
+                    UntypedParseImpl
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-unuseddeclarations.html">
+                    UnusedDeclarations
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-unusedopens.html">
+                    UnusedOpens
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-xmldoccomment.html">
+                    XmlDocComment
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="fsharp-compiler-sourcecodeservices-xmldocparser.html">
+                    XmlDocParser
+                  </a>
+                </td>
+                <td>
+                  
+
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>

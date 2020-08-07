@@ -1,0 +1,317 @@
+<html class="js csstransforms3d">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      FSharp Compiler Service | Reacting to Changes
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="//fsharp.github.io/FSharp.Compiler.Service/static/images/favicon.png"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/nucleus.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/fontawesome-all.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/hybrid.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/featherlight.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/auto-complete.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/atom-one-dark-reasonable.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/tips.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/css/theme-blue.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <nav id="sidebar">
+      <div id="header-wrapper">
+        <div id="header">
+          <h2 id="logo">
+            FSharp Compiler Service
+          </h2>
+        </div>
+        <div class="searchbox">
+          <label for="search-by">
+            <i class="fas fa-search"></i>
+          </label>
+          <input data-search-input="" id="search-by" type="search" placeholder="Search..."/>
+          <span data-search-clear="">
+            <i class="fas fa-times"></i>
+          </span>
+        </div>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/lunr.min.js"></script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/auto-complete.js"></script>
+        <script type="text/javascript">
+          var baseurl ='//fsharp.github.io/FSharp.Compiler.Service/'
+        </script>
+        <script type="text/javascript" src="//fsharp.github.io/FSharp.Compiler.Service/static/js/search.js"></script>
+      </div>
+      <div class="highlightable">
+        <ul class="topics">
+          <li id="menu-explanations" class="dd-item menu-group-link">
+            <a>
+              Explanation
+            </a>
+          </li>
+          <li id="menu-tutorials" class="dd-item menu-group-link menu-group-link-active">
+            <a>
+              Tutorials
+            </a>
+          </li>
+          <li id="menu-howtos" class="dd-item menu-group-link">
+            <a>
+              How-To Guides
+            </a>
+          </li>
+          <li id="menu-refs" class="dd-item menu-group-link">
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/reference/index.html">
+              API Reference
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-explanations" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="padding">
+              F# Compiler Services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/devnotes.html" class="padding">
+              Developer Notes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-tutorials" class="submenu submenu-active">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/tokenizer.html" class="padding">
+              F# Language Tokenizer
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/untypedtree.html" class="padding">
+              Processing untyped AST
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/editor.html" class="padding">
+              Editor services
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/symbols.html" class="padding">
+              Working with symbols
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/typedtree.html" class="padding">
+              Processing typed expression tree
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/project.html" class="padding">
+              Project Analysis
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/interactive.html" class="padding">
+              Embedding F# Interactive
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/compiler.html" class="padding">
+              Hosted Compiler
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/filesystem.html" class="padding">
+              Virtualized File System
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/react.html" class="active-link padding">
+              Reacting to Changes
+            </a>
+          </li>
+        </ul>
+        <ul id="submenu-howtos" class="submenu">
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/queue.html" class="padding">
+              Notes on the FSharpChecker operations queue
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/caches.html" class="padding">
+              Notes on the FSharpChecker caches
+            </a>
+          </li>
+          <li>
+            <a href="//fsharp.github.io/FSharp.Compiler.Service/corelib.html" class="padding">
+              Notes on FSharp.Core.dll
+            </a>
+          </li>
+        </ul>
+        <section id="languages">
+          <h3>
+            Languages
+          </h3>
+          <ul>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/index.html" class="menu-group-link-active padding">
+                English
+              </a>
+            </li>
+            <li>
+              <a href="//fsharp.github.io/FSharp.Compiler.Service/ja/index.html" class="padding">
+                Japanese
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="shortcuts">
+          <h3>
+            Shortcuts
+          </h3>
+          <ul>
+            <li>
+              <a class="padding" href="/">
+                <i class="fas fa-home"></i>
+                Home
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://fsharp.org">
+                <i class="fas fa-globe"></i>
+                F# Software Foundation
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service">
+                <i class="fab fa-github"></i>
+                GitHub repo
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/LICENSE">
+                <i class="far fa-file"></i>
+                License
+              </a>
+            </li>
+            <li>
+              <a class="padding" href="https://github.com/fsharp/FSharp.Compiler.Service/blob/master/RELEASE_NOTES.md">
+                <i class="far fa-file-alt"></i>
+                Release Notes
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="footer">
+          <p>Built with <a href="https://github.com/ionide/Fornax">Fornax</a>
+        </section>
+      </div>
+    </nav>
+    <section id="body">
+      <div id="overlay"></div>
+      <div class="padding highlightable">
+        <div id="body-inner">
+          <span id="sidebar-toggle-span">
+            <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+              <i class="fas fa-bars"></i>
+               navigation
+            </a>
+          </span>
+          <h1>Compiler Services: Reacting to Changes</h1>
+<p>This tutorial discusses some technical aspects of how to make sure the F# compiler service is
+providing up-to-date results especially when hosted in an IDE. See also <a href="project.html">project wide analysis</a>
+for information on project analysis.</p>
+<blockquote>
+<p><strong>NOTE:</strong> The FSharp.Compiler.Service API is subject to change when later versions of the nuget package are published.</p>
+</blockquote>
+<p>The logical results of all "Check" routines (<code>ParseAndCheckFileInProject</code>, <code>GetBackgroundCheckResultsForFileInProject</code>,
+<code>TryGetRecentTypeCheckResultsForFile</code>, <code>ParseAndCheckProject</code>) depend on results reported by the file system,
+especially the <code>IFileSystem</code> implementation described in the tutorial on <a href="project.html">project wide analysis</a>.
+Logically speaking, these results would be different if file system changes occur.  For example,
+referenced DLLs may change on disk, or referenced files may change.</p>
+<p>The <code>FSharpChecker</code> component from FSharp.Compiler.Service does <em>not</em> actively "listen"
+to changes in the file system.  However <code>FSharpChecker</code> <em>does</em> repeatedly ask for
+time stamps from the file system which it uses to decide if recomputation is needed.
+FCS doesn't listen for changes directly - for example, it creates no <code>FileWatcher</code> object (and the
+<code>IFileSystem</code> API has no ability to create such objects).  This is partly for legacy reasons,
+and partly because some hosts forbid the creation of FileWatcher objects.</p>
+<p>In most cases the repeated timestamp requests are sufficient. If you don't actively
+listen for changes, then <code>FSharpChecker</code> will still do <em>approximately</em>
+the right thing, because it is asking for time stamps repeatedly.  However, some updates on the file system
+(such as a DLL appearing after a build, or the user randomly pasting a file into a folder)
+may not actively be noticed by <code>FSharpChecker</code> until some operation happens to ask for a timestamp.
+By issuing fresh requests, you can ensure that FCS actively reassesses the state of play when
+stays up-to-date when changes are observed.</p>
+<p>If you want to more actively listen for changes, then you should add watchers for the
+files specified in the <code>DependencyFiles</code> property of <code>FSharpCheckFileResults</code> and <code>FSharpCheckProjectResults</code>.
+Here�s what you need to do:</p>
+<ul>
+<li>
+<p>When your client notices an CHANGE event on a DependencyFile, it should schedule a refresh call to perform the ParseAndCheckFileInProject (or other operation) again.
+This will result in fresh FileSystem calls to compute time stamps.</p>
+</li>
+<li>
+<p>When your client notices an ADD event on a DependencyFile, it should call <code>checker.InvalidateConfiguration</code>
+for all active projects in which the file occurs. This will result in fresh FileSystem calls to compute time
+stamps, and fresh calls to compute whether files exist.</p>
+</li>
+<li>
+<p>Generally clients don�t listen for DELETE events on files.  Although it would be logically more consistent
+to do so, in practice it�s very irritating for a "project clean" to invalidate all intellisense and
+cause lots of red squiggles.  Some source control tools also make a change by removing and adding files, which
+is best noticed as a single change event.</p>
+</li>
+</ul>
+<p>If your host happens to be Visual Studio, then this is one technique you can use:
+<em> Listeners should be associated with a visual source file buffer
+</em> Use fragments like this to watch the DependencyFiles:</p>
+<pre class="fssnip highlighted"><code class="language-fsharp">    <span class="hljs-comment">// Get the service</span>
+    <span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="hljs-function">vsFileWatch</span> <span class="hljs-keyword">=</span> <span class="hljs-function">fls</span><span class="hljs-keyword">.</span><span class="hljs-function">GetService</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="hljs-function">typeof</span><span class="hljs-keyword">&lt;</span><span class="hljs-function">SVsFileChangeEx</span> <span class="hljs-keyword">&gt;</span><span class="hljs-keyword">)</span> <span class="hljs-keyword">:?&gt;</span> <span class="hljs-function">IVsFileChangeEx</span>
+
+    <span class="hljs-comment">// Watch the Add and Change events</span>
+    <span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="hljs-function">fileChangeFlags</span> <span class="hljs-keyword">=</span>
+        <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="hljs-function">uint32</span> <span class="hljs-keyword">(</span><span class="hljs-function">_VSFILECHANGEFLAGS</span><span class="hljs-keyword">.</span><span class="hljs-function">VSFILECHG_Add</span> <span class="hljs-keyword">|||</span>
+                <span class="hljs-comment">// _VSFILECHANGEFLAGS.VSFILECHG_Del ||| // don&#39;t listen for deletes - if a file (such as a &#39;Clean&#39;ed project reference) is deleted, just keep using stale info</span>
+                <span class="hljs-function">_VSFILECHANGEFLAGS</span><span class="hljs-keyword">.</span><span class="hljs-function">VSFILECHG_Time</span><span class="hljs-keyword">)</span>
+
+    <span class="hljs-comment">// Advise on file changes...</span>
+    <span class="hljs-keyword">let</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="hljs-function">cookie</span> <span class="hljs-keyword">=</span> <span class="hljs-function">Com</span><span class="hljs-keyword">.</span><span class="hljs-function">ThrowOnFailure1</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="hljs-function">vsFileWatch</span><span class="hljs-keyword">.</span><span class="hljs-function">AdviseFileChange</span><span class="hljs-keyword">(</span><span class="hljs-function">file</span><span class="hljs-keyword">,</span> <span onmouseout="hideTip(event, 'fs3', 7)" onmouseover="showTip(event, 'fs3', 7)" class="hljs-function">fileChangeFlags</span><span class="hljs-keyword">,</span> <span class="hljs-function">changeEvents</span><span class="hljs-keyword">)</span><span class="hljs-keyword">)</span>
+
+    <span class="hljs-keyword">..</span><span class="hljs-keyword">.</span>
+
+    <span class="hljs-comment">// Unadvised file changes...</span>
+    <span class="hljs-function">Com</span><span class="hljs-keyword">.</span><span class="hljs-function">ThrowOnFailure0</span><span class="hljs-keyword">(</span><span onmouseout="hideTip(event, 'fs1', 8)" onmouseover="showTip(event, 'fs1', 8)" class="hljs-function">vsFileWatch</span><span class="hljs-keyword">.</span><span class="hljs-function">UnadviseFileChange</span><span class="hljs-keyword">(</span><span class="hljs-function">cookie</span><span class="hljs-keyword">)</span><span class="hljs-keyword">)</span>
+</code></pre>
+<div class="tip" id="fs1">val vsFileWatch : obj</div>
+<div class="tip" id="fs2">val typeof&lt;&#39;T&gt; : System.Type</div>
+<div class="tip" id="fs3">val fileChangeFlags : uint32</div>
+<div class="tip" id="fs4">Multiple items<br />val uint32 : value:&#39;T -&gt; uint32 (requires member op_Explicit)<br /><br />--------------------<br />type uint32 = System.UInt32</div>
+<div class="tip" id="fs5">val cookie : obj</div>
+
+
+        </div>
+      </div>
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/clipboard.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/jquery.sticky.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/featherlight.min.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/modernizr.custom-3.6.0.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/learn.js"></script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/hugo-learn.js"></script>
+    <link rel="stylesheet" href="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.css"/>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/mermaid/mermaid.js"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script src="////cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.0/languages/fsharp.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad()
+    </script>
+    <script src="//fsharp.github.io/FSharp.Compiler.Service/static/js/tips.js"></script>
+  </body>
+</html>
