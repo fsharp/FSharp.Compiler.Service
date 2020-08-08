@@ -1,3 +1,8 @@
+#### 37.0.1
+
+This release is a packaging fix release that updates the .Net Framework TFM requirement from 4.6.1 to 4.7.2, to be
+in line with the new dependencies on Microsoft.Build.Framework, Microsoft.Build.Tasks.Core and Microsoft.Build.Utilities.Core
+
 #### 37.0.0
 
 This release bring a number of new changes, including a massive enhancement to SemanticClassification types thanks to @cartermp.

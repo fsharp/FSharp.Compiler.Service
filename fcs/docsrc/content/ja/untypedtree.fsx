@@ -8,7 +8,7 @@ language: ja
 ---
 *)
 (*** hide ***)
-#I "../../../../artifacts/bin/fcs/Release/net461"
+#I "../../../../artifacts/bin/fcs/Release/net472"
 (**
 コンパイラサービス：型無し構文木の処理
 ======================================

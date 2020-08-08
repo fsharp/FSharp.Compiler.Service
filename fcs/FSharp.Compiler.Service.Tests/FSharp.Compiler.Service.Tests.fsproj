@@ -106,6 +106,8 @@
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
     <Reference Include="UIAutomationTypes" />
+    <Reference Include="netstandard" />
+    <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <ProjectReference Include="CSharp_Analysis\CSharp_Analysis.csproj" />
   </ItemGroup>
 </Project>

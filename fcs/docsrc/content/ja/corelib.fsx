@@ -8,7 +8,7 @@ language: ja
 ---
 *)
 (*** hide ***)
-#I "../../../../artifacts/bin/fcs/net461"
+#I "../../../../artifacts/bin/fcs/net472"
 (**
 コンパイラサービス: FSharp.Core.dll についてのメモ
 ==================================================

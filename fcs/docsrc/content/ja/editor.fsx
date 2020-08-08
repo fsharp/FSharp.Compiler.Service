@@ -9,7 +9,7 @@ language: ja
 *)
 
 (*** hide ***)
-#I "../../../../artifacts/bin/fcs/Release/net461"
+#I "../../../../artifacts/bin/fcs/Release/net472"
 (**
 コンパイラサービス: エディタサービス
 ====================================
